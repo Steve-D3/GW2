@@ -2,28 +2,31 @@ import productsData from "../db.json";
 
 const ProductGrid = () => {
   return (
-    <div>
-      {productsData.categories.map((category) => (
-        <div key={category.category_name}>
-          {/* <h2>{category.category_name}</h2> */}
-          <div className="product-list">
-            {category.products.map((product) => (
-              <div key={product.id} className="product-card">
-                <img
-                  src={product.image_url}
-                  alt={product.name}
-                  style={{ width: "200px" }}
-                />
-                <h3>{product.name}</h3>
-                <p>{product.description}</p>
-                <p>${product.price}</p>
-                <p>Stock: {product.stock_quantity}</p>
+    <section className="product-grid">
+      {productsData.categories.map((category) =>
+        category.products.map((product) => (
+          <article key={product.id} className="product-card">
+            <div>
+              <img src={product.image_url} alt={product.name} />
+            </div>
+            <div>
+              <h3>{product.name}</h3>
+              <p>{product.description}</p>
+              <p>${product.price}</p>
+            </div>
+            <div className="productHover">
+              <button>Add to cart</button>
+              <div>
+                <a href="#">⠪ Share </a>
+                <a href="#">⇄ Compare </a>
+                <a href="#">♡ Like </a>
               </div>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
+            </div>
+          </article>
+        ))
+      )}
+    </section>
   );
 };
+
 export default ProductGrid;

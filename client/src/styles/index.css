@@ -1,1 +1,94 @@
-@import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css');
+@import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  font-size: 62.5%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.product-grid {
+  display: grid;
+  place-self: center;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 4rem;
+  article {
+    position: relative;
+    background-color: #f4f5f7;
+    font-family: "Poppins", serif;
+    width: 285px;
+
+    div:nth-child(1) {
+      width: 285px;
+      height: 301px;
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    div:nth-child(2) {
+      padding: 0 1.5rem;
+      h3 {
+        font-size: 2.4rem;
+        color: #3a3a3a;
+        font-weight: 600;
+      }
+      p:nth-child(2) {
+        font-size: 1.6rem;
+        color: #898989;
+        font-weight: 400;
+      }
+      p:nth-child(3) {
+        font-size: 2em;
+        color: #3a3a3a;
+        font-weight: 600;
+      }
+    }
+    .productHover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(58, 58, 58, 0.72);
+      color: #ffffff;
+      opacity: 0;
+      transition: opacity 400ms ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      button {
+        padding: 1.5rem;
+        border: none;
+        background-color: #ffffff;
+        color: #b88e2f;
+        font-size: 1.6rem;
+        width: 202px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      div {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: space-between;
+        gap: 2.5rem;
+
+        a {
+          text-decoration: none;
+          cursor: pointer;
+          font-size: 1.6rem;
+          color: #ffffff;
+          font-weight: 500;
+        }
+      }
+    }
+    &:hover .productHover {
+      opacity: 1;
+    }
+  }
+}
