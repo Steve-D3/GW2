@@ -13,7 +13,7 @@
         },
         {
           "id": 2,
-          "name": "Organic Shampoo Bar",
+          "name": "Eco Shampoo Bar",
           "description": "Zero-waste shampoo bar made with organic ingredients.",
           "price": 12.0,
           "image_url": "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -26,7 +26,7 @@
       "products": [
         {
           "id": 3,
-          "name": "Stainless Steel Straws",
+          "name": "Stainless Straws",
           "description": "Set of 6 reusable stainless steel straws with cleaning brush.",
           "price": 8.0,
           "image_url": "https://cdn11.bigcommerce.com/s-5vfc75n1yv/images/stencil/960w/products/1390/5431/302%20ssxr_n_8__62858.1709921301.jpg?c=1",
@@ -34,7 +34,7 @@
         },
         {
           "id": 4,
-          "name": "Bamboo Cutting Board",
+          "name": "Bamboo Board",
           "description": "Durable and eco-friendly bamboo cutting board.",
           "price": 18.0,
           "image_url": "https://www.kitchenstuffplus.com/media/catalog/product/7/4/74622_ksp-natura-cut-board-w-tray_220823125429665_7hmfs3f3pwrabpdk.jpg?width=1000&height=&canvas=1000,&optimize=high&fit=bounds",
@@ -68,7 +68,7 @@
       "products": [
         {
           "id": 7,
-          "name": "Organic Cotton T-Shirt",
+          "name": "Eco Cotton T-Shirt",
           "description": "Soft and comfortable T-shirt made from 100% organic cotton.",
           "price": 18.0,
           "image_url": "https://images.unsplash.com/photo-1620799139834-6b8f844fbe61?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -76,7 +76,7 @@
         },
         {
           "id": 8,
-          "name": "Recycled Polyester Jacket",
+          "name": "Recycled Jacket",
           "description": "Water-resistant jacket made from recycled polyester fabric.",
           "price": 45.0,
           "image_url": "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
