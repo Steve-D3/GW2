@@ -1,11 +1,11 @@
-import HomePanner from "../components/HomePanner";
 import HomeCategoryList from "../components/HomeCategoryList";
 import InspirationArticles from "../components/InspirationArticles";
 import ClientGallery from "../components/ClientGallery";
+import HomePanel from "../components/home/HomePanel";
 const Home = () => {
   return (
     <>
-      <HomePanner />
+      <HomePanel />
       <hr />
       <HomeCategoryList />
       <hr />
