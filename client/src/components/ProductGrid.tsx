@@ -1,5 +1,7 @@
 import productsData from "../db.json";
 import "../styles/shop.css";
+import { PiShareNetworkFill } from "react-icons/pi";
+import { FaRegHeart } from "react-icons/fa";
 
 const ProductGrid = () => {
   return (
@@ -19,9 +21,14 @@ const ProductGrid = () => {
               <div className="productHover">
                 <button>Add to cart</button>
                 <div>
-                  <a href="#">⠪ Share </a>
+                  <a href="#">
+                    <PiShareNetworkFill />
+                    Share{" "}
+                  </a>
                   <a href="#">⇄ Compare </a>
-                  <a href="#">♡ Like </a>
+                  <a href="#">
+                    <FaRegHeart /> Like
+                  </a>
                 </div>
               </div>
             </article>
@@ -33,3 +40,7 @@ const ProductGrid = () => {
 };
 
 export default ProductGrid;
+
+//product grid should seprate to card component and product and key should be props
+
+// and style every component to ComponentName.module.css
