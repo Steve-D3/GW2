@@ -1,0 +1,130 @@
+.clients-gallery {
+  height: 780px;
+  width: 100%;
+  margin: 2rem 0;
+  overflow: hidden;
+  text-align: center;
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  h3 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  > div {
+    position: relative;
+    animation: moveGallery 50s linear infinite;
+
+    img {
+      position: absolute;
+      object-fit: cover;
+      opacity: 0.8;
+      &:hover {
+        opacity: 1;
+      }
+
+      &:nth-child(1) {
+        /* girl in green*/
+        width: 295px;
+        height: 392px;
+        top: 150px;
+        left: 770px;
+      }
+      &:nth-child(2) {
+        /* kitchen tool */
+        width: 344px;
+        height: 242px;
+        top: 400px;
+        left: 405px;
+      }
+      &:nth-child(3) {
+        /* hand in green*/
+        width: 451px;
+        height: 312px;
+        top: 68px;
+        left: 300px;
+      }
+      &:nth-child(4) {
+        /* steel straws */
+        width: 274px;
+        height: 382px;
+        top: 0;
+        left: 0;
+      }
+      &:nth-child(5) {
+        /* toothbrush with backage */
+        width: 178px;
+        height: 242px;
+        top: 430px;
+        left: 1085px;
+      }
+      &:nth-child(6) {
+        /* brush and soap */
+        width: 425px;
+        height: 418px;
+        top: 0;
+        left: 1390px;
+      }
+      &:nth-child(7) {
+        /* candle */
+        width: 258px;
+        height: 196px;
+        top: 430px;
+        left: 1280px;
+      }
+      &:nth-child(8) {
+        /* toothbrush in cup*/
+        width: 381px;
+        height: 323px;
+        top: 400px;
+        left: 0;
+      }
+      &:nth-child(9) {
+        /* cotton pad*/
+        width: 290px;
+        height: 348px;
+        top: 70px;
+        left: 1085px;
+      }
+      &:nth-child(10) {
+        width: 400px;
+        top: 50px;
+        left: 1830px;
+      }
+      &:nth-child(11) {
+        width: 500px;
+        height: 260px;
+        top: 0px;
+        left: 2250px;
+      }
+      &:nth-child(12) {
+        width: 650px;
+        top: 280px;
+        left: 2460px;
+      }
+      &:nth-child(13) {
+        width: 190px;
+        top: 280px;
+        left: 2250px;
+      }
+      &:nth-child(14) {
+        width: 340px;
+        height: 210px;
+        top: 50px;
+        left: 2770px;
+      }
+    }
+  }
+}
+
+@keyframes moveGallery {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

@@ -1,7 +1,8 @@
 import HomeCategoryList from "../components/HomeCategoryList";
 import InspirationArticles from "../components/InspirationArticles";
-import ClientGallery from "../components/ClientGallery";
+import ClientsGallery from "../components/ClientsGallery";
 import HomePanel from "../components/home/HomePanel";
+import ProductGrid from "../components/ProductGrid";
 const Home = () => {
   return (
     <>
@@ -9,9 +10,11 @@ const Home = () => {
       <hr />
       <HomeCategoryList />
       <hr />
+      <ProductGrid />
+      <hr />
       <InspirationArticles />
       <hr />
-      <ClientGallery />
+      <ClientsGallery />
     </>
   );
 };
