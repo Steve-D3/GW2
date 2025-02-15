@@ -3,7 +3,8 @@
 :root {
   a {
     text-decoration: none;
-    color: #333333;
+    color: #000000;
+    transition: 200ms ease;
   }
 }
 
@@ -19,33 +20,98 @@ header {
   align-items: center;
   gap: 1.3rem;
   div {
-    width: 5rem;
-    height: 5rem;
+    width: 6rem;
+    height: 6rem;
     img {
       width: 100%;
       height: 100%;
     }
   }
   h3 {
-    padding-top: 0.5rem;
     font-family: "Montserrat", sans-serif;
-    font-size: 3.4rem;
+    font-size: 3.5rem;
     font-weight: 700;
   }
 }
 
 .header-nav {
+  font-size: 1.6rem;
+  font-weight: 500;
   ul {
     display: flex;
+    gap: 9rem;
     li {
+      a {
+        transition: 300ms;
+        &:hover {
+          color: #b88e2f;
+        }
+      }
     }
   }
 }
 
 .header-icons {
+  font-size: 2rem;
   ul {
     display: flex;
+    gap: 5.5rem;
     li {
+      a {
+        transition: 300ms;
+        &:hover {
+          color: #b88e2f;
+        }
+      }
     }
+  }
+}
+
+.header-hamburger {
+  display: none;
+}
+
+@media (max-width: 1200px) {
+  .header-nav {
+    ul {
+      gap: 4rem;
+    }
+  }
+  .header-icons {
+    ul {
+      gap: 3.5rem;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .header-nav {
+    ul {
+      gap: 2rem;
+    }
+  }
+  .header-icons {
+    ul {
+      gap: 2rem;
+    }
+  }
+}
+
+@media (max-width: 750px) {
+  .header-nav {
+    ul {
+      display: none;
+    }
+  }
+  .header-icons {
+    ul {
+      display: none;
+    }
+  }
+  .header-hamburger {
+    display: flex;
+    font-size: 3.5rem;
+    align-items: center;
+    padding-top: 0.5rem;
   }
 }

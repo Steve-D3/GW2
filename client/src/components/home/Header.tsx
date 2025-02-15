@@ -1,15 +1,22 @@
 import { NavLink } from "react-router";
 import styles from "../../styles/Header.module.css";
+import { FaRegHeart } from "react-icons/fa";
+import { FaRegUser } from "react-icons/fa6";
+import { MdOutlineShoppingCart } from "react-icons/md";
+import { PiMagnifyingGlassBold } from "react-icons/pi";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const Header = () => {
   return (
     <header>
-      <nav className={styles["header-logo"]}>
-        <div>
-          <img src="logo.svg" alt="SustainLoop" />
-        </div>
-        <h3>SustainLoop</h3>
-      </nav>
+      <NavLink to="/">
+        <nav className={styles["header-logo"]}>
+          <div>
+            <img src="logo.svg" alt="SustainLoop" />
+          </div>
+          <h3>SustainLoop</h3>
+        </nav>
+      </NavLink>
       <nav className={styles["header-nav"]}>
         <ul>
           <li>
@@ -29,18 +36,31 @@ const Header = () => {
       <nav className={styles["header-icons"]}>
         <ul>
           <li>
-            <NavLink to="/">AV</NavLink>
+            <NavLink to="/">
+              <FaRegUser />
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/">MG</NavLink>
+            <NavLink to="/">
+              <PiMagnifyingGlassBold />
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/">HRT</NavLink>
+            <NavLink to="/">
+              <FaRegHeart />
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/">SC</NavLink>
+            <NavLink to="/">
+              <MdOutlineShoppingCart />
+            </NavLink>
           </li>
         </ul>
+      </nav>
+      <nav className={styles["header-hamburger"]}>
+        <NavLink to="/">
+          <GiHamburgerMenu />
+        </NavLink>
       </nav>
     </header>
   );
