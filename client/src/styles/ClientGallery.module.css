@@ -1,6 +1,6 @@
 .clients-gallery {
   height: 780px;
-  width: 100%;
+
   margin: 2rem 0;
   overflow: hidden;
   text-align: center;
@@ -11,17 +11,22 @@
   h3 {
     font-size: 4rem;
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
   }
 
   > div {
+    max-width: 1200px;
     position: relative;
     animation: moveGallery 50s linear infinite;
 
+    &:hover {
+      animation-play-state: paused;
+    }
     img {
       position: absolute;
       object-fit: cover;
       opacity: 0.8;
+      transition: all 400ms ease;
       &:hover {
         opacity: 1;
       }
@@ -124,7 +129,10 @@
   0% {
     transform: translateX(0);
   }
+  50% {
+    transform: translateX(-1200px);
+  }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(0);
   }
 }
