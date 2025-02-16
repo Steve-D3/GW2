@@ -80,11 +80,14 @@
     text-align: center;
     padding-top: 3.5rem;
     padding-bottom: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem ;
     img {
         height: 480px;
         width: 381px;
         object-fit: cover;
         border-radius: 10px;
+        max-width: 100%;
     }
 
     .text-container {
@@ -108,11 +111,75 @@
         gap: 1rem;
 
         p {
-            padding-top: 1rem;
+            padding-top: 2.5rem;
 
             font-weight: 600;
             font-size: 24px;
             line-height: 36px;
         }
     }
+}
+
+.home-product-grid {
+    text-align: center;
+    padding-top: 3rem;
+    padding-bottom: 6rem;
+
+    h2 {
+        font-weight: 700;
+        font-size: 40px;
+        padding-bottom: 3.5rem;
+    }
+}
+
+.inspirational-articles {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    height: 670px;
+    background: #faf8f6;
+
+    padding-left: 4rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+
+    .text-section {
+        width: 35%;
+        h2 {
+            font-weight: 700;
+            font-size: 40px;
+            line-height: 48px;
+            padding-bottom: 2rem;
+        }
+
+        p {
+            color: #616161;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 24px;
+            padding-bottom: 2rem;
+        }
+
+        button {
+            height: 48px;
+            width: 176px;
+            background-color: #b88e2f;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            border: none;
+        }
+    }
+
+    .wrapper {
+        .main-image {
+            img {
+                width: 404px;
+                height: 582px;
+                object-fit: cover;
+            }
+        }
+    }
+
 }
