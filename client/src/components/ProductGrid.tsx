@@ -20,7 +20,7 @@ const ProductGrid = () => {
           ))}
         </div>
         <div className={styles["pagination"]}>
-          {/* add numbers of product shown and total  in filter */}
+          {/* add numbers of product shown and total  in filter ( will use this in filter compnent )*/}
           {/* <span> Showing 8 of {productsData.length} results</span> */}
 
           <button
