@@ -1,0 +1,148 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  a {
+    text-decoration: none;
+    color: #000000;
+    transition: 200ms ease;
+  }
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 2rem 10rem;
+  gap: 2rem;
+}
+
+.footer-address {
+  grid-column: 1 / span 2;
+  h1 {
+    font-family: "Montserrat", sans-serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+  }
+  p {
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    font-weight: 400;
+    color: #9f9f9f;
+  }
+}
+
+.footer-title {
+  color: #9f9f9f;
+  font-weight: 500;
+}
+
+.footer-links {
+  font-size: 1.6rem;
+  font-weight: 400;
+  padding-top: 3rem;
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    li {
+      a {
+        transition: 300ms;
+        &:hover {
+          color: #b88e2f;
+        }
+      }
+    }
+  }
+}
+
+.footer-help {
+  font-size: 1.6rem;
+  font-weight: 400;
+  padding-top: 3rem;
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    li {
+      a {
+        transition: 300ms;
+        &:hover {
+          color: #b88e2f;
+        }
+      }
+    }
+  }
+}
+
+.footer-newsletter {
+  padding-top: 3rem;
+  ul {
+    font-size: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    li {
+      input {
+        font-size: 1.4rem;
+        border: none;
+        margin-right: 1rem;
+        border-bottom: 1px solid black;
+        &::placeholder {
+          text-transform: capitalize;
+          color: #9f9f9f;
+        }
+      }
+      button {
+        font-size: 1.4rem;
+        border: none;
+        border-bottom: 1px solid black;
+        background-color: transparent;
+        text-transform: uppercase;
+        transition: 300ms;
+        &:hover {
+          cursor: pointer;
+          color: #b88e2f;
+        }
+      }
+    }
+  }
+}
+
+.footer-copyright {
+  padding: 2rem 10rem;
+  font-size: 1.6rem;
+  padding-top: 3rem;
+  div {
+    border-top: solid 1px #d9d9d9;
+    p {
+      padding: 5rem 0;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+  }
+  .footer-address {
+    text-align: center;
+  }
+  .footer-links {
+    text-align: center;
+  }
+  .footer-help {
+    text-align: center;
+  }
+  .footer-newsletter {
+    text-align: center;
+  }
+  .footer-copyright {
+    text-align: center;
+    div {
+      border: none;
+      p {
+        padding: 0;
+      }
+    }
+  }
+}
