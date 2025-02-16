@@ -1,0 +1,49 @@
+.product-grid {
+  max-width: 80%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 5rem;
+}
+
+.product-contanier {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin: 2rem;
+  button {
+    height: 60px;
+    padding: 0 3rem;
+    border: none;
+    background-color: #f9f1e7;
+    color: black;
+    font-size: 2rem;
+    font-weight: 300;
+    cursor: pointer;
+    border-radius: 10px;
+    &.hidden-btn {
+      display: none;
+    }
+    &.active {
+      background-color: #b88e2f;
+      color: #ffffff;
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .pagination button {
+    height: 40px;
+    font-size: 1.5rem;
+  }
+  .pagination-number-btn {
+    display: none;
+  }
+}
