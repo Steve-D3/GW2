@@ -1,0 +1,10 @@
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  justify-items: center;
+  grid-gap: 4rem;
+}
+/* 
+.product-contanier {
+  margin: 2rem 10rem;
+} */
