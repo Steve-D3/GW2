@@ -81,7 +81,8 @@
     padding-top: 3.5rem;
     padding-bottom: 2rem;
     padding-left: 2rem;
-    padding-right: 2rem ;
+    padding-right: 2rem;
+
     img {
         height: 480px;
         width: 381px;
@@ -92,6 +93,7 @@
 
     .text-container {
         padding-bottom: 3.7rem;
+
         h2 {
             font-weight: 700;
             font-size: 32px;
@@ -140,12 +142,11 @@
     height: 670px;
     background: #faf8f6;
 
-    padding-left: 4rem;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding: 2rem 4rem;
 
     .text-section {
-        width: 35%;
+        width: 30%;
+
         h2 {
             font-weight: 700;
             font-size: 40px;
@@ -173,10 +174,91 @@
     }
 
     .wrapper {
+        display: flex;
+        justify-content: space-evenly;
+        gap: 1rem;
+        width: 70%;
+
         .main-image {
+            position: relative;
+
             img {
                 width: 404px;
                 height: 582px;
+                object-fit: cover;
+            }
+
+            .inner-text {
+                height: 130px;
+                width: 217px;
+                background-color: #FFFFFFB8;
+                position: absolute;
+                left: 7%;
+                bottom: 5%;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                gap: 1.5rem;
+                padding-left: 3rem;
+
+                div {
+                    p {
+                        &:first-of-type {
+                            font-size: 16px;
+                            font-weight: 500;
+                            color: #616161;
+                            position: relative;
+                        }
+
+                        &:last-of-type {
+                            position: absolute;
+                            border: 1px solid #616161;
+                            width: 27px;
+                            left: 55px;
+                            top: 32%;
+                        }
+                    }
+                }
+
+                h3 {
+                    font-size: 28px;
+                    font-weight: 600;
+                    color: #3A3A3A;
+                }
+            }
+
+            a {
+                height: 48px;
+                width: 48px;
+
+                position: absolute;
+                left: 60.7%;
+                bottom: 5%;
+
+                background-color: #B88E2F;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                img {
+                    height: 12px;
+                    width: 18px;
+                }
+            }
+        }
+
+        .sub-images {
+            display: flex;
+            overflow: hidden;
+            gap: 1rem;
+
+
+            img {
+                width: 372px;
+                height: 486px;
                 object-fit: cover;
             }
         }
