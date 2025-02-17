@@ -10,13 +10,13 @@
 
 .footer-content {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   padding: 2rem 10rem;
   gap: 2rem;
 }
 
 .footer-address {
-  grid-column: 1 / span 2;
+  /* grid-column: 1 / span 2; */
   h1 {
     font-family: "Montserrat", sans-serif;
     font-size: 3.5rem;
