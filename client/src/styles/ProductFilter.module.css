@@ -149,6 +149,20 @@
 }
 
 @media (max-width: 500px) {
+  .product-filter-container div:nth-child(3) > div:nth-child(2) {
+    gap: 1rem;
+  }
+  /* .product-filter-container div:nth-child(3) > div:nth-child(2) > label {
+    font-size: 1.2rem;
+  } */
+
+  .product-filter-container
+    div:nth-child(3)
+    > div:nth-child(2)
+    > select:nth-child(4) {
+    width: 80px;
+  }
+
   .product-filter-container div:nth-child(3) > div:nth-child(1) {
     display: none;
   }
