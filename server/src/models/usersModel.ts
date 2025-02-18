@@ -1,6 +1,9 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
+import { UserType }  from "../types/index";
 
-const usersSchema = new mongoose.Schema({
+
+
+const usersSchema = new mongoose.Schema<UserType>({
     name: {
         type: String,
         required: true,
@@ -18,9 +21,7 @@ const usersSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        required: true,
-        default: "basic",
-        enum: ["customer", "admin"],
+        default: "basic"
     },
     created_at:{
         type: Date,

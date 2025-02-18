@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
+
 
 const reviewsSchema = new mongoose.Schema({
     user_id: {
@@ -25,3 +26,5 @@ const reviewsSchema = new mongoose.Schema({
         default: Date.now,
     }
 })
+
+exports.Reviews = mongoose.model("Reviews", reviewsSchema);

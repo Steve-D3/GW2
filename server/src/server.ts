@@ -4,6 +4,9 @@ import cors from "cors";
 import express from "express";
 import { notFound } from "./controllers/notFoundController";
 import testRoutes from "./routes/exampleRoutes";
+import userRoutes from "./routes/users.routes"
+import productRoutes from "./routes/product.routes"
+
 import { helloMiddleware } from "./middleware/exampleMiddleware";
 import mongoose from "mongoose";
 
@@ -16,7 +19,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api", helloMiddleware, testRoutes);
+app.use("/api", helloMiddleware, testRoutes, userRoutes, productRoutes);
 app.all("*", notFound);
 
 // Database connection
