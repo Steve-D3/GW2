@@ -13,6 +13,7 @@ const ProductGrid = () => {
 
   return (
     <>
+      <h1></h1>
       <section className={styles["product-contanier"]}>
         <div className={styles["product-grid"]}>
           {selectedProducts.map((product) => (
