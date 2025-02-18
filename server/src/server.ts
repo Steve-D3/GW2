@@ -2,11 +2,13 @@
 import "dotenv/config";
 import cors from "cors";
 import express from "express";
-import { notFound } from "./controllers/notFoundController";
-import testRoutes from "./routes/exampleRoutes";
+import { notFound } from "./controllers/notFound.controller";
+
+// Routes
 import userRoutes from "./routes/users.routes"
 import productRoutes from "./routes/product.routes"
 
+// Middleware
 import { helloMiddleware } from "./middleware/exampleMiddleware";
 import mongoose from "mongoose";
 
