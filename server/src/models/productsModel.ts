@@ -15,21 +15,32 @@ const productsSchema = new mongoose.Schema<ProductType>({
     price: {
         type: Number,
         required: true,
+        min: 0,
     },
     stock: {
         type: Number,
         required: true,
+        min: 0,
     },
     category_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Categories",
         required: true,
     },
-    image_url: {
-        type: [String],
-        required: true,
-        trim: true,
-    },
+    image_url: [{
+        id: {
+            type: Number,
+            required: true,
+        },
+        url: {
+            type: String,
+            required: true,
+        },
+        description: {
+            type: String,
+            required: false,
+        }
+    }],
     created_at: {
         type: Date,
         default: Date.now,
