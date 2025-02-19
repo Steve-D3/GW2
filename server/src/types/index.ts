@@ -16,7 +16,10 @@ export interface ProductType {
     price: number;
     stock: number;
     category_id: mongoose.Schema.Types.ObjectId;
-    image_url: string;
+    image_url: {
+        url: string;
+        description?: string;
+    }[];
     created_at: Date;
 }
 

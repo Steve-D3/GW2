@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import { ProductType } from "../types";
 
-
 const productsSchema = new mongoose.Schema<ProductType>({
     name: {
         type: String,
@@ -21,20 +20,20 @@ const productsSchema = new mongoose.Schema<ProductType>({
         type: Number,
         required: true,
     },
-    category_id:{
+    category_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Categories",
         required: true,
     },
     image_url: {
-        type: String,
+        type: [String],
         required: true,
         trim: true,
     },
-    created_at:{
+    created_at: {
         type: Date,
         default: Date.now,
     }
-})
+});
 
 export default mongoose.model("Products", productsSchema);
