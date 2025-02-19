@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
+import { ReviewType } from "../types";
 
 
-const reviewsSchema = new mongoose.Schema({
+const reviewsSchema = new mongoose.Schema<ReviewType>({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Users",
@@ -12,7 +13,7 @@ const reviewsSchema = new mongoose.Schema({
         ref: "Products",
         required: true,
     },
-    review: {
+    comment: {
         type: String,
         required: true,
         trim: true,

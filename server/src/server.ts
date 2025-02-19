@@ -21,7 +21,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api", helloMiddleware, testRoutes, userRoutes, productRoutes);
+app.use("/api", helloMiddleware, userRoutes, productRoutes);
 app.all("*", notFound);
 
 // Database connection
