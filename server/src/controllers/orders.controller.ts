@@ -128,8 +128,6 @@ export const updateOrder = async (req: Request, res: Response) => {
     }
 }
 
-
-
 // DELETE
 
 export const deleteOrder = async (req: Request, res: Response) => {
