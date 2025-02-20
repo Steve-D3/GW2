@@ -7,6 +7,10 @@ import { notFound } from "./controllers/notFound.controller";
 // Routes
 import userRoutes from "./routes/users.routes"
 import productRoutes from "./routes/product.routes"
+import orderRoutes from "./routes/orders.routes"
+import categoryRoutes from "./routes/categories.routes"
+import reviewRoutes from "./routes/reviews.routes"
+import wishlistRoutes from "./routes/wishlist.routes"
 
 // Middleware
 import { helloMiddleware } from "./middleware/exampleMiddleware";
@@ -21,7 +25,14 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api", helloMiddleware, userRoutes, productRoutes);
+app.use("/api", helloMiddleware, 
+  userRoutes, 
+  productRoutes,
+  orderRoutes,
+  categoryRoutes,
+  reviewRoutes,
+  wishlistRoutes
+);
 app.all("*", notFound);
 
 // Database connection
