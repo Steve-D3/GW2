@@ -2,8 +2,13 @@
 import "dotenv/config";
 import cors from "cors";
 import express from "express";
-import { notFound } from "./controllers/notFoundController";
-import testRoutes from "./routes/exampleRoutes";
+import { notFound } from "./controllers/notFound.controller";
+
+// Routes
+import userRoutes from "./routes/users.routes"
+import productRoutes from "./routes/product.routes"
+
+// Middleware
 import { helloMiddleware } from "./middleware/exampleMiddleware";
 import mongoose from "mongoose";
 
@@ -16,7 +21,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api", helloMiddleware, testRoutes);
+app.use("/api", helloMiddleware, userRoutes, productRoutes);
 app.all("*", notFound);
 
 // Database connection
