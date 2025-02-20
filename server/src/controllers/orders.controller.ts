@@ -8,7 +8,8 @@ export const createOrder = async (req: Request, res: Response) => {
     try {
         const { user_id, products, total_price } = req.body;
         if (!user_id || !products || !total_price) {
-            return res.status(400).json({ message: "Missing fields" });
+            res.status(400).json({ message: "Missing fields" });
+            return;
         }
         const newOrder = new ordersModel({ user_id, products, total_price });
         await newOrder.save();
@@ -26,7 +27,8 @@ export const addProductToOrder = async (req: Request, res: Response) => {
 
         const order = await ordersModel.findById(id);
         if (!order) {
-            return res.status(404).json({ message: "Order not found" });
+            res.status(404).json({ message: "Order not found" });
+            return;
         }
 
         const newProduct = { product_id, quantity };
@@ -61,7 +63,8 @@ export const getOrder = async (req: Request, res: Response) => {
         const { id } = req.params;
         const order = await ordersModel.findById(id);
         if (!order) {
-            return res.status(404).json({ message: "Order not found" });
+            res.status(404).json({ message: "Order not found" });
+            return;
         }
         res.status(200).json({ status: "success", data: order });
     } catch (error) {
@@ -75,7 +78,8 @@ export const getOrdersByUser = async (req: Request, res: Response) => {
         const { user_id } = req.params;
         const orders = await ordersModel.find({ user_id });
         if (!orders) {
-            return res.status(404).json({ message: "Orders not found" });
+            res.status(404).json({ message: "Orders not found" });
+            return;
         }
         res.status(200).json({ status: "success", data: orders });
     } catch (error) {
@@ -89,7 +93,8 @@ export const getOrdersByDate = async (req: Request, res: Response) => {
     try {
         const { startDate, endDate } = req.query;
         if (!startDate || !endDate) {
-            return res.status(400).json({ message: "Missing date range" });
+            res.status(400).json({ message: "Missing date range" });
+            return;
         }
 
         const orders = await ordersModel.find({
@@ -118,7 +123,8 @@ export const updateOrder = async (req: Request, res: Response) => {
             { new: true }
         )
         if (!itemToUpdate) {
-            return res.status(404).json({ message: "Order not found" });
+            res.status(404).json({ message: "Order not found" });
+            return;
         }
 
         res.status(200).json({ status: "success", data: itemToUpdate });
@@ -136,7 +142,8 @@ export const deleteOrder = async (req: Request, res: Response) => {
 
         // Validate input
         if (!id) {
-            return res.status(400).json({ message: "Missing order ID" });
+            res.status(400).json({ message: "Missing order ID" });
+            return;
         }
 
         // Find and delete the order
@@ -144,7 +151,8 @@ export const deleteOrder = async (req: Request, res: Response) => {
 
         // Check if the order was found
         if (!order) {
-            return res.status(404).json({ message: "Order not found" });
+            res.status(404).json({ message: "Order not found" });
+            return;
         }
 
         res.status(200).json({ status: "success", message: "Order deleted", data: order });
@@ -161,13 +169,15 @@ export const deleteProductFromOrder = async (req: Request, res: Response) => {
 
         // Validate input
         if (!id || !product_name) {
-            return res.status(400).json({ message: "Missing order ID or product name" });
+            res.status(400).json({ message: "Missing order ID or product name" });
+            return;
         }
 
         // Find the product by name
         const product = await productsModel.findOne({ name: product_name });
         if (!product) {
-            return res.status(404).json({ message: "Product not found" });
+            res.status(404).json({ message: "Product not found" });
+            return;
         }
 
         // Find the order and update it by removing the product
@@ -178,7 +188,8 @@ export const deleteProductFromOrder = async (req: Request, res: Response) => {
         ).populate("products");
 
         if (!order) {
-            return res.status(404).json({ message: "Order not found" });
+            res.status(404).json({ message: "Order not found" });
+            return;
         }
 
         res.status(200).json({ status: "success", data: order });
