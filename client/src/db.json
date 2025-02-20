@@ -1,88 +1,165 @@
-{
-  "categories": [
-    {
-      "category_name": "Hygiene",
-      "products": [
-        {
-          "id": 1,
-          "name": "Bamboo Toothbrush",
-          "description": "Eco-friendly toothbrush with bamboo handle.",
-          "price": 6.0,
-          "image_url": "https://images.unsplash.com/photo-1563635707334-5ce91b375ea6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          "stock_quantity": 200
-        },
-        {
-          "id": 2,
-          "name": "Eco Shampoo Bar",
-          "description": "Zero-waste shampoo bar made with organic ingredients.",
-          "price": 12.0,
-          "image_url": "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          "stock_quantity": 150
-        }
-      ]
-    },
-    {
-      "category_name": "Kitchen",
-      "products": [
-        {
-          "id": 3,
-          "name": "Stainless Straws",
-          "description": "Set of 6 reusable stainless steel straws with cleaning brush.",
-          "price": 8.0,
-          "image_url": "https://cdn11.bigcommerce.com/s-5vfc75n1yv/images/stencil/960w/products/1390/5431/302%20ssxr_n_8__62858.1709921301.jpg?c=1",
-          "stock_quantity": 100
-        },
-        {
-          "id": 4,
-          "name": "Bamboo Board",
-          "description": "Durable and eco-friendly bamboo cutting board.",
-          "price": 18.0,
-          "image_url": "https://www.kitchenstuffplus.com/media/catalog/product/7/4/74622_ksp-natura-cut-board-w-tray_220823125429665_7hmfs3f3pwrabpdk.jpg?width=1000&height=&canvas=1000,&optimize=high&fit=bounds",
-          "stock_quantity": 75
-        }
-      ]
-    },
-    {
-      "category_name": "Organic Food",
-      "products": [
-        {
-          "id": 5,
-          "name": "Organic Olive Oil",
-          "description": "Cold-pressed, organic olive oil for cooking and dressing.",
-          "price": 14.0,
-          "image_url": "https://filecache.mediaroom.com/mr5nra_sfa/177529/The_Fresh_Cap_Neolea_Press_Image.jpg",
-          "stock_quantity": 50
-        },
-        {
-          "id": 6,
-          "name": "Organic Dried Fruits",
-          "description": "A mix of organic dried fruits, perfect for snacking.",
-          "price": 10.0,
-          "image_url": "https://images.unsplash.com/photo-1541675955960-b9c87e17883d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          "stock_quantity": 80
-        }
-      ]
-    },
-    {
-      "category_name": "Fashion",
-      "products": [
-        {
-          "id": 7,
-          "name": "Eco Cotton T-Shirt",
-          "description": "Soft and comfortable T-shirt made from 100% organic cotton.",
-          "price": 18.0,
-          "image_url": "https://images.unsplash.com/photo-1620799139834-6b8f844fbe61?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          "stock_quantity": 150
-        },
-        {
-          "id": 8,
-          "name": "Recycled Jacket",
-          "description": "Water-resistant jacket made from recycled polyester fabric.",
-          "price": 45.0,
-          "image_url": "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          "stock_quantity": 80
-        }
-      ]
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "name": "Bamboo Toothbrush",
+    "description": "Eco-friendly toothbrush with bamboo handle.",
+    "price": 6.0,
+    "image_url": "https://images.unsplash.com/photo-1563635707334-5ce91b375ea6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "stock_quantity": 200,
+    "category": "Hygiene"
+  },
+  {
+    "id": 2,
+    "name": "Eco Shampoo Bar",
+    "description": "Zero-waste shampoo bar made with organic ingredients.",
+    "price": 12.0,
+    "image_url": "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "stock_quantity": 150,
+    "category": "Hygiene"
+  },
+  {
+    "id": 3,
+    "name": "Stainless Straws",
+    "description": "Set of 6 reusable stainless steel straws with cleaning brush.",
+    "price": 8.0,
+    "image_url": "https://cdn11.bigcommerce.com/s-5vfc75n1yv/images/stencil/960w/products/1390/5431/302%20ssxr_n_8__62858.1709921301.jpg?c=1",
+    "stock_quantity": 100,
+    "category": "Kitchen"
+  },
+  {
+    "id": 4,
+    "name": "Bamboo Board",
+    "description": "Durable and eco-friendly bamboo cutting board.",
+    "price": 18.0,
+    "image_url": "https://www.kitchenstuffplus.com/media/catalog/product/7/4/74622_ksp-natura-cut-board-w-tray_220823125429665_7hmfs3f3pwrabpdk.jpg?width=1000&height=&canvas=1000,&optimize=high&fit=bounds",
+    "stock_quantity": 75,
+    "category": "Kitchen"
+  },
+  {
+    "id": 5,
+    "name": "Organic Olive Oil",
+    "description": "Cold-pressed, organic olive oil for cooking and dressing.",
+    "price": 14.0,
+    "image_url": "https://filecache.mediaroom.com/mr5nra_sfa/177529/The_Fresh_Cap_Neolea_Press_Image.jpg",
+    "stock_quantity": 50,
+    "category": "Organic Food"
+  },
+  {
+    "id": 6,
+    "name": "Organic Dried Fruits",
+    "description": "A mix of organic dried fruits, perfect for snacking.",
+    "price": 10.0,
+    "image_url": "https://images.unsplash.com/photo-1541675955960-b9c87e17883d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "stock_quantity": 80,
+    "category": "Organic Food"
+  },
+  {
+    "id": 7,
+    "name": "Eco Cotton T-Shirt",
+    "description": "Soft and comfortable T-shirt made from 100% organic cotton.",
+    "price": 18.0,
+    "image_url": "https://images.unsplash.com/photo-1620799139834-6b8f844fbe61?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "stock_quantity": 150,
+    "category": "Fashion"
+  },
+  {
+    "id": 8,
+    "name": "Recycled Jacket",
+    "description": "Water-resistant jacket made from recycled polyester fabric.",
+    "price": 45.0,
+    "image_url": "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "stock_quantity": 80,
+    "category": "Fashion"
+  },
+  {
+    "id": 9,
+    "name": "Eco Coffee Cup",
+    "description": "Stainless steel coffee cup with lid, keeps drinks hot or cold.",
+    "price": 15.0,
+    "image_url": "https://images.unsplash.com/photo-1669824614885-abb2a862553a?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8RWNvJTIwQ29mZmVlJTIwQ3VwfGVufDB8fDB8fHww",
+    "stock_quantity": 120,
+    "category": "Kitchen"
+  },
+  {
+    "id": 10,
+    "name": "Eco Beeswax Wraps",
+    "description": "Reusable beeswax wraps for storing food sustainably.",
+    "price": 12.0,
+    "image_url": "https://i.etsystatic.com/19757639/r/il/f69bbd/6426583793/il_1140xN.6426583793_rofk.jpg",
+    "stock_quantity": 90,
+    "category": "Kitchen"
+  },
+  {
+    "id": 11,
+    "name": "Eco Cotton Tote",
+    "description": "Durable and eco-friendly tote bag made of organic cotton.",
+    "price": 10.0,
+    "image_url": "https://plus.unsplash.com/premium_photo-1681233752586-6d52f3e83427?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "stock_quantity": 200,
+    "category": "Fashion"
+  },
+  {
+    "id": 12,
+    "name": "Eco Hair Brush",
+    "description": "Gentle on hair and scalp, made from sustainable bamboo.",
+    "price": 9.0,
+    "image_url": "https://images.unsplash.com/photo-1633878353926-7a98d66aa6da?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "stock_quantity": 150,
+    "category": "Hygiene"
+  },
+  {
+    "id": 13,
+    "name": "Eco Phone Case",
+    "description": "Eco-friendly phone case made from compostable materials.",
+    "price": 20.0,
+    "image_url": "https://images.unsplash.com/photo-1623393884989-cb3663e431c5?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "stock_quantity": 75,
+    "category": "Fashion"
+  },
+
+  {
+    "id": 14,
+    "name": "Eco Soap Dish",
+    "description": "Sustainable and stylish soap dish made from bamboo.",
+    "price": 7.0,
+    "image_url": "https://mionartisansoap.com/cdn/shop/products/VIC_3950.jpg?v=1611973421&width=3000",
+    "stock_quantity": 180,
+    "category": "Hygiene"
+  },
+  {
+    "id": 15,
+    "name": "Eco Herbal Tea",
+    "description": "Loose leaf herbal tea blend, 100% organic and caffeine-free.",
+    "price": 11.0,
+    "image_url": "https://images.unsplash.com/photo-1596343621063-c7a7aaf37aa6?q=80&w=985&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "stock_quantity": 85,
+    "category": "Organic Food"
+  },
+  {
+    "id": 16,
+    "name": "Recycled Notebook",
+    "description": "Eco-friendly notebook made with 100% recycled paper.",
+    "price": 6.0,
+    "image_url": "https://images.unsplash.com/photo-1603188389888-7b80bd0a7e3e?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "stock_quantity": 160,
+    "category": "Fashion"
+  },
+  {
+    "id": 17,
+    "name": "Eco-Cotton Socks",
+    "description": "Comfortable and sustainable socks made from organic cotton.",
+    "price": 10.0,
+    "image_url": "https://images.unsplash.com/photo-1641399032315-39f5f79f436b?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "stock_quantity": 140,
+    "category": "Fashion"
+  },
+  {
+    "id": 18,
+    "name": "Reusable Bottle",
+    "description": "Stainless steel water bottle, BPA-free and eco-friendly.",
+    "price": 16.0,
+    "image_url": "https://images.unsplash.com/photo-1589365278144-c9e705f843ba?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "stock_quantity": 100,
+    "category": "Kitchen"
+  }
+]
