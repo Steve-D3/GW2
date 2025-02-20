@@ -1,4 +1,11 @@
-const ProductDetails = () => {
-  return <div>ProductDetails</div>;
+import ProductDetails from "../components/detail/ProductDetails";
+
+const ProductDetail = () => {
+  return (
+    <div className="">
+      <ProductDetails />
+    </div>
+  );
 };
-export default ProductDetails;
+
+export default ProductDetail;
