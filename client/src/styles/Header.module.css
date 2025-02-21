@@ -114,4 +114,15 @@ header {
     align-items: center;
     padding-top: 0.5rem;
   }
+
+  header > a > .header-logo > div {
+    width: 4rem;
+    height: 4rem;
+  }
+  header > a > .header-logo > h3 {
+    font-size: 3rem;
+  }
+  header > a > .header-logo {
+    gap: 0.5rem;
+  }
 }
