@@ -7,7 +7,8 @@ export const createCategory = async (req: Request, res: Response) => {
     try {
         const { name, description } = req.body;
         if (!name || !description) {
-            return res.status(400).json({ message: "Missing fields" });
+            res.status(400).json({ message: "Missing fields" });
+            return
         }
         const newCategory = new categoriesModel({ name, description });
         await newCategory.save();
@@ -31,9 +32,11 @@ export const getCategories = async (req: Request, res: Response) => {
 
 export const getCategory = async (req: Request, res: Response) => {
     try {
-        const category = await categoriesModel.findById(req.params.id);
+        const { id } = req.params;
+        const category = await categoriesModel.findById(id);
         if (!category) {
-            return res.status(404).json({ message: "Category not found" });
+            res.status(404).json({ message: "Category not found" });
+            return;
         }
         res.status(200).json(category);
     } catch (error) {
@@ -49,7 +52,8 @@ export const updateCategory = async (req: Request, res: Response) => {
         const { description } = req.body;
         const category = await categoriesModel.findOne({ name: name });
         if (!category) {
-            return res.status(404).json({ message: "Category not found" });
+            res.status(404).json({ message: "Category not found" });
+            return;
         }
 
         await categoriesModel.findByIdAndUpdate(
@@ -72,7 +76,8 @@ export const deleteCategory = async (req: Request, res: Response) => {
         const { name } = req.params;
         const category = await categoriesModel.findOne({ name: name });
         if (!category) {
-            return res.status(404).json({ message: "Category not found" });
+            res.status(404).json({ message: "Category not found" });
+            return;
         }
 
         const toDelete = await categoriesModel.findByIdAndDelete(category._id);        

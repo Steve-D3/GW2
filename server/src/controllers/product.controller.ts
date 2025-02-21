@@ -10,15 +10,15 @@ export const createProduct = async (req: Request, res: Response) => {
     try {
         const { name, description, price, stock, category_id, image_url, created_at } = req.body;
         if (!name || !description || !price || !stock || !category_id || !image_url) {
-            return res.status(400).json({message: "Missing fields"});
+            res?.status(400).json({ message: "Missing fields" });
+            return;
         }
         const newUser = new productsModel({ name, description, price, stock, category_id, image_url, created_at });
-        res.status(201).json(newUser);
-        return newUser.save();
+        await newUser.save();
+        res?.status(201).json(newUser);
     } catch (error) {
         console.log(error);
-        res.status(500).json({message: "Internal server error"});
-        return error;
+        res?.status(500).json({ message: "Internal server error" });
     }
 };
 
@@ -29,7 +29,8 @@ export const addImage = async (req: Request, res: Response) => {
 
         const product = await productsModel.findById(id);
         if (!product) {
-            return res.status(404).json({message: "Product not found"});
+            res.status(404).json({ message: "Product not found" });
+            return;
         }
 
         const newImageId = product.image_url.length + 1;
@@ -41,10 +42,10 @@ export const addImage = async (req: Request, res: Response) => {
             { new: true }
         )
 
-        res.status(200).json({status: "success", data: updatedProduct});
+        res.status(200).json({ status: "success", data: updatedProduct });
     } catch (error) {
         console.log(error);
-        res.status(500).json({message: "Internal server error"});
+        res.status(500).json({ message: "Internal server error" });
     }
 }
 
@@ -53,10 +54,10 @@ export const getProducts = async (req: Request, res: Response) => {
     try {
         const products = await productsModel.find();
         res.status(200).json(products);
-        
+
     } catch (error) {
         console.log(error);
-        res.status(500).json({message: "Internal server error"});
+        res.status(500).json({ message: "Internal server error" });
     }
 };
 
@@ -66,12 +67,13 @@ export const getProductById = async (req: Request, res: Response) => {
         const { id } = req.params;
         const product = await productsModel.findById(id);
         if (!product) {
-            return res.status(404).json({message: "Product not found"});
+            res.status(404).json({ message: "Product not found" });
+            return;
         }
         res.status(200).json(product);
     } catch (error) {
         console.log(error);
-        res.status(500).json({message: "Internal server error"});
+        res.status(500).json({ message: "Internal server error" });
     }
 }
 
@@ -82,13 +84,15 @@ export const getProductsByCategory = async (req: Request, res: Response) => {
         // Find the category by name
         const category = await categoriesModel.findOne({ name: category_name });
         if (!category) {
-            return res.status(404).json({ message: "Category not found" });
+            res.status(404).json({ message: "Category not found" });
+            return;
         }
 
         // Find products by category ID
         const products = await productsModel.find({ category_id: category._id });
         if (!products.length) {
-            return res.status(404).json({ message: "No products found for this category" });
+            res.status(404).json({ message: "No products found for this category" });
+            return;
         }
 
         res.status(200).json(products);
@@ -105,7 +109,8 @@ export const getProductsByPriceRange = async (req: Request, res: Response) => {
 
         // Validate that both lower and upper bounds are provided
         if (!lower || !upper) {
-            return res.status(400).json({ message: "Missing price range parameters" });
+            res.status(400).json({ message: "Missing price range parameters" });
+            return;
         }
 
         // Find products within the specified price range
@@ -115,7 +120,8 @@ export const getProductsByPriceRange = async (req: Request, res: Response) => {
 
         // Check if any products were found
         if (!products.length) {
-            return res.status(404).json({ message: "No products found within the given price range" });
+            res.status(404).json({ message: "No products found within the given price range" });
+            return;
         }
 
         // Return the found products
@@ -132,12 +138,13 @@ export const getImages = async (req: Request, res: Response) => {
         const { id } = req.params;
         const product = await productsModel.findById(id);
         if (!product) {
-            return res.status(404).json({message: "Product not found"});
+            res.status(404).json({ message: "Product not found" });
+            return
         }
         res.status(200).json(product.image_url);
     } catch (error) {
         console.log(error);
-        res.status(500).json({message: "Internal server error"});
+        res.status(500).json({ message: "Internal server error" });
     }
 }
 
@@ -147,18 +154,19 @@ export const updateProduct = async (req: Request, res: Response) => {
         const { id } = req.params;
         const itemToUpdate = await productsModel.findByIdAndUpdate(
             id,
-            {...req.body},
+            { ...req.body },
             { new: true }
         )
 
         if (!itemToUpdate) {
-            return res.status(404).json({message: "Product not found"});
+            res.status(404).json({ message: "Product not found" });
+            return;
         }
 
-        res.status(200).json({status: "success", data: itemToUpdate});
+        res.status(200).json({ status: "success", data: itemToUpdate });
     } catch (error) {
         console.log(error);
-        res.status(500).json({message: "Internal server error"});
+        res.status(500).json({ message: "Internal server error" });
     }
 }
 
@@ -168,12 +176,13 @@ export const deleteProduct = async (req: Request, res: Response) => {
         const { id } = req.params;
         const deletedProduct = await productsModel.findByIdAndDelete({ _id: id });
         if (!deletedProduct) {
-            return res.status(404).json({message: "Product not found"});
+            res.status(404).json({ message: "Product not found" });
+            return;
         }
-        res.status(200).json({message: "Product deleted"});
+        res.status(200).json({ message: "Product deleted" });
     } catch (error) {
         console.log(error);
-        res.status(500).json({message: "Internal server error"});
+        res.status(500).json({ message: "Internal server error" });
     }
 };
 
@@ -182,7 +191,8 @@ export const deleteImage = async (req: Request, res: Response) => {
         const { id, image_id } = req.params;
         const product = await productsModel.findById(id);
         if (!product) {
-            return res.status(404).json({message: "Product not found"});
+            res.status(404).json({ message: "Product not found" });
+            return;
         }
 
         const updatedImages = product.image_url.filter((image) => image.id !== Number(image_id));
@@ -192,9 +202,9 @@ export const deleteImage = async (req: Request, res: Response) => {
             { new: true }
         )
 
-        res.status(200).json({status: "success", data: updatedProduct});
+        res.status(200).json({ status: "success", data: updatedProduct });
     } catch (error) {
         console.log(error);
-        res.status(500).json({message: "Internal server error"});
+        res.status(500).json({ message: "Internal server error" });
     }
 }

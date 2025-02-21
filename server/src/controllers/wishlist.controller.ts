@@ -7,11 +7,12 @@ export const createWishlist = async (req: Request, res: Response) => {
     try {
         const { user_id, products } = req.body;
         if (!user_id || !products) {
-            return res.status(400).json({ message: "Missing fields" });
+            res?.status(400).json({ message: "Missing fields" });
+            return;
         }
         const newWishlist = new wishlistModel({ user_id, products });
         await newWishlist.save();
-        res.status(201).json({ user_id, products });
+        res?.status(201).json({ user_id, products });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Internal server error" });
@@ -21,14 +22,16 @@ export const createWishlist = async (req: Request, res: Response) => {
 // READ
 export const getWishlist = async (req: Request, res: Response) => {
     try {
-        const wishlist = await wishlistModel.findById(req.params.id);
+        const  { id } = req.params;
+        const wishlist = await wishlistModel.findById(id);
         if (!wishlist) {
-            return res.status(404).json({ message: "Wishlist not found" });
+            res?.status(404).json({ message: "Wishlist not found" });
+            return;
         }
-        res.status(200).json(wishlist);
+        res?.status(200).json(wishlist);
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Internal server error" });
+        res?.status(500).json({ message: "Internal server error" });
     }
 };
 
@@ -40,7 +43,8 @@ export const addOrUpdateProductInWishlist = async (req: Request, res: Response) 
 
         // Validate input
         if (!user_id || !product_id || !quantity) {
-            return res.status(400).json({ message: "Missing fields" });
+            res.status(400).json({ message: "Missing fields" });
+            return;
         }
 
         // Check if the product already exists in the wishlist
@@ -80,7 +84,8 @@ export const deleteProductFromWishlist = async (req: Request, res: Response) => 
         // Check if the wishlist exists
         const wishlist = await wishlistModel.findOne({ user_id });
         if (!wishlist) {
-            return res.status(404).json({ message: "Wishlist not found" });
+            res?.status(404).json({ message: "Wishlist not found" })
+            return;
         }
 
         const updateWishlist = await wishlistModel.findOneAndUpdate(
@@ -102,7 +107,8 @@ export const deleteWishlist = async (req: Request, res: Response) => {
         // Check if the wishlist exists
         const wishlist = await wishlistModel.findOne({ user_id });
         if (!wishlist) {
-            return res.status(404).json({ message: "Wishlist not found" });
+            res?.status(404).json({ message: "Wishlist not found" })
+            return;
         }
 
         // Delete the wishlist

@@ -9,7 +9,8 @@ export const createUser = async (req: Request, res: Response) => {
     try {
         const { name, email, password, role, created_at } = req.body;
         if (!name || !email || !password) {
-            return res.status(400).json({ message: "Missing fields" });
+            res?.status(400).json({ message: "Missing fields" });
+            return;
         }
         const newUser = new usersModel({ name, email, password, role, created_at });
         await newUser.save();
@@ -38,9 +39,10 @@ export const getUserById = async (req: Request, res: Response) => {
         const { id } = req.params;
         const user = await usersModel.findById(id);
         if (!user) {
-            return res.status(404).json({ message: "User not found" });
+            res.status(404).json({ message: "User not found" });
+            return;
         }
-        res.status(200).json(user);
+        res.status(200).json({ status: "success", data: user });
 
     } catch (error) {
         console.log(error);
@@ -89,13 +91,15 @@ export const deleteUser = async (req: Request, res: Response) => {
 
         // Validate input
         if (!id) {
-            return res.status(400).json({ message: "Missing user ID" });
+            res.status(400).json({ message: "Missing user ID" });
+            return;
         }
 
         // Check if the user exists
         const user = await usersModel.findById(id);
         if (!user) {
-            return res.status(404).json({ message: "User not found" });
+            res.status(404).json({ message: "User not found" });
+            return;
         }
 
         // Delete the user
