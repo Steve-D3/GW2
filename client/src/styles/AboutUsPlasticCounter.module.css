@@ -1,0 +1,32 @@
+.plastic-counter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+  font-size: 4rem;
+
+  color: #b82f2f;
+  p {
+    &:nth-child(1) {
+      font-size: 4rem;
+
+      span {
+        color: #b82f2f;
+        font-weight: 600;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.329);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .plastic-counter {
+    font-size: 2rem;
+    p {
+      &:nth-child(1) {
+        font-size: 2rem;
+      }
+    }
+  }
+}
