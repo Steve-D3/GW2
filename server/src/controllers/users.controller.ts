@@ -1,5 +1,6 @@
 import { Response, Request } from "express";
 import usersModel from "../models/usersModel"
+import { stat } from "fs";
 
 
 
@@ -14,7 +15,7 @@ export const createUser = async (req: Request, res: Response) => {
         }
         const newUser = new usersModel({ name, email, password, role, created_at });
         await newUser.save();
-        res.status(201).json(newUser);
+        res.status(201).json({status: "success", data: newUser});
 
     } catch (error) {
         console.log(error);

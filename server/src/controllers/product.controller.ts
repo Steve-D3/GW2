@@ -8,17 +8,32 @@ import categoriesModel from "../models/categoriesModel";
 // CREATE
 export const createProduct = async (req: Request, res: Response) => {
     try {
-        const { name, description, price, stock, category_id, image_url, created_at } = req.body;
-        if (!name || !description || !price || !stock || !category_id || !image_url) {
-            res?.status(400).json({ message: "Missing fields" });
+        const { name, description, price, stock, category_name, image_url, created_at } = req.body;
+        if (!name || !description || !price || !stock || !category_name || !image_url) {
+            res.status(400).json({ message: "Missing fields" });
             return;
         }
-        const newUser = new productsModel({ name, description, price, stock, category_id, image_url, created_at });
-        await newUser.save();
-        res?.status(201).json(newUser);
+
+        const category = await categoriesModel.findOne({ name: category_name });
+        if (!category) {
+            res.status(404).json({ message: "Category not found" });
+            return;
+        }
+
+        const newProduct = new productsModel({
+            name,
+            description,
+            price,
+            stock,
+            category: category, // Include full category information
+            image_url,
+            created_at
+        });
+        await newProduct.save();
+        res.status(201).json(newProduct);
     } catch (error) {
         console.log(error);
-        res?.status(500).json({ message: "Internal server error" });
+        res.status(500).json({ message: "Internal server error" });
     }
 };
 
