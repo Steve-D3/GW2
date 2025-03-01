@@ -23,13 +23,11 @@ const ProductBreadcrumb = () => {
 
   // Filter out the unwanted breadcrumb (the one at index 2)
   const filteredBreadcrumbs = breadcrumbs.filter((_, index) => index !== 2);
-
+  console.log(filteredBreadcrumbs);
   return (
     <div className={styles["breadcrumbs-productDetail"]}>
       {filteredBreadcrumbs.map(({ match, breadcrumb }, index) => {
-        const breadcrumbLink = match.params.slug
-          ? `/shop/${match.params.slug}`
-          : match.pathname;
+        const breadcrumbLink = match.pathname;
 
         return (
           <React.Fragment key={match.pathname}>
@@ -38,7 +36,7 @@ const ProductBreadcrumb = () => {
             ) : (
               <p>
                 <span>|</span>
-                {breadcrumb}
+                {match.params.slug?.replace(/%20/g, " ")}
               </p>
             )}
             {index < filteredBreadcrumbs.length - 1 && (

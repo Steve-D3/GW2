@@ -4,12 +4,13 @@ import Header from "./home/Header";
 
 type LayoutProps = {
   children: ReactNode;
+  handelLogin: () => void;
 };
 
-const layout = ({ children }: LayoutProps) => {
+const layout = ({ children, handelLogin }: LayoutProps) => {
   return (
     <>
-      <Header />
+      <Header handelLoginClick={handelLogin} />
       <main>{children}</main>
       <Footer />
     </>
