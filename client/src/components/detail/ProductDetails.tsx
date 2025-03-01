@@ -20,12 +20,13 @@ const ProductDetails: React.FC = () => {
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("description"); // Tab state
 
+  console.log(id);
+
   useEffect(() => {
     if (id) {
-      const foundProduct = db.categories
-        .flatMap((category) => category.products)
+      const foundProduct = db
+        .map((item) => item)
         .find((p) => p.id === Number(id));
-
       setProduct(foundProduct || null);
     }
   }, [id]);
