@@ -1,7 +1,7 @@
 import { PiShareNetworkFill } from "react-icons/pi";
 import { FaRegHeart } from "react-icons/fa";
 import styles from "../styles/ProductCard.module.css";
-
+import { Link } from "react-router-dom";
 type ProductCardProps = {
   product: {
     id: number;
@@ -14,38 +14,40 @@ type ProductCardProps = {
 };
 const ProductCard = ({ product }: ProductCardProps) => {
   return (
-    <article key={product.id} className={styles["product-card"]}>
-      <div>
-        <img src={product.image_url} alt={product.name} />
-      </div>
-      <div>
-        <h3>{product.name}</h3>
-        <p>{product.description}</p>
-        <p>${product.price}</p>
-      </div>
-      <div className={styles["product-hover"]}>
-        <button>Add to cart</button>
+    <Link to={`/shop/${product.id}/${product.name}`}>
+      <article key={product.id} className={styles["product-card"]}>
         <div>
-          <a href="#">
-            <i>
-              {" "}
-              <PiShareNetworkFill />
-            </i>
-            Share{" "}
-          </a>
-          <a href="#">
-            {" "}
-            <i>⇄</i> Compare{" "}
-          </a>
-          <a href="#">
-            <i>
-              <FaRegHeart />
-            </i>
-            Like
-          </a>
+          <img src={product.image_url} alt={product.name} />
         </div>
-      </div>
-    </article>
+        <div>
+          <h3>{product.name}</h3>
+          <p>{product.description}</p>
+          <p>${product.price}</p>
+        </div>
+        <div className={styles["product-hover"]}>
+          <button>Add to cart</button>
+          <div>
+            <a href="#">
+              <i>
+                {" "}
+                <PiShareNetworkFill />
+              </i>
+              Share{" "}
+            </a>
+            <a href="#">
+              {" "}
+              <i>⇄</i> Compare{" "}
+            </a>
+            <a href="#">
+              <i>
+                <FaRegHeart />
+              </i>
+              Like
+            </a>
+          </div>
+        </div>
+      </article>
+    </Link>
   );
 };
 export default ProductCard;
