@@ -63,6 +63,15 @@ header {
           color: #b88e2f;
         }
       }
+      button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        transition: 300ms;
+        &:hover {
+          color: #b88e2f;
+        }
+      }
     }
   }
 }

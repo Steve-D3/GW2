@@ -6,7 +6,10 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { PiMagnifyingGlassBold } from "react-icons/pi";
 import { GiHamburgerMenu } from "react-icons/gi";
 
-const Header = () => {
+const Header = ({ handelLoginClick }: { handelLoginClick: () => void }) => {
+  const handelLogin = () => {
+    handelLoginClick();
+  };
   return (
     <header>
       <NavLink to="/">
@@ -36,9 +39,10 @@ const Header = () => {
       <nav className={styles["header-icons"]}>
         <ul>
           <li>
-            <NavLink to="/">
+            <button onClick={handelLogin}>
+              {" "}
               <FaRegUser />
-            </NavLink>
+            </button>
           </li>
           <li>
             <NavLink to="/">
