@@ -1,12 +1,14 @@
 import styles from "../styles/Login.module.css";
+import { useSelector, useDispatch } from "react-redux";
+import { selectIsShowLogin, hideLogin } from "../store/signinSlice";
 
-const LoginForm = ({
-  isShowLogin,
-  onClose,
-}: {
-  isShowLogin: boolean;
-  onClose: () => void;
-}) => {
+// import isShowLogin from signinSlice and onclose from hideLogin
+const LoginForm = () => {
+  const isShowLogin = useSelector(selectIsShowLogin);
+  const dispatch = useDispatch();
+  const onClose = () => {
+    dispatch(hideLogin());
+  };
   return (
     <div className={styles[`${isShowLogin ? "show-login" : "hide-login"}`]}>
       <div className={isShowLogin ? "show-login" : "hide-login"}>

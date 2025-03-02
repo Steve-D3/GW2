@@ -5,11 +5,21 @@ import { FaRegUser } from "react-icons/fa6";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { PiMagnifyingGlassBold } from "react-icons/pi";
 import { GiHamburgerMenu } from "react-icons/gi";
+//import signinslice
+import { useDispatch } from "react-redux";
+import { showLogin } from "../../store/signinSlice";
 
-const Header = ({ handelLoginClick }: { handelLoginClick: () => void }) => {
+// const Header = ({ handelLoginClick }: { handelLoginClick: () => void }) => {
+//   const handelLogin = () => {
+//     handelLoginClick();
+//   };
+
+const Header = () => {
+  const dispatch = useDispatch();
   const handelLogin = () => {
-    handelLoginClick();
+    dispatch(showLogin());
   };
+
   return (
     <header>
       <NavLink to="/">
@@ -39,6 +49,7 @@ const Header = ({ handelLoginClick }: { handelLoginClick: () => void }) => {
       <nav className={styles["header-icons"]}>
         <ul>
           <li>
+            {/* onclick show login from slice */}
             <button onClick={handelLogin}>
               {" "}
               <FaRegUser />
