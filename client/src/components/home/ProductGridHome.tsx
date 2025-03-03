@@ -12,7 +12,7 @@ const ProductGridHome = () => {
       <h2>Our Products</h2>
       <div className={styles["product-grid"]}>
         {selectedProducts?.map((product) => (
-          <ProductCard key={product.id} product={product} viewType="grid" />
+          <ProductCard key={product._id} product={product} viewType="grid" />
         ))}
       </div>
       <a href="/shop">Show More </a>

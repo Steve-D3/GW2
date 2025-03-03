@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import { useGetProductsQuery } from "../store/productApiSlice";
 
 type Product = {
-  id: number;
+  _id: string;
   name: string;
   description: string;
   price: number;
@@ -26,6 +26,7 @@ const ProductGrid = () => {
   const viewType = useSelector(selectViewType);
   const [currentPage, setCurrentPage] = useState(1);
   const { data: productsData } = useGetProductsQuery();
+  console.log(productsData);
   if (!productsData) return null;
   const sortedProducts = [...productsData].sort((a, b) => {
     if (sortBy === "name") {
@@ -51,7 +52,7 @@ const ProductGrid = () => {
         >
           {selectedProducts.map((product: Product) => (
             <ProductCard
-              key={product.id}
+              key={product._id}
               product={product}
               viewType={viewType}
             />

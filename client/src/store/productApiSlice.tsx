@@ -2,7 +2,7 @@
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 type Product = {
-  id: number;
+  _id: string;
   name: string;
   description: string;
   price: number;
@@ -20,6 +20,10 @@ const productApi = createApi({
       query: () => "/products",
       providesTags: ["Product"],
     }),
+    getProductById: builder.query<Product, string>({
+      query: (id) => `/products/${id}`,
+      providesTags: ["Product"],
+    }),
   }),
 });
 
@@ -27,5 +31,6 @@ const productApi = createApi({
 
 export default productApi;
 export const { useGetProductsQuery } = productApi;
+export const { useGetProductByIdQuery } = productApi;
 
 export const { getProducts } = productApi.endpoints;

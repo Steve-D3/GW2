@@ -4,7 +4,7 @@ import styles from "../styles/ProductCard.module.css";
 import { Link } from "react-router-dom";
 type ProductCardProps = {
   product: {
-    id: number;
+    _id: string;
     name: string;
     description: string;
     price: number;
@@ -15,8 +15,8 @@ type ProductCardProps = {
 };
 const ProductCard = ({ product, viewType }: ProductCardProps) => {
   return (
-    <Link to={`/shop/${product.id}/${product.name}`}>
-      <article key={product.id} className={styles[`product-card-${viewType}`]}>
+    <Link to={`/shop/${product._id}/${product.name}`}>
+      <article key={product._id} className={styles[`product-card-${viewType}`]}>
         <div>
           <img src={product.image_url[0]?.url} alt={product.name} />
         </div>
