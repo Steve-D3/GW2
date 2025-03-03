@@ -5,14 +5,14 @@ import wishlistModel from "../models/wishlistModel";
 // CREATE
 export const createWishlist = async (req: Request, res: Response) => {
     try {
-        const { user_id, products } = req.body;
-        if (!user_id || !products) {
+        const { user_id, products , total_price} = req.body;
+        if (!user_id || !products || !total_price) {
             res?.status(400).json({ message: "Missing fields" });
             return;
         }
-        const newWishlist = new wishlistModel({ user_id, products });
+        const newWishlist = new wishlistModel({ user_id, products , total_price});
         await newWishlist.save();
-        res?.status(201).json({ user_id, products });
+        res?.status(201).json({ user_id, products, total_price });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Internal server error" });
