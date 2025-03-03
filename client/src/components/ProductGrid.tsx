@@ -2,7 +2,11 @@
 import styles from "../styles/ProductGrid.module.css";
 import ProductCard from "./ProductCard";
 import { useState } from "react";
-import { selectLimit, selectSortBy } from "../store/filterSlice";
+import {
+  selectLimit,
+  selectSortBy,
+  selectViewType,
+} from "../store/filterSlice";
 import { useSelector } from "react-redux";
 
 //get the product from the server http://localhost:3001/products
@@ -19,6 +23,7 @@ type Product = {
 const ProductGrid = () => {
   const limit = useSelector(selectLimit);
   const sortBy = useSelector(selectSortBy);
+  const viewType = useSelector(selectViewType);
   const [currentPage, setCurrentPage] = useState(1);
   const { data: productsData } = useGetProductsQuery();
   if (!productsData) return null;
@@ -37,9 +42,19 @@ const ProductGrid = () => {
   return (
     <>
       <section className={styles["product-contanier"]}>
-        <div className={styles["product-grid"]}>
+        <div
+          className={
+            viewType === "grid"
+              ? styles["product-grid"]
+              : styles["product-list"]
+          }
+        >
           {selectedProducts.map((product: Product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              viewType={viewType}
+            />
           ))}
         </div>
         <div className={styles["pagination"]}>

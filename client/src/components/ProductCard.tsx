@@ -11,11 +11,12 @@ type ProductCardProps = {
     image_url: string;
     stock_quantity: number;
   };
+  viewType?: string;
 };
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductCard = ({ product, viewType }: ProductCardProps) => {
   return (
     <Link to={`/shop/${product.id}/${product.name}`}>
-      <article key={product.id} className={styles["product-card"]}>
+      <article key={product.id} className={styles[`product-card-${viewType}`]}>
         <div>
           <img src={product.image_url} alt={product.name} />
         </div>

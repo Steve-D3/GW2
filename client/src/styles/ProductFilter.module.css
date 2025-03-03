@@ -74,10 +74,12 @@
       i {
         font-size: 2rem;
         font-weight: 400;
+        cursor: pointer;
         &:nth-child(4) {
           color: #9f9f9f;
           font-size: 3.7rem;
           font-weight: 200;
+          cursor: default;
         }
       }
       > p {

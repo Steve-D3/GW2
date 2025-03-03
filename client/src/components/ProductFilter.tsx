@@ -9,11 +9,14 @@ import {
   selectLimit,
   setSortBy,
   selectSortBy,
+  setViewType,
+  selectViewType,
 } from "../store/filterSlice";
 import { useGetProductsQuery } from "../store/productApiSlice";
 const ProductFilter = () => {
   const limit = useSelector(selectLimit);
   const sortBy = useSelector(selectSortBy);
+  const viewType = useSelector(selectViewType);
   const dispatch = useDispatch();
 
   //to know total products from the server
@@ -22,6 +25,9 @@ const ProductFilter = () => {
   const totalProducts = productsData.length;
   const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(setLimit(Number(e.target.value)));
+  };
+  const handleViewChange = (viewType: string) => {
+    dispatch(setViewType(viewType));
   };
   return (
     <>
@@ -42,10 +48,16 @@ const ProductFilter = () => {
               <p>Filter</p>
             </div>
 
-            <i>
+            <i
+              className={viewType === "grid" ? styles["active"] : ""}
+              onClick={() => handleViewChange("grid")}
+            >
               <HiViewGrid />
             </i>
-            <i>
+            <i
+              className={viewType === "list" ? styles["active"] : ""}
+              onClick={() => handleViewChange("list")}
+            >
               <BsViewList />
             </i>
             <i>|</i>
