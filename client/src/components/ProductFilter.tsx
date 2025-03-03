@@ -3,8 +3,16 @@ import Breadcrumb from "./Breadcrumb";
 import { BsViewList } from "react-icons/bs";
 import { HiViewGrid } from "react-icons/hi";
 import { GiSettingsKnobs } from "react-icons/gi";
+import { useDispatch, useSelector } from "react-redux";
+import { setLimit, selectLimit } from "../store/filterSlice";
 
 const ProductFilter = () => {
+  const limit = useSelector(selectLimit);
+  const dispatch = useDispatch();
+
+  const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(setLimit(Number(e.target.value)));
+  };
   return (
     <>
       <section className={styles["product-filter-container"]}>
@@ -35,10 +43,16 @@ const ProductFilter = () => {
           </div>
           <div>
             <label htmlFor="filter-by-product-numbers">Show</label>
-            <select name="showPerPage" id="showPerPage">
-              <option value="8">8</option>
-              <option value="16">16</option>
-              <option value="24">24</option>
+            {/* add filter by product numbers from filterstate limit  */}
+            <select
+              name="showPerPage"
+              id="showPerPage"
+              onChange={handleLimitChange}
+              value={limit}
+            >
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
             </select>
             <label htmlFor="sort-by">Sort by</label>
             <select name="sort-by" id="sort-by">

@@ -2,6 +2,8 @@
 import styles from "../styles/ProductGrid.module.css";
 import ProductCard from "./ProductCard";
 import { useState } from "react";
+import { selectLimit } from "../store/filterSlice";
+import { useSelector } from "react-redux";
 
 //get the product from the server http://localhost:3001/products
 import { useGetProductsQuery } from "../store/productApiSlice";
@@ -15,13 +17,14 @@ type Product = {
   stock_quantity: number;
 };
 const ProductGrid = () => {
+  const limit = useSelector(selectLimit);
   const [currentPage, setCurrentPage] = useState(1);
   const { data: productsData } = useGetProductsQuery();
   if (!productsData) return null;
 
-  const totalPages = Math.ceil(productsData.length / 8);
-  const startIndex = (currentPage - 1) * 8;
-  const selectedProducts = productsData.slice(startIndex, startIndex + 8);
+  const totalPages = Math.ceil(productsData.length / limit);
+  const startIndex = (currentPage - 1) * limit;
+  const selectedProducts = productsData.slice(startIndex, startIndex + limit);
 
   return (
     <>
