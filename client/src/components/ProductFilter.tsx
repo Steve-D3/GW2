@@ -31,7 +31,7 @@ const ProductFilter = () => {
   };
   return (
     <>
-      <section className={styles["product-filter-container"]}>
+      <section className={styles["shop-header"]}>
         <div>
           <img src="/shopPanner.jpg" alt="" />
         </div>
@@ -39,6 +39,8 @@ const ProductFilter = () => {
           <h1>Shop</h1>
           <Breadcrumb />
         </div>
+      </section>
+      <section className={styles["product-filter"]}>
         <div>
           <div>
             <div>
