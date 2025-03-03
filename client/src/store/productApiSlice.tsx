@@ -23,6 +23,9 @@ const productApi = createApi({
   }),
 });
 
+//export  the amount of the product
+
 export default productApi;
 export const { useGetProductsQuery } = productApi;
+
 export const { getProducts } = productApi.endpoints;

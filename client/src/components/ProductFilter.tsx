@@ -5,11 +5,14 @@ import { HiViewGrid } from "react-icons/hi";
 import { GiSettingsKnobs } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
 import { setLimit, selectLimit } from "../store/filterSlice";
-
+import { useGetProductsQuery } from "../store/productApiSlice";
 const ProductFilter = () => {
   const limit = useSelector(selectLimit);
   const dispatch = useDispatch();
-
+  //to know total products from the server
+  const { data: productsData } = useGetProductsQuery();
+  if (!productsData) return null;
+  const totalProducts = productsData.length;
   const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(setLimit(Number(e.target.value)));
   };
@@ -39,7 +42,10 @@ const ProductFilter = () => {
               <BsViewList />
             </i>
             <i>|</i>
-            <p> Showing 1–12 of 15 results</p>
+            <p>
+              {" "}
+              Showing {limit} of {totalProducts} results
+            </p>
           </div>
           <div>
             <label htmlFor="filter-by-product-numbers">Show</label>
