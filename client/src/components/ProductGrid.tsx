@@ -39,7 +39,10 @@ const ProductGrid = () => {
           {/* <span> Showing 8 of {productsData.length} results</span> */}
 
           <button
-            onClick={() => setCurrentPage(currentPage - 1)}
+            onClick={() => {
+              setCurrentPage(currentPage - 1);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
             className={currentPage === 1 ? styles["hidden-btn"] : ""}
           >
             Prev
@@ -48,7 +51,10 @@ const ProductGrid = () => {
           {Array.from({ length: totalPages }, (_, index) => (
             <button
               key={index + 1}
-              onClick={() => setCurrentPage(index + 1)}
+              onClick={() => {
+                setCurrentPage(index + 1);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
               className={`${styles["pagination-number-btn"]} ${
                 index + 1 === currentPage ? styles["active"] : ""
               }`}
@@ -58,7 +64,10 @@ const ProductGrid = () => {
           ))}
           {/* if there are more pages, show next button if not,  hidden "Next" button*/}
           <button
-            onClick={() => setCurrentPage(currentPage + 1)}
+            onClick={() => {
+              setCurrentPage(currentPage + 1);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
             className={currentPage === totalPages ? styles["hidden-btn"] : ""}
           >
             Next
