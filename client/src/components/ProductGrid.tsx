@@ -2,7 +2,7 @@
 import styles from "../styles/ProductGrid.module.css";
 import ProductCard from "./ProductCard";
 import { useState } from "react";
-import { selectLimit } from "../store/filterSlice";
+import { selectLimit, selectSortBy } from "../store/filterSlice";
 import { useSelector } from "react-redux";
 
 //get the product from the server http://localhost:3001/products
@@ -18,13 +18,21 @@ type Product = {
 };
 const ProductGrid = () => {
   const limit = useSelector(selectLimit);
+  const sortBy = useSelector(selectSortBy);
   const [currentPage, setCurrentPage] = useState(1);
   const { data: productsData } = useGetProductsQuery();
   if (!productsData) return null;
-
-  const totalPages = Math.ceil(productsData.length / limit);
+  const sortedProducts = [...productsData].sort((a, b) => {
+    if (sortBy === "name") {
+      return a.name.localeCompare(b.name);
+    } else if (sortBy === "price") {
+      return a.price - b.price;
+    }
+    return 0;
+  });
+  const totalPages = Math.ceil(sortedProducts.length / limit);
   const startIndex = (currentPage - 1) * limit;
-  const selectedProducts = productsData.slice(startIndex, startIndex + limit);
+  const selectedProducts = sortedProducts.slice(startIndex, startIndex + limit);
 
   return (
     <>

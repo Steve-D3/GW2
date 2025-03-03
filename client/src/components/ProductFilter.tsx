@@ -4,11 +4,18 @@ import { BsViewList } from "react-icons/bs";
 import { HiViewGrid } from "react-icons/hi";
 import { GiSettingsKnobs } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
-import { setLimit, selectLimit } from "../store/filterSlice";
+import {
+  setLimit,
+  selectLimit,
+  setSortBy,
+  selectSortBy,
+} from "../store/filterSlice";
 import { useGetProductsQuery } from "../store/productApiSlice";
 const ProductFilter = () => {
   const limit = useSelector(selectLimit);
+  const sortBy = useSelector(selectSortBy);
   const dispatch = useDispatch();
+
   //to know total products from the server
   const { data: productsData } = useGetProductsQuery();
   if (!productsData) return null;
@@ -61,7 +68,10 @@ const ProductFilter = () => {
               <option value="15">15</option>
             </select>
             <label htmlFor="sort-by">Sort by</label>
-            <select name="sort-by" id="sort-by">
+            <select
+              value={sortBy}
+              onChange={(e) => dispatch(setSortBy(e.target.value))}
+            >
               <option value="name">Name</option>
               <option value="price">Price</option>
             </select>
