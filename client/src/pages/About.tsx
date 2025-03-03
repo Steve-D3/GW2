@@ -7,7 +7,7 @@ const About = () => {
     <>
       <section className={styles["about-us-container"]}>
         <div>
-          <img src="/public/wall-unsplash.jpg" alt="" />
+          <img src="/wall-unsplash.jpg" alt="" />
         </div>
         <div>
           <h1>About Us</h1>
