@@ -13,7 +13,7 @@ const productApi = createApi({
   tagTypes: ["Product"],
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3001",
+    baseUrl: "https://gw2-rfg0.onrender.com/api",
   }),
   endpoints: (builder) => ({
     getProducts: builder.query<Product[], void>({
