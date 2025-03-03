@@ -1,10 +1,22 @@
-import productsData from "../db.json";
+// import productsData from "../db.json";
 import styles from "../styles/ProductGrid.module.css";
 import ProductCard from "./ProductCard";
 import { useState } from "react";
 
+//get the product from the server http://localhost:3001/products
+import { useGetProductsQuery } from "../store/productApiSlice";
+
+type Product = {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  image_url: string;
+  stock_quantity: number;
+};
 const ProductGrid = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const { data: productsData } = useGetProductsQuery();
   if (!productsData) return null;
 
   const totalPages = Math.ceil(productsData.length / 8);
@@ -15,7 +27,7 @@ const ProductGrid = () => {
     <>
       <section className={styles["product-contanier"]}>
         <div className={styles["product-grid"]}>
-          {selectedProducts.map((product) => (
+          {selectedProducts.map((product: Product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
