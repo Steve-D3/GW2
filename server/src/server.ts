@@ -37,6 +37,7 @@ app.all("*", notFound);
 
 // Database connection
 try {
+  // DB connected to render
   await mongoose.connect(process.env.MONGO_URI_LIVE!);
   console.log("Database connection OK");
 } catch (err) {
