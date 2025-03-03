@@ -6,7 +6,7 @@ type Product = {
   name: string;
   description: string;
   price: number;
-  image_url: string;
+  image_url: { url: string }[];
   stock_quantity: number;
 };
 const productApi = createApi({
