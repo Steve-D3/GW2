@@ -7,6 +7,7 @@ import {
     deleteUser,
     updateUser
 } from "../controllers/users.controller";
+import { isAuth } from "../middleware/authMiddleware";
 
 
 const router = express.Router();

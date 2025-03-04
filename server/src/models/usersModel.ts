@@ -31,3 +31,5 @@ const usersSchema = new mongoose.Schema<UserType>({
 })
 
 export default mongoose.model("Users", usersSchema);
+
+
