@@ -5,15 +5,15 @@ import { Routes, Route } from "react-router";
 import Layout from "./components/Layout";
 import About from "./pages/About";
 import LoginForm from "./components/LoginForm";
-import { useState } from "react";
+// import { useState } from "react";
 import Contact from "./pages/Contact";
 const App = () => {
-  const [isShowLogin, setIsShowLogin] = useState(false);
-  const handelLoginClick = () => setIsShowLogin(!isShowLogin);
+  // const [isShowLogin, setIsShowLogin] = useState(false);
+  // const handelLoginClick = () => setIsShowLogin(!isShowLogin);
   return (
     <>
-      <Layout handelLogin={handelLoginClick}>
-        <LoginForm isShowLogin={isShowLogin} onClose={handelLoginClick} />
+      <Layout>
+        <LoginForm />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />

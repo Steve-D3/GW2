@@ -86,12 +86,12 @@
     > button:last-child {
       background-color: transparent;
       color: #ffffff;
+      font-weight: 200;
       border: none;
       position: absolute;
       right: 2rem;
       top: 2rem;
-      font-size: 2.5rem;
-      font-weight: 200;
+      font-size: 2.4rem;
       cursor: pointer;
       transition: 300ms;
       &:hover {

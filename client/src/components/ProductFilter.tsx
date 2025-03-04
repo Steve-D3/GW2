@@ -3,11 +3,35 @@ import Breadcrumb from "./Breadcrumb";
 import { BsViewList } from "react-icons/bs";
 import { HiViewGrid } from "react-icons/hi";
 import { GiSettingsKnobs } from "react-icons/gi";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setLimit,
+  selectLimit,
+  setSortBy,
+  selectSortBy,
+  setViewType,
+  selectViewType,
+} from "../store/filterSlice";
+import { useGetProductsQuery } from "../store/productApiSlice";
 const ProductFilter = () => {
+  const limit = useSelector(selectLimit);
+  const sortBy = useSelector(selectSortBy);
+  const viewType = useSelector(selectViewType);
+  const dispatch = useDispatch();
+
+  //to know total products from the server
+  const { data: productsData } = useGetProductsQuery();
+  if (!productsData) return null;
+  const totalProducts = productsData.length;
+  const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(setLimit(Number(e.target.value)));
+  };
+  const handleViewChange = (viewType: string) => {
+    dispatch(setViewType(viewType));
+  };
   return (
     <>
-      <section className={styles["product-filter-container"]}>
+      <section className={styles["shop-header"]}>
         <div>
           <img src="/shopPanner.jpg" alt="" />
         </div>
@@ -15,6 +39,8 @@ const ProductFilter = () => {
           <h1>Shop</h1>
           <Breadcrumb />
         </div>
+      </section>
+      <section className={styles["product-filter"]}>
         <div>
           <div>
             <div>
@@ -24,24 +50,42 @@ const ProductFilter = () => {
               <p>Filter</p>
             </div>
 
-            <i>
+            <i
+              className={viewType === "grid" ? styles["active"] : ""}
+              onClick={() => handleViewChange("grid")}
+            >
               <HiViewGrid />
             </i>
-            <i>
+            <i
+              className={viewType === "list" ? styles["active"] : ""}
+              onClick={() => handleViewChange("list")}
+            >
               <BsViewList />
             </i>
             <i>|</i>
-            <p> Showing 1–12 of 15 results</p>
+            <p>
+              {" "}
+              Showing {limit} of {totalProducts} results
+            </p>
           </div>
           <div>
             <label htmlFor="filter-by-product-numbers">Show</label>
-            <select name="showPerPage" id="showPerPage">
-              <option value="8">8</option>
-              <option value="16">16</option>
-              <option value="24">24</option>
+            {/* add filter by product numbers from filterstate limit  */}
+            <select
+              name="showPerPage"
+              id="showPerPage"
+              onChange={handleLimitChange}
+              value={limit}
+            >
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
             </select>
             <label htmlFor="sort-by">Sort by</label>
-            <select name="sort-by" id="sort-by">
+            <select
+              value={sortBy}
+              onChange={(e) => dispatch(setSortBy(e.target.value))}
+            >
               <option value="name">Name</option>
               <option value="price">Price</option>
             </select>

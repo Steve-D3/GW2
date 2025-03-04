@@ -1,8 +1,6 @@
-.product-filter-container {
-  height: 400px;
+.shop-header {
   display: block;
   position: relative;
-  margin-bottom: 8rem;
 
   > div:nth-child(1) {
     &:nth-child(1) {
@@ -48,7 +46,10 @@
       }
     }
   }
-  > div:nth-child(3) {
+}
+.product-filter {
+  margin-bottom: 8rem;
+  > div {
     height: 100px;
     background-color: #f9f1e7;
     display: flex;
@@ -74,10 +75,12 @@
       i {
         font-size: 2rem;
         font-weight: 400;
+        cursor: pointer;
         &:nth-child(4) {
           color: #9f9f9f;
           font-size: 3.7rem;
           font-weight: 200;
+          cursor: default;
         }
       }
       > p {
@@ -114,57 +117,50 @@
   }
 }
 
-@media (max-width: 1200px) {
-  .product-filter-container > div:nth-child(3) {
-    padding: 2rem;
-  }
-}
-@media (max-width: 950px) {
-  .product-filter-container div:nth-child(3) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
+@media screen and (max-width: 1100px) {
+  .product-filter {
+    > div {
+      padding: 2rem;
+    }
   }
 
-  .product-filter-container div:nth-child(3) > div:nth-child(2) > label {
-    font-size: 1.6rem;
+  .product-filter > div > div:nth-child(2) > label {
+    font-size: 1.5rem;
     white-space: nowrap;
+    gap: 1rem;
   }
-  .product-filter-container
-    div:nth-child(3)
-    > div:nth-child(2)
-    > select:nth-child(2) {
-    font-size: 16px;
-    height: 30px;
-    width: 50px;
-  }
-  .product-filter-container
-    div:nth-child(3)
-    > div:nth-child(2)
-    > select:nth-child(4) {
-    font-size: 16px;
-    height: 30px;
+  .product-filter > div > div:nth-child(2) > select {
+    font-size: 1.5rem;
+    &:nth-child(2) {
+      width: 45px;
+      height: 45px;
+    }
+    &:nth-child(4) {
+      width: 120px;
+      height: 45px;
+    }
   }
 }
 
-@media (max-width: 500px) {
-  .product-filter-container div:nth-child(3) > div:nth-child(2) {
-    gap: 1rem;
+@media screen and (max-width: 800px) {
+  .product-filter {
+    height: fit-content;
   }
-  /* .product-filter-container div:nth-child(3) > div:nth-child(2) > label {
-    font-size: 1.2rem;
-  } */
-
-  .product-filter-container
-    div:nth-child(3)
-    > div:nth-child(2)
-    > select:nth-child(4) {
-    width: 80px;
+  .product-filter > div {
+    flex-direction: column;
+    height: fit-content;
+    padding: 2rem;
+    gap: 2rem;
   }
+}
 
-  .product-filter-container div:nth-child(3) > div:nth-child(1) {
-    display: none;
+@media screen and (max-width: 500px) {
+  .product-filter > div > div:nth-child(1) {
+    i:nth-child(4) {
+      display: none;
+    }
+    p:nth-child(5) {
+      display: none;
+    }
   }
 }
