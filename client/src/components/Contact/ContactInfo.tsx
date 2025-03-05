@@ -1,4 +1,5 @@
-import { FaMapMarkerAlt, FaPhone, FaClock } from "react-icons/fa";
+import { FaMapMarkerAlt, FaClock } from "react-icons/fa";
+import { FaPhone } from "react-icons/fa6";
 import styles from "../../styles/GetInTouch.module.css";
 
 const ContactInfo: React.FC = () => {
@@ -17,7 +18,7 @@ const ContactInfo: React.FC = () => {
         <div>
           <h3>Phone</h3>
           <p>Mobile: + (84) 546-6789</p>
-          <br />
+
           <p>Hotline: + (84) 456-6789</p>
         </div>
       </div>
@@ -27,7 +28,7 @@ const ContactInfo: React.FC = () => {
         <div>
           <h3>Working Time</h3>
           <p>Monday-Friday: 9:00 - 22:00</p>
-          <br />
+
           <p>Saturday-Sunday: 9:00 - 21:00</p>
         </div>
       </div>
