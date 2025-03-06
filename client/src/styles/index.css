@@ -25,3 +25,14 @@ body:has(div.show-login)::after {
   background: rgba(0, 0, 0, 0.884);
   z-index: 1;
 }
+
+body:has(div.showCart)::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.548);
+  z-index: 1;
+}

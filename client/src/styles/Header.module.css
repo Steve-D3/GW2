@@ -63,7 +63,7 @@ header {
           color: #b88e2f;
         }
       }
-      button {
+      > button {
         background-color: transparent;
         border: none;
         cursor: pointer;
