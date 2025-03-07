@@ -7,6 +7,7 @@ import About from "./pages/About";
 import LoginForm from "./components/LoginForm";
 // import { useState } from "react";
 import Contact from "./pages/Contact";
+import { ToastContainer } from "react-toastify";
 const App = () => {
   // const [isShowLogin, setIsShowLogin] = useState(false);
   // const handelLoginClick = () => setIsShowLogin(!isShowLogin);
@@ -14,6 +15,18 @@ const App = () => {
     <>
       <Layout>
         <LoginForm />
+        <ToastContainer
+          position="top-right"
+          autoClose={1000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
