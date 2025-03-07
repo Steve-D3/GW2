@@ -8,6 +8,8 @@ import { GiHamburgerMenu } from "react-icons/gi";
 //import signinslice
 import { useDispatch } from "react-redux";
 import { showLogin } from "../../store/signinSlice";
+import { showCart } from "../../store/addToCartSlice";
+import ShoppingCart from "../ShoppingCart";
 
 // const Header = ({ handelLoginClick }: { handelLoginClick: () => void }) => {
 //   const handelLogin = () => {
@@ -67,8 +69,9 @@ const Header = () => {
           </li>
           <li>
             <NavLink to="/">
-              <MdOutlineShoppingCart />
+              <MdOutlineShoppingCart onClick={() => dispatch(showCart())} />
             </NavLink>
+            <ShoppingCart />
           </li>
         </ul>
       </nav>
