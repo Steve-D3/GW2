@@ -48,7 +48,8 @@
   padding: 2rem;
 
   .cartItem {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 2fr 0.2fr;
     gap: 2rem;
     align-items: center;
 
@@ -90,7 +91,6 @@
     }
 
     > button {
-      margin-left: 5rem;
       border-radius: 50%;
       background-color: #9f9f9f;
       border: none;
@@ -143,4 +143,12 @@
       background-color: #9f9f9fa4;
     }
   }
+}
+
+.emptyCartMessage {
+  padding: 2rem;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: #9f9f9f;
 }

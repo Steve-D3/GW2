@@ -5,15 +5,13 @@ import { FaRegUser } from "react-icons/fa6";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { PiMagnifyingGlassBold } from "react-icons/pi";
 import { GiHamburgerMenu } from "react-icons/gi";
-//import signinslice
 import { useDispatch } from "react-redux";
 import { showLogin } from "../../store/signinSlice";
 import { showCart } from "../../store/addToCartSlice";
 import ShoppingCart from "../ShoppingCart";
+import { useSelector } from "react-redux";
+import { selectTotalCartItems } from "../../store/addToCartSlice";
 
-// const Header = ({ handelLoginClick }: { handelLoginClick: () => void }) => {
-//   const handelLogin = () => {
-//     handelLoginClick();
 //   };
 
 const Header = () => {
@@ -21,6 +19,7 @@ const Header = () => {
   const handelLogin = () => {
     dispatch(showLogin());
   };
+  const cartItems = useSelector(selectTotalCartItems);
 
   return (
     <header>
@@ -51,7 +50,6 @@ const Header = () => {
       <nav className={styles["header-icons"]}>
         <ul>
           <li>
-            {/* onclick show login from slice */}
             <button onClick={handelLogin}>
               {" "}
               <FaRegUser />
@@ -68,10 +66,16 @@ const Header = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/">
+            <NavLink to="#">
               <MdOutlineShoppingCart onClick={() => dispatch(showCart())} />
+              <div
+                className={
+                  cartItems > 0 ? styles.showCartCount : styles.hideCartCount
+                }
+              >
+                <p>{cartItems}</p>
+              </div>
             </NavLink>
-            <ShoppingCart />
           </li>
         </ul>
       </nav>
@@ -79,7 +83,8 @@ const Header = () => {
         <NavLink to="/">
           <GiHamburgerMenu />
         </NavLink>
-      </nav>
+      </nav>{" "}
+      <ShoppingCart />
     </header>
   );
 };

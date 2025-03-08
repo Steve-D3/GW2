@@ -68,8 +68,32 @@ header {
         border: none;
         cursor: pointer;
         transition: 300ms;
+
         &:hover {
           color: #b88e2f;
+        }
+      }
+      &:last-child {
+        position: relative;
+        > a {
+          transition: 300ms;
+          .showCartCount {
+            position: absolute;
+            bottom: -5px;
+            left: -10px;
+            width: 18px;
+            aspect-ratio: 1/1;
+            background-color: #b88e2f;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black;
+          }
+          .hideCartCount {
+            display: none;
+          }
         }
       }
     }
