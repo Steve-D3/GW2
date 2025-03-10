@@ -11,9 +11,9 @@ import { showCart } from "../../store/addToCartSlice";
 import ShoppingCart from "../ShoppingCart";
 import { useSelector } from "react-redux";
 import { selectTotalCartItems } from "../../store/addToCartSlice";
-
-//   };
-
+import { selectIsShowSearch } from "../../store/searchSlice";
+import { toggelSearch } from "../../store/searchSlice";
+import SearchBar from "../../components/SearchBar";
 const Header = () => {
   const dispatch = useDispatch();
   const handelLogin = () => {
@@ -21,6 +21,7 @@ const Header = () => {
   };
   const cartItems = useSelector(selectTotalCartItems);
 
+  const handleSearchChange = useSelector(selectIsShowSearch);
   return (
     <header>
       <NavLink to="/">
@@ -56,8 +57,15 @@ const Header = () => {
             </button>
           </li>
           <li>
-            <NavLink to="/">
-              <PiMagnifyingGlassBold />
+            <NavLink to="#">
+              <PiMagnifyingGlassBold onClick={() => dispatch(toggelSearch())} />
+              <div
+                className={
+                  handleSearchChange ? styles.showSearch : styles.hideSearch
+                }
+              >
+                <SearchBar />
+              </div>
             </NavLink>
           </li>
           <li>
