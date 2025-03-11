@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
     <script src="/js/script.js" defer></script>
-    <title>Item Management System</title>
+    <title>Product Management System</title>
 </head>
 
 <body>
@@ -18,22 +18,23 @@
         <table id="productTable">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Brand</th>
-                    <th>Model</th>
-                    <th>Year</th>
-                    <th>Type</th>
-                    <th>Action</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Category</th>
+                    <th>Images</th>
                 </tr>
             </thead>
             <tbody>
                 <% products.forEach((product)=>{ %>
                 <tr>
-                    <td><%- vehicle._id %></td>
-                    <td><%- vehicle.brand %></td>
-                    <td><%- vehicle.model %></td>
-                    <td><%- vehicle.year %></td>
-                    <td><%- vehicle.type %></td>
+                    <td><%- product.name %></td>
+                    <td><%- product.description %></td>
+                    <td><%- product.price %></td>
+                    <td><%- product.stock %></td>
+                    <td><%- product.category %></td>
+                    <td><%- product.image_url %></td>
                     <td>
                         <button class="red" id="deleteBtn" data-id="<%- vehicle._id %>">
                             Delete

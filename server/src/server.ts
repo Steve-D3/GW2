@@ -62,7 +62,7 @@ app.get("/login", async (req, res) => {
 
 /*
 Not yet tested, login and register could cause issues 
- 
+if so put register and login in comments
 */ 
 
 // ------------------------------------------------------
