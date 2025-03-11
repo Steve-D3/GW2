@@ -12,6 +12,7 @@ import categoryRoutes from "./routes/categories.routes"
 import reviewRoutes from "./routes/reviews.routes"
 import wishlistRoutes from "./routes/wishlist.routes"
 import authRoutes from "./routes/authRoutes"
+import Products from "./models/productsModel"
 
 // Middleware
 import { helloMiddleware } from "./middleware/exampleMiddleware";
@@ -19,6 +20,7 @@ import { helloMiddleware } from "./middleware/exampleMiddleware";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { isAuth } from "./middleware/authMiddleware";
+import { title } from "process";
 // import { isAuth } from "./middleware/authMiddleware";
 
 // Variables
@@ -30,9 +32,44 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 
+
+// EJS Template Engine -----------------------------------
+app.set("view engine", "ejs");
+app.set("views", "src/views");
+app.use(express.static("src/public"));
+// use arcmiddleware?
+
+app.get("/", async (req, res) => {
+  const allProducts = await Products.find();
+  res.render("index", {
+    title: "Product management system",
+    products: allProducts,
+    user: res.locals.user
+  });
+});
+
+app.get("/register", async (req, res) => {
+  res.render("register", {
+    title: "Register",
+  })
+});
+
+app.get("/login", async (req, res) => {
+  res.render("login", {
+    title: "Login",
+  })
+});
+
+/*
+Not yet tested, login and register could cause issues 
+ 
+*/ 
+
+// ------------------------------------------------------
+
+
 // Routes
 app.use("/api", authRoutes);
-
 app.use("/api", 
   userRoutes, 
   productRoutes,
@@ -41,10 +78,7 @@ app.use("/api",
   reviewRoutes,
  
 );
-
 app.use("/api", isAuth, wishlistRoutes);
-
-
 app.all("*", notFound);
 
 console.log("Mongo URI: ", process.env.MONGO_URI_LIVE); 
