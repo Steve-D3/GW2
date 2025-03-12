@@ -61,6 +61,14 @@ body {
     cursor: pointer;
     border-radius: 4px;
   }
+  button.blue {
+    background-color: #4d4dff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
   
   button.red:hover {
     background-color: #cc0000;
@@ -87,4 +95,10 @@ body {
       border: 1px solid #ccc;
       border-radius: 4px;
     }
+  }
+
+  img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
   }

@@ -20,8 +20,7 @@ import { helloMiddleware } from "./middleware/exampleMiddleware";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { isAuth } from "./middleware/authMiddleware";
-import { title } from "process";
-// import { isAuth } from "./middleware/authMiddleware";
+
 
 // Variables
 const app = express();

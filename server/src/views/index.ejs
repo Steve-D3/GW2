@@ -12,9 +12,8 @@
 <body>
     <div class="container">
         <h1><%= title %></h1>
-        <!-- <h2>Welcome <%= locals.user.name %></h2>
-        <img src="<%= locals.user.avatar %>" alt="" width="100" style="border-radius: 50%" /> -->
         <button class="green" id="logoutBtn">Log Out</button>
+        <button class="blue">Add Item</button>
         <table id="productTable">
             <thead>
                 <tr>
@@ -34,10 +33,17 @@
                     <td><%- product.price %></td>
                     <td><%- product.stock %></td>
                     <td><%- product.category %></td>
-                    <td><%- product.image_url %></td>
                     <td>
-                        <button class="red" id="deleteBtn" data-id="<%- vehicle._id %>">
+                        <% product.image_url.forEach((elem) => { %>
+                            <img src="<%- elem.url %>" alt="">
+                        <% }); %>
+                    </td>
+                    <td>
+                        <button class="red" id="deleteBtn" data-id="<%- product._id %>">
                             Delete
+                        </button>
+                        <button class="red">
+                            Edit
                         </button>
                     </td>
                 </tr>
