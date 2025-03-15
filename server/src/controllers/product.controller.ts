@@ -286,11 +286,22 @@ export const getImages = async (req: Request, res: Response) => {
 export const updateProduct = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
+        const { category_name, ...updateData } = req.body;
+
+        if (category_name) {
+            const category = await categoriesModel.findOne({ name: category_name });
+            if (!category) {
+                res.status(404).json({ message: "Category not found" });
+                return;
+            }
+            updateData.category = category._id;
+        }
+
         const itemToUpdate = await productsModel.findByIdAndUpdate(
             id,
-            { ...req.body },
+            { ...updateData },
             { new: true }
-        )
+        );
 
         if (!itemToUpdate) {
             res.status(404).json({ message: "Product not found" });
@@ -302,7 +313,7 @@ export const updateProduct = async (req: Request, res: Response) => {
         console.log(error);
         res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
 // DELETE
 /**
