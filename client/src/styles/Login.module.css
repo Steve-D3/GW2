@@ -12,6 +12,7 @@
   width: 100%;
   height: 100%;
   z-index: 1000;
+
   .card {
     width: 400px;
     height: 450px;
@@ -115,6 +116,74 @@
   }
 }
 
+.loggedIn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #8d743b;
+  background-color: #fff3e3;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  width: 400px;
+  height: 300px;
+  position: relative;
+  .profileHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    p {
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #8d743b;
+      text-align: center;
+      line-height: 2rem;
+
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  .profileActions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    .closeButton {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      background: transparent;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: 0.3s;
+      &:hover {
+        color: #8d743b;
+      }
+    }
+    .logoutButton {
+      background-color: #8d743b;
+      color: #fff3e3;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1.5rem;
+      font-weight: 400;
+
+      &:hover {
+        background-color: #b4af9e;
+        color: #fff3e3;
+      }
+    }
+  }
+}
 @media screen and (max-width: 600px) {
   .show-login {
     .card {
@@ -141,6 +210,16 @@
             font-size: 1.2rem;
           }
         }
+      }
+    }
+  }
+  .loggedIn {
+    width: 300px;
+    height: 300px;
+    .profileHeader {
+      p {
+        font-size: 1.2rem;
+        line-height: 1.5rem;
       }
     }
   }

@@ -25,9 +25,13 @@ import { isAuth } from "./middleware/authMiddleware";
 // Variables
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+const corsOptions = {
+  origin: ["http://localhost:5173", "https://gw2-rfg0.onrender.com/api"], // Allow the front-end to access the API
+  credentials: true,  // Allow credentials like cookies to be sent
+};
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
+
 app.use(cookieParser());
 app.use(express.json());
 
