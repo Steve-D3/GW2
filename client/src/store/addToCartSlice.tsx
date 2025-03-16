@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./index";
 
-interface CartItem {
+export type CartItem = {
   _id: string;
   name: string;
   description: string;
@@ -9,7 +9,7 @@ interface CartItem {
   image_url: { url: string }[];
   stock_quantity: number;
   quantity: number;
-}
+};
 
 const getCartFromStorage = () => {
   const storedCart = localStorage.getItem("cart");
@@ -88,11 +88,41 @@ const addToCartSlice = createSlice({
         0
       );
     },
+
+    updateQuantity: (state, action) => {
+      const { _id, quantity } = action.payload;
+      const existingItem = state.cartItems.find(
+        (item: CartItem) => item._id === _id
+      );
+
+      if (existingItem) {
+        if (quantity > 0) {
+          existingItem.quantity = quantity;
+        } else {
+          // 🚀 Automatically remove when quantity is 0
+          state.cartItems = state.cartItems.filter(
+            (item: CartItem) => item._id !== _id
+          );
+        }
+      }
+
+      updateLocalStorage(state.cartItems);
+      state.totalCartItems = state.cartItems.reduce(
+        (total: number, item: CartItem) => total + item.quantity,
+        0
+      );
+    },
   },
 });
 
-export const { showCart, hideCart, addToCart, removeFromCart, cartItemsCount } =
-  addToCartSlice.actions;
+export const {
+  showCart,
+  hideCart,
+  addToCart,
+  removeFromCart,
+  cartItemsCount,
+  updateQuantity,
+} = addToCartSlice.actions;
 export const selectCart = (state: RootState) => state.addToCart.cartItems;
 export const selectTotalCartItems = (state: RootState) =>
   state.addToCart.totalCartItems;
