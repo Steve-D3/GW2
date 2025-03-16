@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./index";
 
-interface CartItem {
+export type CartItem = {
   _id: string;
   name: string;
   description: string;
@@ -9,23 +9,19 @@ interface CartItem {
   image_url: { url: string }[];
   stock_quantity: number;
   quantity: number;
-}
+};
 
 const getCartFromStorage = () => {
   const storedCart = localStorage.getItem("cart");
   if (storedCart) {
-    const { items, expiry } = JSON.parse(storedCart);
-    if (Date.now() < expiry) return items;
+    const { items } = JSON.parse(storedCart);
+    return items;
   }
   return [];
 };
 
 const updateLocalStorage = (cartItems: CartItem[]) => {
-  const expiryTime = Date.now() + 30 * 60 * 1000;
-  localStorage.setItem(
-    "cart",
-    JSON.stringify({ items: cartItems, expiry: expiryTime })
-  );
+  localStorage.setItem("cart", JSON.stringify({ items: cartItems }));
 };
 
 const getItemsCountFromStorage = () => {
@@ -43,7 +39,6 @@ const getItemsCountFromStorage = () => {
 const initialState = {
   isShowCart: false,
   cartItems: getCartFromStorage(),
-
   totalCartItems: getItemsCountFromStorage(),
 };
 
@@ -88,14 +83,45 @@ const addToCartSlice = createSlice({
         0
       );
     },
+
+    updateQuantity: (state, action) => {
+      const { _id, quantity } = action.payload;
+      const existingItem = state.cartItems.find(
+        (item: CartItem) => item._id === _id
+      );
+
+      if (existingItem) {
+        if (quantity > 0) {
+          existingItem.quantity = quantity;
+        } else {
+          state.cartItems = state.cartItems.filter(
+            (item: CartItem) => item._id !== _id
+          );
+        }
+      }
+
+      updateLocalStorage(state.cartItems);
+      state.totalCartItems = state.cartItems.reduce(
+        (total: number, item: CartItem) => total + item.quantity,
+        0
+      );
+    },
   },
 });
 
-export const { showCart, hideCart, addToCart, removeFromCart, cartItemsCount } =
-  addToCartSlice.actions;
+export const {
+  showCart,
+  hideCart,
+  addToCart,
+  removeFromCart,
+  cartItemsCount,
+  updateQuantity,
+} = addToCartSlice.actions;
+
 export const selectCart = (state: RootState) => state.addToCart.cartItems;
 export const selectTotalCartItems = (state: RootState) =>
   state.addToCart.totalCartItems;
 export const selectIsShowCart = (state: RootState) =>
   state.addToCart.isShowCart;
+
 export default addToCartSlice.reducer;

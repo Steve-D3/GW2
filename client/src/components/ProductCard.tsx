@@ -50,7 +50,7 @@ const ProductCard = ({ product, viewType }: ProductCardProps) => {
         <div>
           <h3>{product.name}</h3>
           <p>{product.description}</p>
-          <p>${product.price}</p>
+          <p>{product.price} Euro</p>
         </div>
         <div className={styles["product-hover"]}>
           <button onClick={handleAddToCart}>Add to cart</button>
