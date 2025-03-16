@@ -14,18 +14,14 @@ export type CartItem = {
 const getCartFromStorage = () => {
   const storedCart = localStorage.getItem("cart");
   if (storedCart) {
-    const { items, expiry } = JSON.parse(storedCart);
-    if (Date.now() < expiry) return items;
+    const { items } = JSON.parse(storedCart);
+    return items;
   }
   return [];
 };
 
 const updateLocalStorage = (cartItems: CartItem[]) => {
-  const expiryTime = Date.now() + 30 * 60 * 1000;
-  localStorage.setItem(
-    "cart",
-    JSON.stringify({ items: cartItems, expiry: expiryTime })
-  );
+  localStorage.setItem("cart", JSON.stringify({ items: cartItems }));
 };
 
 const getItemsCountFromStorage = () => {
@@ -43,7 +39,6 @@ const getItemsCountFromStorage = () => {
 const initialState = {
   isShowCart: false,
   cartItems: getCartFromStorage(),
-
   totalCartItems: getItemsCountFromStorage(),
 };
 
@@ -99,7 +94,6 @@ const addToCartSlice = createSlice({
         if (quantity > 0) {
           existingItem.quantity = quantity;
         } else {
-          // 🚀 Automatically remove when quantity is 0
           state.cartItems = state.cartItems.filter(
             (item: CartItem) => item._id !== _id
           );
@@ -123,9 +117,11 @@ export const {
   cartItemsCount,
   updateQuantity,
 } = addToCartSlice.actions;
+
 export const selectCart = (state: RootState) => state.addToCart.cartItems;
 export const selectTotalCartItems = (state: RootState) =>
   state.addToCart.totalCartItems;
 export const selectIsShowCart = (state: RootState) =>
   state.addToCart.isShowCart;
+
 export default addToCartSlice.reducer;
