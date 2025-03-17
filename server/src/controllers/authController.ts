@@ -14,22 +14,30 @@ const SECRET = process.env.JWT_SECRET;
 export const register = async (req: Request, res: Response) => {
   try {
     const { name, email, password } = req.body;
-    if (!name || !email || !password ) {
+
+    if (!name || !email || !password) {
       res.status(400).json({ message: "Please fill all fields" });
       return;
     }
+
+    // Check if the email already exists in the database
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     const response = await User.create({
       name,
       email,
       password: hashedPassword,
-    
     });
 
     if (!SECRET) {
       throw new Error("Internal error");
     }
+
     const user = {
       _id: new mongoose.Types.ObjectId(response._id),
       email: response.email,
@@ -37,11 +45,10 @@ export const register = async (req: Request, res: Response) => {
       role: response.role,
     };
 
-    // JWT aanmaken USER - SECRET - EXPIRESIN
+    // JWT creation
     const token = await signToken({ user: user, secret: SECRET, expiresIn: "7d" });
-    
 
-    // Cookie aanmaken
+    // Cookie creation
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production" ? true : false,
@@ -60,7 +67,6 @@ export const register = async (req: Request, res: Response) => {
     }
   }
 };
-
 export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
@@ -75,7 +81,7 @@ export const login = async (req: Request, res: Response) => {
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      res.status(400).json({ message: "Invalid credentials" });
+      res.status(400).json({ message: "Email or password is incorrect" });
       return;
     }
     if (!SECRET) {
