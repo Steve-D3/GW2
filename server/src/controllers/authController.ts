@@ -105,7 +105,7 @@ export const login = async (req: Request, res: Response) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    return res.status(200).json({
+    res.status(200).json({
       message: "User logged in successfully",
       user: {
         _id: user._id,
@@ -114,6 +114,7 @@ export const login = async (req: Request, res: Response) => {
       },
       token,  
     });
+    return;
   } catch (error: unknown) {
     if (error instanceof Error) {
       res.status(500).json({ message: error.message });
