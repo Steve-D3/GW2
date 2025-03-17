@@ -50,7 +50,7 @@ registerForm?.addEventListener("submit", async (e) => {
     const formData = new FormData(registerForm);
     const inputData = Object.fromEntries(formData);
 
-    const response = await fetch("/api/register", {
+    const response = await fetch("/api/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -71,14 +71,6 @@ registerForm?.addEventListener("submit", async (e) => {
     console.error("Error during registration:", error);
   }
 });
-
-const removeVehicle = async (id) => {
-  const response = await fetch(`/api/vehicles/${id}`, {
-    method: "DELETE",
-  });
-  const data = await response.json();
-  console.log(data);
-};
 
 deleteBtns.forEach((btn) => {
   btn.addEventListener("click", async (e) => {

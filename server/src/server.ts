@@ -29,8 +29,8 @@ const corsOptions = {
   credentials: true,  // Allow credentials like cookies to be sent
 };
 // Middleware
-app.use(cors(corsOptions));
 
+app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -66,8 +66,8 @@ app.get("/login", async (req, res) => {
 
 
 // Routes
-app.use("/api", authRoutes);
-app.use("/api", 
+app.use("/api/auth", authRoutes);
+app.use("/api/auth", 
   userRoutes, 
   productRoutes,
   orderRoutes,
