@@ -46,7 +46,10 @@
             <td><%- product.description %></td>
             <td><%- product.price %></td>
             <td><%- product.stock %></td>
-            <td><%- product.category.name %></td>
+            <td>
+              <%- product.category && product.category.name ?
+              product.category.name : "No Category" %>
+            </td>
             <td>
               <% product.image_url.forEach((elem) => { %>
               <img src="<%- elem.url %>" alt="" />
@@ -57,12 +60,13 @@
                 Delete
               </button>
               <button>
-                <a href="/edit?product_id=<%- product._id %>&name=<%- encodeURIComponent(product.name) %>&description=<%- encodeURIComponent(product.description) %>&price=<%- product.price %>&stock=<%- product.stock %>&category=<%- encodeURIComponent(product.category.name) %>" class="yellow">
-                    Edit
+                <a
+                  href="/edit?product_id=<%- product._id %>&name=<%- encodeURIComponent(product.name) %>&description=<%- encodeURIComponent(product.description) %>&price=<%- product.price %>&stock=<%- product.stock %>&category=<%- encodeURIComponent(product.category.name) %>"
+                  class="yellow"
+                >
+                  Edit
                 </a>
               </button>
-               
-             
             </td>
           </tr>
           <% }); %>

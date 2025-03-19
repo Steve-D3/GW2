@@ -5,44 +5,44 @@ const loginForm = document.querySelector("#login-form");
 const logoutBtn = document.querySelector("#logoutBtn");
 
 logoutBtn?.addEventListener("click", async (e) => {
-    try {
-        await fetch("/api/auth/logout", {
-            method: "POST",
-            credentials: "include",
-        });
-        window.location.href = "/login";       
-    } catch (error) {
-        console.error("Error during logout:", error);
-    }
+  try {
+    await fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+    window.location.href = "/login";
+  } catch (error) {
+    console.error("Error during logout:", error);
+  }
 });
 
 loginForm?.addEventListener("submit", async (e) => {
-    try {
-      e.preventDefault();
-      const formData = new FormData(loginForm);
-      const inputData = Object.fromEntries(formData);
-  
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(inputData),
-      });
-  
-      if (!response.ok) {
-        const errorResponse = await response.json();
-        throw new Error(errorResponse.message);
-      }
-  
-      console.log(response);
-      window.location.href = "/";
-    } catch (error) {
-      errorDiv.textContent = error.message;
-      console.error("Error during registration:", error);
+  try {
+    e.preventDefault();
+    const formData = new FormData(loginForm);
+    const inputData = Object.fromEntries(formData);
+
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(inputData),
+    });
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      throw new Error(errorResponse.message);
     }
-  });
+
+    console.log(response);
+    window.location.href = "/";
+  } catch (error) {
+    errorDiv.textContent = error.message;
+    console.error("Error during registration:", error);
+  }
+});
 
 registerForm?.addEventListener("submit", async (e) => {
   try {
@@ -65,7 +65,7 @@ registerForm?.addEventListener("submit", async (e) => {
     }
 
     console.log(response);
-    location.re
+    location.re;
   } catch (error) {
     errorDiv.textContent = error.message;
     console.error("Error during registration:", error);
