@@ -71,7 +71,21 @@ if so put register and login in comments
 // ------------------------------------------------------
 
 
+//Route for edit page 
+app.get("/edit", (req, res) => {
+  res.render("edit", {
+      product_id: req.query.product_id,
+      name: req.query.name,
+      description: req.query.description,
+      price: req.query.price,
+      stock: req.query.stock,
+      category: req.query.category
+  });
+});
+
 // Routes
+
+
 app.use("/api", authRoutes);
 app.use("/api", 
   userRoutes, 
@@ -79,7 +93,6 @@ app.use("/api",
   orderRoutes,
   categoryRoutes,
   reviewRoutes,
- 
 );
 app.use("/api", isAuth, wishlistRoutes);
 app.all("*", notFound);
