@@ -21,48 +21,47 @@ import categoriesModel from "../models/categoriesModel";
  * messages will be returned with status codes 400 (Bad Request) or 404 (Not Found) respectively. If
  * there is
  */
+
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    const {
-      name,
-      description,
-      price,
-      stock,
-      category_name,
-      image_url,
-      created_at,
-    } = req.body;
-    if (
-      !name ||
-      !description ||
-      !price ||
-      !stock ||
-      !category_name ||
-      !image_url
-    ) {
-      res.status(400).json({ message: "Missing fields" });
-      return;
+    const { name, description, price, stock, category, image_url } = req.body;
+
+    // Ensure all required fields are provided
+    if (!name || !description || !price || !stock || !category || !image_url) {
+      return res.status(400).json({ message: "Missing fields" });
     }
 
-    const category = await categoriesModel.findOne({ name: category_name });
-    if (!category) {
-      res.status(404).json({ message: "Category not found" });
-      return;
+    // Validate category ID
+    const categoryExists = await categoriesModel.findById(category);
+    if (!categoryExists) {
+      return res.status(404).json({ message: "Category not found" });
     }
 
+    // 🖼️ Ensure `image_url` is stored as an array of objects
+    const formattedImage = [
+      {
+        id: 1,
+        url: image_url,
+        description: "Product image",
+      },
+    ];
+
+    // ✅ Create the product
     const newProduct = new productsModel({
       name,
       description,
       price,
       stock,
-      category: category, // Include full category information
-      image_url,
-      created_at,
+      category,
+      image_url: formattedImage,
+      created_at: new Date(),
     });
+
     await newProduct.save();
+    console.log(" New Product Created:", newProduct);
     res.status(201).json(newProduct);
   } catch (error) {
-    console.log(error);
+    console.error(" Error creating product:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
