@@ -21,6 +21,12 @@ const ProductGrid = () => {
   const category = useSelector(selectCategory);
   const priceRange = useSelector(selectPriceRange);
   const [currentPage, setCurrentPage] = useState(1);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setCurrentPage(1);
+    dispatch(setAmountOfProductsFiltered(amountOfProducts));
+    dispatch(setAmountOfProductsSelected(amountofSelectedProducts));
+  }, [limit, sortBy, viewType, category, priceRange.min, priceRange.max]);
 
   // Add a loading state for fetching products
   const { data: productsData, isLoading, isError } = useGetProductsQuery();
@@ -66,13 +72,6 @@ const ProductGrid = () => {
 
   const amountOfProducts = filteredProducts.length;
   const amountofSelectedProducts = selectedProducts.length;
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setCurrentPage(1);
-    dispatch(setAmountOfProductsFiltered(amountOfProducts));
-    dispatch(setAmountOfProductsSelected(amountofSelectedProducts));
-  }, [limit, sortBy, viewType, category, priceRange.min, priceRange.max]);
 
   return (
     <section className={styles["product-container"]}>
