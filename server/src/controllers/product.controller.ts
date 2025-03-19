@@ -37,7 +37,7 @@ export const createProduct = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Category not found" });
     }
 
-    // 🖼️ Ensure `image_url` is stored as an array of objects
+    //  Ensure `image_url` is stored as an array of objects
     const formattedImage = [
       {
         id: 1,
@@ -46,7 +46,7 @@ export const createProduct = async (req: Request, res: Response) => {
       },
     ];
 
-    // ✅ Create the product
+    //  Create the product
     const newProduct = new productsModel({
       name,
       description,
@@ -353,17 +353,21 @@ export const updateProduct = async (req: Request, res: Response) => {
  * falsy), a JSON response with a status code of 404 and a message "Product not found" is being
  * returned. If an error occurs during the deletion process, a JSON response
  */
+
 export const deleteProduct = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const deletedProduct = await productsModel.findByIdAndDelete({ _id: id });
+
+    //  Check if product exists
+    const deletedProduct = await productsModel.findByIdAndDelete(id);
     if (!deletedProduct) {
-      res.status(404).json({ message: "Product not found" });
-      return;
+      return res.status(404).json({ message: "Product not found" });
     }
-    res.status(200).json({ message: "Product deleted" });
+
+    console.log(" Product Deleted:", deletedProduct);
+    res.status(200).json({ message: "Product deleted", data: deletedProduct });
   } catch (error) {
-    console.log(error);
+    console.error(" Error deleting product:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
