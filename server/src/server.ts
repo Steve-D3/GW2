@@ -15,7 +15,6 @@ import authRoutes from "./routes/authRoutes"
 import Products from "./models/productsModel"
 
 // Middleware
-import { helloMiddleware } from "./middleware/exampleMiddleware";
 
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
@@ -51,7 +50,7 @@ app.get("/", async (req, res) => {
   });
 });
 
-app.get("/register", async (req, res) => {
+app.get("/register/admin", async (req, res) => {
   res.render("register", {
     title: "Register",
   })
@@ -72,7 +71,7 @@ if so put register and login in comments
 
 
 // Routes
-app.use("/api", authRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api", 
   userRoutes, 
   productRoutes,
