@@ -79,7 +79,7 @@ if so put register and login in comments
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use("/api", 
+app.use("/api/auth", 
   userRoutes, 
   productRoutes,
   orderRoutes,
