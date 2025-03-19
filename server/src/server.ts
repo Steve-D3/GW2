@@ -15,10 +15,11 @@ import authRoutes from "./routes/authRoutes"
 import Products from "./models/productsModel"
 
 // Middleware
+import { helloMiddleware } from "./middleware/exampleMiddleware";
+
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { isAuth } from "./middleware/authMiddleware";
-import localAuthMiddleware from "./middleware/localAuthMiddleware";
 
 
 // Variables
@@ -29,19 +30,19 @@ const corsOptions = {
   credentials: true,  // Allow credentials like cookies to be sent
 };
 // Middleware
-
 app.use(cors(corsOptions));
+
 app.use(cookieParser());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 
 // EJS Template Engine -----------------------------------
 app.set("view engine", "ejs");
 app.set("views", "src/views");
 app.use(express.static("src/public"));
+// use arcmiddleware?
 
-app.get("/", localAuthMiddleware, async (req, res) => {
+app.get("/", async (req, res) => {
   const allProducts = await Products.find();
   res.render("index", {
     title: "Product management system",
@@ -61,6 +62,11 @@ app.get("/login", async (req, res) => {
     title: "Login",
   })
 });
+
+/*
+Not yet tested, login and register could cause issues 
+if so put register and login in comments
+*/ 
 
 // ------------------------------------------------------
 

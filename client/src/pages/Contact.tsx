@@ -6,7 +6,7 @@ const Contact = () => {
     <>
       <section className={styles["contact-us-header"]}>
         <div>
-          <img src="/stay-at-work-article-four.jpg" alt="" />
+          <img src="/shopPanner.jpg" alt="" />
         </div>
         <div>
           <h1>Contact</h1>
