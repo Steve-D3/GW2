@@ -73,6 +73,14 @@ registerForm?.addEventListener("submit", async (e) => {
   }
 });
 
+const removeVehicle = async (id) => {
+  const response = await fetch(`/api/vehicles/${id}`, {
+    method: "DELETE",
+  });
+  const data = await response.json();
+  console.log(data);
+};
+
 deleteBtns.forEach((btn) => {
   btn.addEventListener("click", async (e) => {
     await removeVehicle(e.target.dataset.id);

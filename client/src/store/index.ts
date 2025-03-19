@@ -3,6 +3,7 @@ import signinSlice from "./signinSlice";
 import productApi from "./productApiSlice";
 import filterSlice from "./filterSlice";
 import addToCartSlice from "./addToCartSlice";
+import searchSlice from "./searchSlice";
 
 import authApi from "./authApi";
 
@@ -13,6 +14,7 @@ const store = configureStore({
     [productApi.reducerPath]: productApi.reducer, 
   addToCart: addToCartSlice,
   [authApi.reducerPath]: authApi.reducer,
+  search: searchSlice,
   },
 
 

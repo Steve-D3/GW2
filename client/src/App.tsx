@@ -8,6 +8,7 @@ import LoginForm from "./components/LoginForm";
 // import { useState } from "react";
 import Contact from "./pages/Contact";
 import { ToastContainer } from "react-toastify";
+import Cart from "./pages/Cart";
 const App = () => {
   // const [isShowLogin, setIsShowLogin] = useState(false);
   // const handelLoginClick = () => setIsShowLogin(!isShowLogin);
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/shop/:id/:slug" element={<ProductDetails />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </Layout>
     </>

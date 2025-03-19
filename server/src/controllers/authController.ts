@@ -18,6 +18,13 @@ export const register = async (req: Request, res: Response) => {
       res.status(400).json({ message: "Please fill all fields" });
       return;
     }
+
+    // Check if the email already exists in the database
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     const userRole = role || "basic";
@@ -32,6 +39,7 @@ export const register = async (req: Request, res: Response) => {
     if (!SECRET) {
       throw new Error("Internal error");
     }
+
     const user = {
       _id: new mongoose.Types.ObjectId(response._id),
       email: response.email,
@@ -57,7 +65,6 @@ export const register = async (req: Request, res: Response) => {
     }
   }
 };
-
 export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
@@ -72,7 +79,7 @@ export const login = async (req: Request, res: Response) => {
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      res.status(400).json({ message: "Invalid credentials" });
+      res.status(400).json({ message: "Email or password is incorrect" });
       return;
     }
     if (!SECRET) {
@@ -98,11 +105,11 @@ export const login = async (req: Request, res: Response) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production" ? true : false,
-      sameSite: "lax",
+      sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "User logged in successfully",
       user: {
         _id: user._id,
@@ -111,7 +118,6 @@ export const login = async (req: Request, res: Response) => {
       },
       token,  
     });
-    return;
   } catch (error: unknown) {
     if (error instanceof Error) {
       res.status(500).json({ message: error.message });

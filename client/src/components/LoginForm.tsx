@@ -16,6 +16,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMsgs, setErrorMsgs] = useState<string>("");
   const dispatch = useDispatch();
 
   const isShowLogin = useSelector(selectIsShowLogin);
@@ -37,7 +38,6 @@ const LoginForm = () => {
     setUsername("");
     setConfirmPassword("");
   };
-
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -49,6 +49,19 @@ const LoginForm = () => {
       onClose();
     } catch (err) {
       console.error("Login failed:", err);
+      // Display error message if available
+      if (err && typeof err === "object" && "data" in err) {
+        if (
+          err &&
+          typeof err === "object" &&
+          "data" in err &&
+          err.data !== null &&
+          typeof err.data === "object" &&
+          "message" in err.data
+        ) {
+          setErrorMsgs((err.data as { message: string }).message);
+        }
+      }
     }
   };
 
@@ -66,8 +79,19 @@ const LoginForm = () => {
       }).unwrap();
       localStorage.setItem("token", response.token);
       setIsFlipped(false);
-    } catch (err) {
+    } catch (err: unknown) {
       console.error("Registration failed:", err);
+      // Display error message if available
+      if (
+        err &&
+        typeof err === "object" &&
+        "data" in err &&
+        err.data !== null &&
+        typeof err.data === "object" &&
+        "message" in err.data
+      ) {
+        setErrorMsgs((err.data as { message: string }).message);
+      }
     }
   };
 
@@ -128,7 +152,9 @@ const LoginForm = () => {
                 </button>
                 {loginError && (
                   <p style={{ color: "black", fontSize: "1.8rem" }}>
-                    Login failed. Try again.
+                    {"data" in loginError
+                      ? errorMsgs
+                      : "Login failed. Try again."}
                   </p>
                 )}
               </form>
@@ -183,7 +209,9 @@ const LoginForm = () => {
                 </button>
                 {registerError && (
                   <p style={{ color: "black", fontSize: "1.8rem" }}>
-                    Registration failed. Try again.
+                    {"data" in registerError
+                      ? errorMsgs
+                      : "Registration failed. Try again."}
                   </p>
                 )}
               </form>
