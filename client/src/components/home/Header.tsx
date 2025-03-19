@@ -59,13 +59,17 @@ const Header = () => {
           <li>
             <NavLink to="#">
               <PiMagnifyingGlassBold onClick={() => dispatch(toggelSearch())} />
-              <div
-                className={
-                  handleSearchChange ? styles.showSearch : styles.hideSearch
-                }
-              >
-                <SearchBar />
-              </div>
+              {handleSearchChange && (
+                <div className={styles.showSearch}>
+                  <button
+                    className={styles.closeSearch}
+                    onClick={() => dispatch(toggelSearch())}
+                  >
+                    ✕
+                  </button>
+                  <SearchBar />
+                </div>
+              )}
             </NavLink>
           </li>
           <li>
