@@ -161,12 +161,17 @@ export const login = async (req: Request, res: Response) => {
 export const logout = async (req: Request, res: Response) => {
   try {
     res.cookie("token", "", {
+      maxAge: 1,
       httpOnly: true,
       secure: process.env.NODE_ENV === "production" ? true : false,
-      sameSite: "none",
-      maxAge: 1,
+      sameSite: "lax",
     });
-    res.status(200).json({ message: "User logged out successfully" });
+
+    console.log("Logged out successfully!");
+    res
+      .status(200)
+      .json({ status: "success", message: "Logged out successfully!" });
+    return;
   } catch (error: unknown) {
     if (error instanceof Error) {
       res.status(500).json({ message: error.message });

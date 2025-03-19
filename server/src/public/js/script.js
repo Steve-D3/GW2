@@ -4,16 +4,24 @@ const errorDiv = document.querySelector(".error");
 const loginForm = document.querySelector("#login-form");
 const logoutBtn = document.querySelector("#logoutBtn");
 
-logoutBtn?.addEventListener("click", async (e) => {
-    try {
-        await fetch("/api/auth/logout", {
-            method: "POST",
-            credentials: "include",
-        });
-        window.location.href = "/login";       
-    } catch (error) {
-        console.error("Error during logout:", error);
+logoutBtn?.addEventListener("click", async () => {
+  try {
+    const response = await fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      throw new Error(errorResponse.message);
     }
+
+    console.log(response);
+
+    window.location.href = "/login";
+  } catch (error) {
+    console.error("Error during logout:", error);
+  }
 });
 
 loginForm?.addEventListener("submit", async (e) => {
