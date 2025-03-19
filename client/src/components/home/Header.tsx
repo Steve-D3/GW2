@@ -11,9 +11,9 @@ import { showCart } from "../../store/addToCartSlice";
 import ShoppingCart from "../ShoppingCart";
 import { useSelector } from "react-redux";
 import { selectTotalCartItems } from "../../store/addToCartSlice";
-
-//   };
-
+import { selectIsShowSearch } from "../../store/searchSlice";
+import { toggelSearch } from "../../store/searchSlice";
+import SearchBar from "../../components/SearchBar";
 const Header = () => {
   const dispatch = useDispatch();
   const handelLogin = () => {
@@ -21,70 +21,86 @@ const Header = () => {
   };
   const cartItems = useSelector(selectTotalCartItems);
 
+  const handleSearchChange = useSelector(selectIsShowSearch);
   return (
     <header>
-      <NavLink to="/">
-        <nav className={styles["header-logo"]}>
-          <div>
-            <img src="logo.svg" alt="SustainLoop" />
-          </div>
-          <h3>SustainLoop</h3>
-        </nav>
-      </NavLink>
-      <nav className={styles["header-nav"]}>
-        <ul>
-          <li>
-            <NavLink to="/">Home</NavLink>
-          </li>
-          <li>
-            <NavLink to="/shop">Shop</NavLink>
-          </li>
-          <li>
-            <NavLink to="/about">About</NavLink>
-          </li>
-          <li>
-            <NavLink to="/contact">Contact</NavLink>
-          </li>
-        </ul>
-      </nav>
-      <nav className={styles["header-icons"]}>
-        <ul>
-          <li>
-            <button onClick={handelLogin}>
-              {" "}
-              <FaRegUser />
-            </button>
-          </li>
-          <li>
-            <NavLink to="/">
-              <PiMagnifyingGlassBold />
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/">
-              <FaRegHeart />
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="#">
-              <MdOutlineShoppingCart onClick={() => dispatch(showCart())} />
-              <div
-                className={
-                  cartItems > 0 ? styles.showCartCount : styles.hideCartCount
-                }
-              >
-                <p>{cartItems}</p>
-              </div>
-            </NavLink>
-          </li>
-        </ul>
-      </nav>
-      <nav className={styles["header-hamburger"]}>
+      <section className={styles.mainHeaderNav}>
         <NavLink to="/">
-          <GiHamburgerMenu />
+          <nav className={styles["header-logo"]}>
+            <div>
+              <img src="logo.svg" alt="SustainLoop" />
+            </div>
+            <h3>SustainLoop</h3>
+          </nav>
         </NavLink>
-      </nav>{" "}
+        <nav className={styles["header-nav"]}>
+          <ul>
+            <li>
+              <NavLink to="/">Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/shop">Shop</NavLink>
+            </li>
+            <li>
+              <NavLink to="/about">About</NavLink>
+            </li>
+            <li>
+              <NavLink to="/contact">Contact</NavLink>
+            </li>
+          </ul>
+        </nav>
+        <nav className={styles["header-icons"]}>
+          <ul>
+            <li>
+              <button onClick={handelLogin}>
+                {" "}
+                <FaRegUser />
+              </button>
+            </li>
+            <li>
+              <NavLink to="#">
+                <PiMagnifyingGlassBold
+                  onClick={() => dispatch(toggelSearch())}
+                />
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/">
+                <FaRegHeart />
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="#">
+                <MdOutlineShoppingCart onClick={() => dispatch(showCart())} />
+                <div
+                  className={
+                    cartItems > 0 ? styles.showCartCount : styles.hideCartCount
+                  }
+                >
+                  <p>{cartItems}</p>
+                </div>
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
+        <nav className={styles["header-hamburger"]}>
+          <NavLink to="/">
+            <GiHamburgerMenu />
+          </NavLink>
+        </nav>{" "}
+      </section>
       <ShoppingCart />
+      {handleSearchChange && (
+        <div className={styles.showSearch}>
+          <button
+            className={styles.closeSearch}
+            onClick={() => dispatch(toggelSearch())}
+          >
+            ✕
+          </button>
+          <SearchBar />
+        </div>
+      )}
     </header>
   );
 };
