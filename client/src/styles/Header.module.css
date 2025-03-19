@@ -8,27 +8,29 @@
   }
 }
 
-header {
+header > .mainHeaderNav {
   display: flex;
   padding: 2rem 2.5rem;
   justify-content: space-between;
   align-items: center;
 }
+header {
+  display: flex;
+  flex-direction: column;
+}
 
 .showSearch {
-  position: absolute;
-  top: 20%;
-  right: 0;
-  transform: translateY(-50%);
   z-index: 10;
   background-color: white;
   padding: 1rem;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  width: 300px;
   display: flex;
   align-items: center;
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 2rem;
 }
 
 .closeSearch {
@@ -37,7 +39,7 @@ header {
   font-size: 1.5rem;
   font-weight: bolder;
   cursor: pointer;
-  color: #333;
+  color: black;
   margin-right: 10px;
   transition: 0.2s;
 }
