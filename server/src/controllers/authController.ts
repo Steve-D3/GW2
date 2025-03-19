@@ -22,7 +22,8 @@ export const register = async (req: Request, res: Response) => {
     // Check if the email already exists in the database
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "Email already exists" });
+      res.status(400).json({ message: "Email already exists" });
+      return;
     }
 
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -109,7 +110,7 @@ export const login = async (req: Request, res: Response) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    return res.status(200).json({
+    res.status(200).json({
       message: "User logged in successfully",
       user: {
         _id: user._id,
@@ -118,6 +119,7 @@ export const login = async (req: Request, res: Response) => {
       },
       token,  
     });
+    return;
   } catch (error: unknown) {
     if (error instanceof Error) {
       res.status(500).json({ message: error.message });

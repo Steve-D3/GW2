@@ -15,7 +15,6 @@ import authRoutes from "./routes/authRoutes"
 import Products from "./models/productsModel"
 
 // Middleware
-import { helloMiddleware } from "./middleware/exampleMiddleware";
 
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
