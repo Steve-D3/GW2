@@ -21,27 +21,26 @@ const ProductGrid = () => {
   const category = useSelector(selectCategory);
   const priceRange = useSelector(selectPriceRange);
   const [currentPage, setCurrentPage] = useState(1);
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setCurrentPage(1);
-    dispatch(setAmountOfProductsFiltered(amountOfProducts));
-    dispatch(setAmountOfProductsSelected(amountofSelectedProducts));
-  }, [limit, sortBy, viewType, category, priceRange.min, priceRange.max]);
 
-  // Add a loading state for fetching products
   const { data: productsData, isLoading, isError } = useGetProductsQuery();
 
-  // If data is loading, show a loading indicator
+  useEffect(() => {
+    if (productsData) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setCurrentPage(1);
+      dispatch(setAmountOfProductsFiltered(amountOfProducts));
+      dispatch(setAmountOfProductsSelected(amountofSelectedProducts));
+    }
+  }, [limit, sortBy, viewType, category, priceRange.min, priceRange.max]);
+
   if (isLoading) {
     return <div className={styles.loading}>Loading products...</div>;
   }
 
-  // If there's an error, show an error message
   if (isError) {
     return <div className={styles.error}>Failed to load products</div>;
   }
 
-  // Once products are loaded, proceed with filtering and sorting
   const sortedProducts = productsData
     ? [...productsData].sort((a, b) =>
         sortBy === "name"
