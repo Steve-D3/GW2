@@ -120,9 +120,16 @@ export const addImage = async (req: Request, res: Response) => {
  * request. In this case, the function is sending a JSON response with the products data when the
  * products are successfully
  */
+
 export const getProducts = async (req: Request, res: Response) => {
   try {
-    const products = await productsModel.find();
+    const products = await productsModel
+      .find()
+      .populate("category", "name")
+      .lean(); //  Converts Mongoose documents to plain objects
+
+    console.log("🔍 Products fetched for Admin View:", products); // Debugging log
+
     res.status(200).json(products);
   } catch (error) {
     console.log(error);
@@ -166,7 +173,7 @@ export const getProductById = async (req: Request, res: Response) => {
  * @param {Response} res - The res parameter in the getProductsByCategory function is the response
  * object that will be used to send the response back to the client making the request. It is an
  * instance of the Express Response object, which provides methods for sending responses such as
- * res.status() and 
+ * res.status() and
  * @returns The getProductsByCategory function is an asynchronous function that takes a request
  * (req) and response (res) object as parameters. It attempts to find a category by name, then
  * finds products associated with that category by category ID. If the category or products are not
@@ -296,78 +303,40 @@ export const getImages = async (req: Request, res: Response) => {
  * data. If the product is not found, it returns a 404 status with a message "Product not found". If
  * there is an internal server error during the update process, it returns a 500 status with a message
  */
-// export const updateProduct = async (req: Request, res: Response) => {
-//     try {
-//         const { id } = req.params;
-//         const { category_name, ...updateData } = req.body;
-
-//         if (category_name) {
-//             const category = await categoriesModel.findOne({ name: category_name });
-//             if (!category) {
-//                 res.status(404).json({ message: "Category not found" });
-//                 return;
-//             }
-//             updateData.category = category._id;
-//         }
-
-//         const itemToUpdate = await productsModel.findByIdAndUpdate(
-//             id,
-//             { ...updateData },
-//             { new: true }
-//         );
-
-//         if (!itemToUpdate) {
-//             res.status(404).json({ message: "Product not found" });
-//             return;
-//         }
-
-//         res.status(200).json({ status: "success", data: itemToUpdate });
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).json({ message: "Internal server error" });
-//     }
-// };
 
 export const updateProduct = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { category_name, ...updateData } = req.body;
+    const { category, ...updateData } = req.body;
 
-    console.log("✅ Received update request for ID:", id);
-    console.log("🔹 Data received in request:", updateData);
+    console.log("Received update request for ID:", id);
+    console.log("Data received in request:", updateData);
 
-    if (category_name) {
-      const category = await categoriesModel.findOne({ name: category_name });
-      if (!category) {
-        res.status(404).json({ message: "Category not found" });
-        return;
+    if (category) {
+      const categoryExists = await categoriesModel.findById(category);
+      if (!categoryExists) {
+        return res.status(404).json({ message: "Category not found" });
       }
-      updateData.category = category._id;
+      updateData.category = category;
     }
 
-    // Ensure stock and price are treated as numbers
-    if (updateData.stock) updateData.stock = Number(updateData.stock);
-    if (updateData.price) updateData.price = Number(updateData.price);
-
-    const itemToUpdate = await productsModel.findByIdAndUpdate(
-      id,
-      { $set: updateData }, // Ensure full update
-      { new: true }
-    );
+    const itemToUpdate = await productsModel
+      .findByIdAndUpdate(id, { $set: updateData }, { new: true })
+      .populate("category", "name");
 
     if (!itemToUpdate) {
-      console.log("🔴 Product not found.");
-      res.status(404).json({ message: "Product not found" });
-      return;
+      console.log("Product not found.");
+      return res.status(404).json({ message: "Product not found" });
     }
 
-    console.log("✅ Updated Product:", itemToUpdate);
+    console.log("Updated Product:", itemToUpdate);
     res.status(200).json({ status: "success", data: itemToUpdate });
   } catch (error) {
-    console.error("🔴 Update Error:", error);
+    console.error(" Update Error:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 // DELETE
 /**
  * The function deleteProduct deletes a product by its ID and returns a success message if the

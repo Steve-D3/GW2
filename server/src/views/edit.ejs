@@ -51,13 +51,17 @@
         />
 
         <label for="category">Category</label>
-        <input
-          type="text"
-          id="category"
-          name="category"
-          value="<%= category %>"
-          required
-        />
+        <select id="category" name="category">
+          <% if (category) { %>
+          <option value="<%= category._id %>" selected>
+            <%= category.name %>
+          </option>
+          <% } else { %>
+          <option value="" disabled selected>Select a category</option>
+          <% } %> <% categories.forEach((cat) => { %>
+          <option value="<%= cat._id %>"><%= cat.name %></option>
+          <% }); %>
+        </select>
 
         <button type="submit" class="blue">Save Changes</button>
       </form>

@@ -1,32 +1,32 @@
-
 document
-  .querySelector("#edit-product-form")
+  .querySelector("#add-product-form")
   .addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    console.log("Submit button clicked! Preparing update...");
+    console.log("🚀 Adding new product...");
 
-    const productId = document.querySelector("#product_id").value;
     const name = document.querySelector("#name").value;
     const description = document.querySelector("#description").value;
     const price = document.querySelector("#price").value;
     const stock = document.querySelector("#stock").value;
     const category = document.querySelector("#category").value; 
+    const image_url = document.querySelector("#image_url").value;
 
-    const updateData = {
+    const newProduct = {
       name,
       description,
       price: Number(price),
       stock: Number(stock),
       category, 
+      image_url,
     };
 
-    console.log(" Sending update request with data:", updateData);
+    console.log(" Sending new product data:", newProduct);
 
-    const response = await fetch(`/api/products/${productId}`, {
-      method: "PUT",
+    const response = await fetch("/api/products", {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updateData),
+      body: JSON.stringify(newProduct),
     });
 
     const responseData = await response.json();
@@ -35,6 +35,6 @@ document
     if (response.ok) {
       window.location.href = "/";
     } else {
-      alert("Error updating product: " + responseData.message);
+      alert("Error adding product: " + responseData.message);
     }
   });
