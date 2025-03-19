@@ -66,7 +66,6 @@ registerForm?.addEventListener("submit", async (e) => {
 
     console.log(response);
     window.location.href = "/";
-    // location.re
   } catch (error) {
     errorDiv.textContent = error.message;
     console.error("Error during registration:", error);

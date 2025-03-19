@@ -2,9 +2,10 @@ import { Request, Response } from "express";
 import { Error as MongooseError } from "mongoose";
 const { ValidationError } = MongooseError;
 import bcrypt from "bcrypt";
-import User  from "../models/usersModel";
+import User from "../models/usersModel";
 import jwt from "jsonwebtoken";
 import { signToken } from "../utils/helpers";
+import validator from "validator";
 import mongoose from "mongoose";
 
 
@@ -26,8 +27,27 @@ export const register = async (req: Request, res: Response) => {
       return;
     }
 
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    // Check if email is valid
+    if (!validator.isEmail(email)) {
+      res.status(400).json({ message: "Email is not valid" });
+      return;
+    }
 
+    // Check if password is strong enough
+    const isStrongPassword = validator.isStrongPassword(password, {
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
+    });
+
+    if (!isStrongPassword) {
+      res.status(403).json({ message: "Password is not strong enough" });
+      return;
+    }
+
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
     const userRole = role || "basic";
 
     const response = await User.create({
@@ -66,6 +86,7 @@ export const register = async (req: Request, res: Response) => {
     }
   }
 };
+
 export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
@@ -80,12 +101,19 @@ export const login = async (req: Request, res: Response) => {
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      res.status(400).json({ message: "Email or password is incorrect" });
+      res.status(400).json({ message: "Invalid credentials" });
       return;
     }
+
+    if (user.role !== "admin") {
+      res.status(403).json({ message: "Unauthorized, Admins only" });
+      return;
+    }
+
     if (!SECRET) {
       throw new Error("Internal error");
     }
+
 
     const tokenUser = {
       _id: new mongoose.Types.ObjectId(user._id),
@@ -106,7 +134,7 @@ export const login = async (req: Request, res: Response) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production" ? true : false,
-      sameSite: "none",
+      sameSite: "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -117,7 +145,7 @@ export const login = async (req: Request, res: Response) => {
         email: user.email,
         name: user.name,
       },
-      token,  
+      token,
     });
     return;
   } catch (error: unknown) {
@@ -128,6 +156,7 @@ export const login = async (req: Request, res: Response) => {
     }
   }
 };
+
 
 export const logout = async (req: Request, res: Response) => {
   try {
