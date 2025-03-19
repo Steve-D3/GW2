@@ -51,7 +51,7 @@ app.get("/", async (req, res) => {
   });
 });
 
-app.get("/register", async (req, res) => {
+app.get("/register/admin", async (req, res) => {
   res.render("register", {
     title: "Register",
   })
@@ -72,7 +72,7 @@ if so put register and login in comments
 
 
 // Routes
-app.use("/api", authRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api", 
   userRoutes, 
   productRoutes,
