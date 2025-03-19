@@ -11,23 +11,36 @@ import {
   selectSortBy,
   setViewType,
   selectViewType,
+  selectViewFilter,
+  toggelFilter,
+  selectAmountOfProductsFiltered,
+  selectAmountOfProductsSelected,
 } from "../store/filterSlice";
 import { useGetProductsQuery } from "../store/productApiSlice";
+import CustomFilter from "./CustomFilter";
+
 const ProductFilter = () => {
   const limit = useSelector(selectLimit);
   const sortBy = useSelector(selectSortBy);
   const viewType = useSelector(selectViewType);
+  const viewFilter = useSelector(selectViewFilter);
+  const amountOfProductsFiltered = useSelector(selectAmountOfProductsFiltered);
+  const amountofSelectedProducts = useSelector(selectAmountOfProductsSelected);
   const dispatch = useDispatch();
 
   //to know total products from the server
   const { data: productsData } = useGetProductsQuery();
   if (!productsData) return null;
-  const totalProducts = productsData.length;
+
   const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(setLimit(Number(e.target.value)));
   };
   const handleViewChange = (viewType: string) => {
     dispatch(setViewType(viewType));
+  };
+  const handleViewFilter = () => {
+    dispatch(toggelFilter());
+    console.log(viewFilter);
   };
   return (
     <>
@@ -44,8 +57,8 @@ const ProductFilter = () => {
         <div>
           <div>
             <div>
-              <i>
-                <GiSettingsKnobs />
+              <i className={styles.customFilterIcon}>
+                <GiSettingsKnobs onClick={handleViewFilter} />
               </i>
               <p>Filter</p>
             </div>
@@ -65,7 +78,8 @@ const ProductFilter = () => {
             <i>|</i>
             <p>
               {" "}
-              Showing {limit} of {totalProducts} results
+              Showing {amountofSelectedProducts} of {amountOfProductsFiltered}{" "}
+              results
             </p>
           </div>
           <div>
@@ -91,6 +105,7 @@ const ProductFilter = () => {
             </select>
           </div>
         </div>
+        {viewFilter && <CustomFilter />}
       </section>
     </>
   );

@@ -8,6 +8,7 @@ type Product = {
   price: number;
   image_url: { url: string }[];
   stock_quantity: number;
+  category: string;
 };
 const productApi = createApi({
   tagTypes: ["Product"],

@@ -3,6 +3,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 5rem;
+  margin: 0 auto;
+  min-height: 300px;
 }
 .product-list {
   max-width: 80%;
@@ -10,6 +12,8 @@
   flex-direction: column;
   gap: 5rem;
   justify-content: center;
+  min-height: 300px;
+  margin: 0 auto;
 }
 .product-contanier {
   display: flex;
@@ -41,6 +45,20 @@
       background-color: #b88e2f;
       color: #ffffff;
     }
+  }
+}
+
+.notFoundProductMsg {
+  width: 100%;
+  text-align: center;
+
+  > p {
+    text-align: center;
+    position: absolute;
+
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
   }
 }
 
