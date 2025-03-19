@@ -7,6 +7,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/ShoppingCart.module.css";
 import { TbShoppingBagX } from "react-icons/tb";
+import { Link } from "react-router";
 
 interface CartItem {
   _id: string;
@@ -35,21 +36,27 @@ const ShoppingCart = () => {
       {cartItems.length > 0 ? (
         <div className={styles.cartItems}>
           {cartItems.map((item: CartItem) => (
-            <div key={item._id} className={styles.cartItem}>
-              <img src={item.image_url[0]?.url} alt={item.name} />
-              <div>
-                <h3>{item.name}</h3>
-
+            // make a link to the product details
+            <Link
+              to={`/shop/${item._id}/${item.name}`}
+              onClick={() => dispatch(hideCart())}
+            >
+              <div key={item._id} className={styles.cartItem}>
+                <img src={item.image_url[0]?.url} alt={item.name} />
                 <div>
-                  <p>{item.quantity}</p>
-                  <p>X</p>
-                  <p>${item.price}</p>
+                  <h3>{item.name}</h3>
+
+                  <div>
+                    <p>{item.quantity}</p>
+                    <p>X</p>
+                    <p>${item.price}</p>
+                  </div>
                 </div>
+                <button onClick={() => dispatch(removeFromCart(item._id))}>
+                  x
+                </button>
               </div>
-              <button onClick={() => dispatch(removeFromCart(item._id))}>
-                x
-              </button>
-            </div>
+            </Link>
           ))}
         </div>
       ) : (
