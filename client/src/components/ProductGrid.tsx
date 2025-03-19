@@ -21,30 +21,35 @@ const ProductGrid = () => {
   const category = useSelector(selectCategory);
   const priceRange = useSelector(selectPriceRange);
   const [currentPage, setCurrentPage] = useState(1);
-  const { data: productsData } = useGetProductsQuery();
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setCurrentPage(1);
-    dispatch(setAmountOfProductsFiltered(amountOfProducts));
-    dispatch(setAmountOfProductsSelected(amountofSelectedProducts));
-  }, [limit, sortBy, viewType, category, priceRange.min, priceRange.max]);
 
-  if (!productsData) return null;
+  // Add a loading state for fetching products
+  const { data: productsData, isLoading, isError } = useGetProductsQuery();
 
-  const sortedProducts = [...productsData].sort((a, b) =>
-    sortBy === "name"
-      ? a.name.localeCompare(b.name)
-      : sortBy === "price"
-      ? a.price - b.price
-      : 0
-  );
+  // If data is loading, show a loading indicator
+  if (isLoading) {
+    return <div className={styles.loading}>Loading products...</div>;
+  }
+
+  // If there's an error, show an error message
+  if (isError) {
+    return <div className={styles.error}>Failed to load products</div>;
+  }
+
+  // Once products are loaded, proceed with filtering and sorting
+  const sortedProducts = productsData
+    ? [...productsData].sort((a, b) =>
+        sortBy === "name"
+          ? a.name.localeCompare(b.name)
+          : sortBy === "price"
+          ? a.price - b.price
+          : 0
+      )
+    : [];
 
   const filteredProducts = sortedProducts.filter((product) => {
     const categoryMatch = category === "" || product.category === category;
-
     const priceInRange =
       product.price >= priceRange.min && product.price <= priceRange.max;
-
     return categoryMatch && priceInRange;
   });
 
@@ -58,9 +63,16 @@ const ProductGrid = () => {
   const handlePagination = (page: number) => {
     setCurrentPage(page);
   };
-  const amountOfProducts = filteredProducts.length;
 
+  const amountOfProducts = filteredProducts.length;
   const amountofSelectedProducts = selectedProducts.length;
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setCurrentPage(1);
+    dispatch(setAmountOfProductsFiltered(amountOfProducts));
+    dispatch(setAmountOfProductsSelected(amountofSelectedProducts));
+  }, [limit, sortBy, viewType, category, priceRange.min, priceRange.max]);
 
   return (
     <section className={styles["product-container"]}>
@@ -83,6 +95,7 @@ const ProductGrid = () => {
           ))
         )}
       </div>
+
       {amountofSelectedProducts > 0 && (
         <div className={styles["pagination"]}>
           <button
