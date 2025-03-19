@@ -50,12 +50,6 @@ app.get("/", localAuthMiddleware, async (req, res) => {
   });
 });
 
-app.get("/register", async (req, res) => {
-  res.render("register", {
-    title: "Register",
-  })
-});
-
 app.get("/register/admin", async (req, res) => {
   res.render("register", {
     title: "Register",
