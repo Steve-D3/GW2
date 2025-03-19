@@ -28,8 +28,6 @@ const ProductGrid = () => {
     if (productsData) {
       window.scrollTo({ top: 0, behavior: "smooth" });
       setCurrentPage(1);
-      dispatch(setAmountOfProductsFiltered(amountOfProducts));
-      dispatch(setAmountOfProductsSelected(amountofSelectedProducts));
     }
   }, [limit, sortBy, viewType, category, priceRange.min, priceRange.max]);
 
@@ -71,6 +69,8 @@ const ProductGrid = () => {
 
   const amountOfProducts = filteredProducts.length;
   const amountofSelectedProducts = selectedProducts.length;
+  dispatch(setAmountOfProductsFiltered(amountOfProducts));
+  dispatch(setAmountOfProductsSelected(amountofSelectedProducts));
 
   return (
     <section className={styles["product-container"]}>
