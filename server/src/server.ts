@@ -57,12 +57,6 @@ app.get("/register", async (req, res) => {
   })
 });
 
-app.get("/register/admin", async (req, res) => {
-  res.render("register", {
-    title: "Register",
-  })
-});
-
 app.get("/login", async (req, res) => {
   res.render("login", {
     title: "Login",

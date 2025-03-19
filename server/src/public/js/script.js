@@ -50,7 +50,7 @@ registerForm?.addEventListener("submit", async (e) => {
     const formData = new FormData(registerForm);
     const inputData = Object.fromEntries(formData);
 
-    const response = await fetch("/api/auth/register/admin", {
+    const response = await fetch("/api/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,8 +65,7 @@ registerForm?.addEventListener("submit", async (e) => {
     }
 
     console.log(response);
-    window.location.href = "/";
-    // location.re
+    location.re
   } catch (error) {
     errorDiv.textContent = error.message;
     console.error("Error during registration:", error);

@@ -13,8 +13,8 @@ const SECRET = process.env.JWT_SECRET;
 
 export const register = async (req: Request, res: Response) => {
   try {
-    const { name, email, password, role } = req.body;
-    if (!name || !email || !password) {
+    const { name, email, password } = req.body;
+    if (!name || !email || !password ) {
       res.status(400).json({ message: "Please fill all fields" });
       return;
     }
@@ -27,13 +27,11 @@ export const register = async (req: Request, res: Response) => {
 
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const userRole = role || "basic";
-
     const response = await User.create({
       name,
       email,
       password: hashedPassword,
-      role: userRole,
+    
     });
 
     if (!SECRET) {
@@ -47,8 +45,11 @@ export const register = async (req: Request, res: Response) => {
       role: response.role,
     };
 
+    // JWT aanmaken USER - SECRET - EXPIRESIN
     const token = await signToken({ user: user, secret: SECRET, expiresIn: "7d" });
+    
 
+    // Cookie aanmaken
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production" ? true : false,
@@ -56,7 +57,9 @@ export const register = async (req: Request, res: Response) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res.status(201).json({ message: "User created successfully", user: response });
+    res
+      .status(201)
+      .json({ message: "User created successfully", user: response });
   } catch (error: unknown) {
     if (error instanceof Error) {
       res.status(500).json({ message: error.message });
