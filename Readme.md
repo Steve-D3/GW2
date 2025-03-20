@@ -8,9 +8,9 @@ This project is the result of our second group collaboration: an online webshop 
 ![Screenshot of the website](./server/src/public/img/eco-shop1.png)
 
 <p align="center">
-  <img src="./server/src/public/img/eco-shop2.png" width="350">
-  <img src="./server/src/public/img/eco-shop3.png" width="350">
-  <img src="./server/src/public/img/eco-shop4.png" width="350">
+  <img src="./server/src/public/img/eco-shop2.png" width="300">
+  <img src="./server/src/public/img/eco-shop3.png" width="300">
+  <img src="./server/src/public/img/eco-shop4.png" width="300">
 </p>
 
 ## Technologies Used
