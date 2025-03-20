@@ -21,6 +21,8 @@ import categoriesModel from "./models/categoriesModel";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { isAuth } from "./middleware/authMiddleware";
+import localAuthMiddleware from "./middleware/localAuthMiddleware";
+
 
 // Variables
 const app = express();
@@ -39,12 +41,12 @@ app.use(express.json());
 app.set("view engine", "ejs");
 app.set("views", "src/views");
 app.use(express.static("src/public"));
-// use arcmiddleware?
 
-app.get("/", async (req, res) => {
+app.get("/", localAuthMiddleware, async (req, res) => {
   try {
-    const allProducts = await Products.find().populate("category", "name"); //  Ensure categories are included
-    console.log(" Products sent to Admin View:", allProducts); // just sum debugging line :v
+    const allProducts = await Products.find().populate("category", "name");
+    console.log("Products sent to Admin View:", allProducts);
+    console.log("User: ", res.locals);
 
     res.render("index", {
       title: "Product management system",
@@ -52,10 +54,11 @@ app.get("/", async (req, res) => {
       user: res.locals.user,
     });
   } catch (error) {
-    console.error(" Error loading admin view:", error);
+    console.error("Error loading admin view:", error);
     res.status(500).send("Internal Server Error");
   }
 });
+
 
 app.get("/register/admin", async (req, res) => {
   res.render("register", {
@@ -68,11 +71,6 @@ app.get("/login", async (req, res) => {
     title: "Login",
   });
 });
-
-/*
-Not yet tested, login and register could cause issues 
-if so put register and login in comments
-*/
 
 // ------------------------------------------------------
 

@@ -1,4 +1,5 @@
 .product-card-grid {
+  margin: 0 auto;
   position: relative;
   background-color: #f4f5f7;
   font-family: "Poppins", serif;

@@ -5,12 +5,22 @@ type FilterState = {
   limit: number;
   sortBy: "name" | "price";
   viewType: "grid" | "list";
+  viewFilter: boolean;
+  category: string;
+  priceRange: { min: number; max: number };
+  amountOfProductsSelected: number;
+  amountOfProductsFiltered: number;
 };
 
 const initialState: FilterState = {
   limit: 10,
   sortBy: "name",
   viewType: "grid",
+  viewFilter: false,
+  category: "",
+  priceRange: { min: 0, max: 100 },
+  amountOfProductsSelected: 0,
+  amountOfProductsFiltered: 0,
 };
 
 const filterSlice = createSlice({
@@ -26,12 +36,43 @@ const filterSlice = createSlice({
     setViewType: (state, action) => {
       state.viewType = action.payload;
     },
+    toggelFilter: (state) => {
+      state.viewFilter = !state.viewFilter;
+    },
+    filterByCategory: (state, action) => {
+      state.category = action.payload;
+    },
+    setPriceRange: (state, action) => {
+      state.priceRange = action.payload;
+    },
+    setAmountOfProductsSelected: (state, action) => {
+      state.amountOfProductsSelected = action.payload;
+    },
+    setAmountOfProductsFiltered: (state, action) => {
+      state.amountOfProductsFiltered = action.payload;
+    },
   },
 });
 
-export const { setLimit, setSortBy, setViewType } = filterSlice.actions;
+export const {
+  setLimit,
+  setSortBy,
+  setViewType,
+  toggelFilter,
+  filterByCategory,
+  setPriceRange,
+  setAmountOfProductsSelected,
+  setAmountOfProductsFiltered,
+} = filterSlice.actions;
 export default filterSlice.reducer;
 
 export const selectLimit = (state: RootState) => state.filter.limit;
 export const selectSortBy = (state: RootState) => state.filter.sortBy;
 export const selectViewType = (state: RootState) => state.filter.viewType;
+export const selectViewFilter = (state: RootState) => state.filter.viewFilter;
+export const selectCategory = (state: RootState) => state.filter.category;
+export const selectPriceRange = (state: RootState) => state.filter.priceRange;
+export const selectAmountOfProductsSelected = (state: RootState) =>
+  state.filter.amountOfProductsSelected;
+export const selectAmountOfProductsFiltered = (state: RootState) =>
+  state.filter.amountOfProductsFiltered;
