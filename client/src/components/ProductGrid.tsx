@@ -1,104 +1,132 @@
-// import productsData from "../db.json";
+import { useEffect, useState } from "react";
 import styles from "../styles/ProductGrid.module.css";
 import ProductCard from "./ProductCard";
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   selectLimit,
   selectSortBy,
   selectViewType,
+  selectCategory,
+  selectPriceRange,
+  setAmountOfProductsFiltered,
+  setAmountOfProductsSelected,
 } from "../store/filterSlice";
-import { useSelector } from "react-redux";
-
-//get the product from the server http://localhost:3001/products
 import { useGetProductsQuery } from "../store/productApiSlice";
 
-type Product = {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  image_url: { url: string }[];
-  stock_quantity: number;
-};
 const ProductGrid = () => {
+  const dispatch = useDispatch();
   const limit = useSelector(selectLimit);
   const sortBy = useSelector(selectSortBy);
   const viewType = useSelector(selectViewType);
+  const category = useSelector(selectCategory);
+  const priceRange = useSelector(selectPriceRange);
   const [currentPage, setCurrentPage] = useState(1);
-  const { data: productsData } = useGetProductsQuery();
-  console.log(productsData);
-  if (!productsData) return null;
-  const sortedProducts = [...productsData].sort((a, b) => {
-    if (sortBy === "name") {
-      return a.name.localeCompare(b.name);
-    } else if (sortBy === "price") {
-      return a.price - b.price;
+
+  const { data: productsData, isLoading, isError } = useGetProductsQuery();
+
+  useEffect(() => {
+    if (productsData) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setCurrentPage(1);
     }
-    return 0;
+  }, [limit, sortBy, viewType, category, priceRange.min, priceRange.max]);
+
+  if (isLoading) {
+    return <div className={styles.loading}>Loading products...</div>;
+  }
+
+  if (isError) {
+    return <div className={styles.error}>Failed to load products</div>;
+  }
+
+  const sortedProducts = productsData
+    ? [...productsData].sort((a, b) =>
+        sortBy === "name"
+          ? a.name.localeCompare(b.name)
+          : sortBy === "price"
+          ? a.price - b.price
+          : 0
+      )
+    : [];
+
+  const filteredProducts = sortedProducts.filter((product) => {
+    const categoryMatch = category === "" || product.category === category;
+    const priceInRange =
+      product.price >= priceRange.min && product.price <= priceRange.max;
+    return categoryMatch && priceInRange;
   });
-  const totalPages = Math.ceil(sortedProducts.length / limit);
+
+  const totalPages = Math.ceil(filteredProducts.length / limit);
   const startIndex = (currentPage - 1) * limit;
-  const selectedProducts = sortedProducts.slice(startIndex, startIndex + limit);
+  const selectedProducts = filteredProducts.slice(
+    startIndex,
+    startIndex + limit
+  );
+
+  const handlePagination = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const amountOfProducts = filteredProducts.length;
+  const amountofSelectedProducts = selectedProducts.length;
+  dispatch(setAmountOfProductsFiltered(amountOfProducts));
+  dispatch(setAmountOfProductsSelected(amountofSelectedProducts));
 
   return (
-    <>
-      <section className={styles["product-contanier"]}>
-        <div
-          className={
-            viewType === "grid"
-              ? styles["product-grid"]
-              : styles["product-list"]
-          }
-        >
-          {selectedProducts.map((product: Product) => (
+    <section className={styles["product-container"]}>
+      <div
+        className={
+          viewType === "grid" ? styles["product-grid"] : styles["product-list"]
+        }
+      >
+        {selectedProducts.length === 0 ? (
+          <div className={styles.notFoundProductMsg}>
+            <p>No products found</p>
+          </div>
+        ) : (
+          selectedProducts.map((product) => (
             <ProductCard
               key={product._id}
               product={product}
               viewType={viewType}
             />
-          ))}
-        </div>
-        <div className={styles["pagination"]}>
-          {/* add numbers of product shown and total  in filter ( will use this in filter compnent )*/}
-          {/* <span> Showing 8 of {productsData.length} results</span> */}
+          ))
+        )}
+      </div>
 
+      {amountofSelectedProducts > 0 && (
+        <div className={styles["pagination"]}>
           <button
-            onClick={() => {
-              setCurrentPage(currentPage - 1);
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
+            onClick={() => handlePagination(currentPage - 1)}
             className={currentPage === 1 ? styles["hidden-btn"] : ""}
+            aria-label="Previous Page"
           >
             Prev
           </button>
-          {/* add numbers of pages */}
+
           {Array.from({ length: totalPages }, (_, index) => (
             <button
               key={index + 1}
-              onClick={() => {
-                setCurrentPage(index + 1);
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
+              onClick={() => handlePagination(index + 1)}
               className={`${styles["pagination-number-btn"]} ${
                 index + 1 === currentPage ? styles["active"] : ""
               }`}
+              aria-label={`Page ${index + 1}`}
             >
               {index + 1}
             </button>
           ))}
-          {/* if there are more pages, show next button if not,  hidden "Next" button*/}
+
           <button
-            onClick={() => {
-              setCurrentPage(currentPage + 1);
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
+            onClick={() => handlePagination(currentPage + 1)}
             className={currentPage === totalPages ? styles["hidden-btn"] : ""}
+            aria-label="Next Page"
           >
             Next
           </button>
         </div>
-      </section>
-    </>
+      )}
+    </section>
   );
 };
 

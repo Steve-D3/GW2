@@ -1,0 +1,105 @@
+.customFilter {
+  border-top: #e4d6b681 solid 1px;
+  background-color: blueviolet;
+  display: flex;
+
+  gap: 1rem;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: #9f9f9f;
+  width: 100%;
+  top: -50px;
+  right: 10px;
+  > div {
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    &:nth-child(1) {
+      label {
+        font-size: 2rem;
+        white-space: nowrap;
+        gap: 1rem;
+        color: black;
+      }
+      select {
+        outline: none;
+        font-size: 2rem;
+        color: #9f9f9f;
+        background-color: #ffffff;
+        text-align: center;
+        border: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        cursor: pointer;
+        height: 50px;
+        width: 170px;
+      }
+    }
+    &:nth-child(2) {
+      p {
+        font-size: 2rem;
+        white-space: nowrap;
+        gap: 1rem;
+        color: black;
+      }
+      > div {
+        width: 100%;
+
+        > div:nth-child(1) {
+          background-color: #ffffff !important;
+          height: 6px !important;
+        }
+
+        > div:nth-child(2) {
+          background-color: #b88e2f !important;
+          height: 6px !important;
+        }
+
+        > div:nth-child(3) {
+          border-color: #9f9f9f !important;
+
+          cursor: pointer;
+          box-shadow: none !important;
+          &:hover,
+          &:active {
+            border-color: #b88e2f !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .customFilter {
+    > div {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      justify-items: center;
+
+      &:nth-child(1) {
+        label {
+          font-size: 1.5rem;
+          white-space: nowrap;
+          gap: 1rem;
+          color: black;
+        }
+        select {
+          outline: none;
+          font-size: 1.5rem;
+
+          height: 40px;
+          width: 150px;
+        }
+      }
+      &:nth-child(2) {
+        p {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+}

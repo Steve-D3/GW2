@@ -7,7 +7,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/ShoppingCart.module.css";
 import { TbShoppingBagX } from "react-icons/tb";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 
 interface CartItem {
   _id: string;
@@ -80,9 +80,14 @@ const ShoppingCart = () => {
 
       {/* Footer Buttons */}
       <div className={styles.cartFooterButtons}>
-        <button>Cart</button>
+        {/* <button>Cart</button>
         <button>Checkout</button>
-        <button>Comparison</button>
+        <button>Comparison</button> */}
+        <NavLink to="/cart" onClick={() => dispatch(hideCart())}>
+          Cart
+        </NavLink>{" "}
+        <NavLink to="#">Checkout</NavLink>
+        <NavLink to="#">Comparison</NavLink>
       </div>
     </section>
   );
