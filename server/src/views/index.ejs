@@ -36,19 +36,21 @@
                     <td><%- product.description %></td>
                     <td><%- product.price %></td>
                     <td><%- product.stock %></td>
-                    <td><%- product.category %></td>
+                    <td><%- product.category.name %></td>
                     <td>
                         <% product.image_url.forEach((elem) => { %>
                             <img src="<%- elem.url %>" alt="">
                         <% }); %>
                     </td>
                     <td>
+                      <div>
                         <button class="red" id="deleteBtn" data-id="<%- product._id %>">
                             Delete
                         </button>
-                        <button class="red">
+                        <button class="red" id="editBtn">
                             Edit
                         </button>
+                      </div>
                     </td>
                 </tr>
                 <% }); %>

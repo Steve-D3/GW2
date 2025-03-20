@@ -11,7 +11,7 @@ import orderRoutes from "./routes/orders.routes"
 import categoryRoutes from "./routes/categories.routes"
 import reviewRoutes from "./routes/reviews.routes"
 import wishlistRoutes from "./routes/wishlist.routes"
-import authRoutes from "./routes/authRoutes"
+import authRoutes from "./routes/auth.routes"
 import Products from "./models/productsModel"
 
 // Middleware
@@ -42,7 +42,7 @@ app.set("views", "src/views");
 app.use(express.static("src/public"));
 
 app.get("/", localAuthMiddleware, async (req, res) => {
-  const allProducts = await Products.find();
+  const allProducts = await Products.find().populate("category", "name");;
   console.log("User: ", res.locals);
   res.render("index", {
     title: "Product management system",
