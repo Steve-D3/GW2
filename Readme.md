@@ -2,19 +2,17 @@
 
 
 ## Description
-
 This project is the result of our second group collaboration: an online webshop inspired by eco-friendly products. 
 
 ![Screenshot of the website](./server/src/public/img/eco-shop1.png)
 
-<p align="center">
-  <img src="./server/src/public/img/eco-shop2.png" width="300">
-  <img src="./server/src/public/img/eco-shop3.png" width="300">
-  <img src="./server/src/public/img/eco-shop4.png" width="300">
-</p>
+
 
 ## Technologies Used
 This project includes both a front-end and back-end, each structured in its own folder with separate dependencies and configurations.
+
+| ![Eco-Shop 1](./server/src/public/img/eco-shop2.png) | ![Eco-Shop 2](./server/src/public/img/eco-shop3.png) | ![Eco-Shop 3](./server/src/public/img/eco-shop4.png) |
+|------------------------------------------------------|------------------------------------------------------|------------------------------------------------------|
 - ### Front-End:
     - **HTML**
     - **CSS**
