@@ -71,6 +71,10 @@ button.blue {
   border-radius: 4px;
 }
 
+button.blue:hover {
+  background-color: #0000cc;
+}
+
 button.red:hover {
   background-color: #cc0000;
 }

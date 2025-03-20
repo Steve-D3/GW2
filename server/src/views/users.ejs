@@ -1,0 +1,31 @@
+<%- include('partials/header'); -%>
+
+<div class="container">
+  <h1>Users</h1>
+  <div class="error"></div>
+  <div class="success"></div>
+  <a href="/"><button class="blue">Return to products</button></a>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(user => { %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.role %></td>
+        <td>
+          <a href="/users/<%= user._id %>"><button class="blue">Edit</button></a>
+          <button class="red delete" data-id="<%= user._id %>">Delete</button>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

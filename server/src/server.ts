@@ -13,6 +13,7 @@ import reviewRoutes from "./routes/reviews.routes"
 import wishlistRoutes from "./routes/wishlist.routes"
 import authRoutes from "./routes/auth.routes"
 import Products from "./models/productsModel"
+import User from "./models/usersModel"
 
 // Middleware
 
@@ -21,6 +22,7 @@ import cookieParser from "cookie-parser";
 import { isAuth } from "./middleware/authMiddleware";
 import localAuthMiddleware from "./middleware/localAuthMiddleware";
 import categoriesModel from "./models/categoriesModel";
+
 
 
 // Variables
@@ -61,6 +63,14 @@ app.get("/register/admin", async (req, res) => {
 app.get("/login", async (req, res) => {
   res.render("login", {
     title: "Login",
+  });
+});
+
+app.get("/users", async (req, res) => {
+  const allUsers = await User.find();
+  res.render("users", {
+    title: "Users",
+    users: allUsers,
   });
 });
 
