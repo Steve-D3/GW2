@@ -6,7 +6,7 @@ This project is the result of our second group collaboration: an online webshop 
 
 ![Screenshot of the website](./server/src/public/img/eco-shop1.png)
 
-
+---
 
 ## Technologies Used
 This project includes both a front-end and back-end, each structured in its own folder with separate dependencies and configurations.
@@ -26,7 +26,6 @@ This project includes both a front-end and back-end, each structured in its own 
     - **MongoDB** (with Mongoose)
     - **JWT** (Authentication)
     - **EJS** (for server-side views)
-
 
 
 ## Instalation
@@ -122,8 +121,9 @@ Product Management:
 | DELETE | /api/products/:id    | Delete a product (Admin)     |
 
 
+## License
 
-
+This project is licensed under the [MIT License](LICENSE).
 
 ---
 ## Credits  
