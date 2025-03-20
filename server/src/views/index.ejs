@@ -1,60 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
     <script src="/js/script.js" defer></script>
     <title>Product Management System</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <h1><%= title %></h1>
+      <h1><%= title %></h1>
         <h2>Welcome <%= locals.user.name %></h2>
         <div class="error"></div>
         <div class="success"></div>
 
-        <button class="green" id="logoutBtn">Log Out</button>
-        <button class="blue">Add Item</button>
-        <table id="productTable">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Stock</th>
-                    <th>Category</th>
-                    <th>Images</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% products.forEach((product)=>{ %>
-                <tr>
-                    <td><%- product.name %></td>
-                    <td><%- product.description %></td>
-                    <td><%- product.price %></td>
-                    <td><%- product.stock %></td>
-                    <td><%- product.category %></td>
-                    <td>
-                        <% product.image_url.forEach((elem) => { %>
-                            <img src="<%- elem.url %>" alt="">
-                        <% }); %>
-                    </td>
-                    <td>
-                        <button class="red" id="deleteBtn" data-id="<%- product._id %>">
-                            Delete
-                        </button>
-                        <button class="red">
-                            Edit
-                        </button>
-                    </td>
-                </tr>
-                <% }); %>
-            </tbody>
-        </table>
+      <button class="green" id="logoutBtn">Log Out</button>
+      <button>
+        <a href="/add" class="blue">Add Product</a>
+      </button>
+      <table id="productTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Category</th>
+            <th>Images</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% products.forEach((product)=>{ %>
+          <tr>
+            <td><%- product.name %></td>
+            <td><%- product.description %></td>
+            <td><%- product.price %></td>
+            <td><%- product.stock %></td>
+            <td>
+              <%- product.category && product.category.name ?
+              product.category.name : "No Category" %>
+            </td>
+            <td>
+              <% product.image_url.forEach((elem) => { %>
+              <img src="<%- elem.url %>" alt="" />
+              <% }); %>
+            </td>
+            <td>
+              <button
+                class="red deleteBtn"
+                id="deleteBtn"
+                data-id="<%- product._id %>"
+              >
+                Delete
+              </button>
+              <button>
+                <a
+                  href="/edit?product_id=<%- product._id %>&name=<%- encodeURIComponent(product.name) %>&description=<%- encodeURIComponent(product.description) %>&price=<%- product.price %>&stock=<%- product.stock %>&category=<%- encodeURIComponent(product.category.name) %>"
+                  class="yellow"
+                >
+                  Edit
+                </a>
+              </button>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
     </div>
-</body>
-
+  </body>
 </html>

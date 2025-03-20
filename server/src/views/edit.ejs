@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="/js/edit.js" defer></script>
+    <title>Edit Product</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Edit Product</h1>
+      <form id="edit-product-form">
+        <input
+          type="hidden"
+          id="product_id"
+          name="product_id"
+          value="<%= product_id %>"
+        />
+        <label for="name">Product Name</label>
+        <input type="text" id="name" name="name" value="<%= name %>" required />
+
+        <label for="description">Description</label>
+        <input
+          type="text"
+          id="description"
+          name="description"
+          value="<%= description %>"
+          required
+        />
+
+        <label for="price">Price</label>
+        <input
+          type="number"
+          id="price"
+          name="price"
+          value="<%= price %>"
+          step="0.01"
+          required
+        />
+
+        <label for="stock">Stock</label>
+        <input
+          type="number"
+          id="stock"
+          name="stock"
+          value="<%= stock %>"
+          min="0"
+          required
+        />
+
+        <label for="category">Category</label>
+        <select id="category" name="category">
+          <% if (category) { %>
+          <option value="<%= category._id %>" selected>
+            <%= category.name %>
+          </option>
+          <% } else { %>
+          <option value="" disabled selected>Select a category</option>
+          <% } %> <% categories.forEach((cat) => { %>
+          <option value="<%= cat._id %>"><%= cat.name %></option>
+          <% }); %>
+        </select>
+
+        <button type="submit" class="blue">Save Changes</button>
+      </form>
+      <a href="/" class="green">Back to Products</a>
+    </div>
+  </body>
+</html>
