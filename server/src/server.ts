@@ -42,7 +42,7 @@ app.set("views", "src/views");
 app.use(express.static("src/public"));
 
 app.get("/", localAuthMiddleware, async (req, res) => {
-  const allProducts = await Products.find();
+  const allProducts = await Products.find().populate("category", "name");
   console.log("User: ", res.locals);
   res.render("index", {
     title: "Product management system",
