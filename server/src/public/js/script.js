@@ -1,19 +1,39 @@
-const deleteBtns = document.querySelectorAll("#deleteBtn");
 const registerForm = document.querySelector("#register-form");
-const errorDiv = document.querySelector(".error");
 const loginForm = document.querySelector("#login-form");
-const logoutBtn = document.querySelector("#logoutBtn");
 
-logoutBtn?.addEventListener("click", async (e) => {
-    try {
-        await fetch("/api/auth/logout", {
-            method: "POST",
-            credentials: "include",
-        });
-        window.location.href = "/login";       
-    } catch (error) {
-        console.error("Error during logout:", error);
+const logoutBtn = document.querySelector("#logoutBtn");
+const deleteBtns = document.querySelectorAll("#deleteBtn");
+
+const errorDiv = document.querySelector(".error");
+const successDiv = document.querySelector(".success");
+
+logoutBtn?.addEventListener("click", async () => {
+  try {
+    const response = await fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      throw new Error(errorResponse.message);
     }
+
+    
+    // Display success message
+    successDiv.textContent = "Logged out successfully!";
+    successDiv.style.display = "block";
+    errorDiv.style.display = "none";
+    
+    setTimeout(() => {
+      window.location.href = "/login";
+    }, 1500);
+  } catch (error) {
+    errorDiv.textContent = error.message;
+    errorDiv.style.display = "block";
+    successDiv.style.display = "none";
+    console.error("Error during logout:", error);
+  }
 });
 
 loginForm?.addEventListener("submit", async (e) => {
@@ -36,10 +56,22 @@ loginForm?.addEventListener("submit", async (e) => {
         throw new Error(errorResponse.message);
       }
   
-      console.log(response);
-      window.location.href = "/";
+      
+      const data = await response.json();
+      console.log(data);
+
+      // Display success message
+      successDiv.textContent = data.message;
+      successDiv.style.display = "block";
+      errorDiv.style.display = "none";
+
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1000);
     } catch (error) {
       errorDiv.textContent = error.message;
+      errorDiv.style.display = "block";
+      successDiv.style.display = "none";
       console.error("Error during registration:", error);
     }
   });
@@ -64,11 +96,18 @@ registerForm?.addEventListener("submit", async (e) => {
       throw new Error(errorResponse.message);
     }
 
-    console.log(response);
+    const data = await response.json();
+    console.log(data);
+
+    successDiv.textContent = data.message;
+    successDiv.style.display = "block";
+    errorDiv.style.display = "none";
+
     window.location.href = "/";
-    // location.re
   } catch (error) {
     errorDiv.textContent = error.message;
+    errorDiv.style.display = "block";
+    successDiv.style.display = "none";
     console.error("Error during registration:", error);
   }
 });

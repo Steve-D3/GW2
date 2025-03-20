@@ -19,6 +19,7 @@ import Products from "./models/productsModel"
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { isAuth } from "./middleware/authMiddleware";
+import localAuthMiddleware from "./middleware/localAuthMiddleware";
 
 
 // Variables
@@ -39,14 +40,14 @@ app.use(express.json());
 app.set("view engine", "ejs");
 app.set("views", "src/views");
 app.use(express.static("src/public"));
-// use arcmiddleware?
 
-app.get("/", async (req, res) => {
+app.get("/", localAuthMiddleware, async (req, res) => {
   const allProducts = await Products.find();
+  console.log("User: ", res.locals);
   res.render("index", {
     title: "Product management system",
     products: allProducts,
-    user: res.locals.user
+    user: res.locals.user,
   });
 });
 
@@ -61,11 +62,6 @@ app.get("/login", async (req, res) => {
     title: "Login",
   })
 });
-
-/*
-Not yet tested, login and register could cause issues 
-if so put register and login in comments
-*/ 
 
 // ------------------------------------------------------
 
