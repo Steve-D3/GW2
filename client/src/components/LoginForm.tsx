@@ -60,7 +60,11 @@ const LoginForm = () => {
           "message" in err.data
         ) {
           setErrorMsgs((err.data as { message: string }).message);
+        } else {
+          setErrorMsgs("Login failed. Please check your credentials and try again.");
         }
+      } else {
+        setErrorMsgs("An unexpected error occurred. Please try again later.");
       }
     }
   };
