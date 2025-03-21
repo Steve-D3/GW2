@@ -34,18 +34,24 @@ const localAuthMiddleware = async (req: Request, res: Response, next: NextFuncti
             return;
         }
 
-        const decoded = jwt.verify(token, JWT_SECRET as string)
+        const decoded = jwt.verify(token, JWT_SECRET as string) as JwtPayload;
         if (!decoded) {
             res.redirect('/login/admin');
             return;
         }
 
         const user = {
-            _id: (decoded as JwtPayload)._id,
-            email: (decoded as JwtPayload).email
-        }
+            _id: decoded._id,
+            email: decoded.email,
+            role: decoded.role,
+        };
 
         const userDetails = await User.findById(user._id).select("-password");
+        if (!userDetails) {
+            res.redirect('/login/admin');
+            return;
+        }
+
         req.user = user;
         res.locals.user = userDetails;
         next();
@@ -53,10 +59,11 @@ const localAuthMiddleware = async (req: Request, res: Response, next: NextFuncti
     } catch (error: unknown) {
         if (error instanceof Error) {
             res.status(500).json({ message: error.message });
-            return;
+            return; 
         }
         res.status(400).json({ message: 'Unexpected error' });
+        return;
     }
-}
+};
 
 export default localAuthMiddleware;

@@ -67,7 +67,7 @@ app.get("/login/admin", async (req, res) => {
 });
 
 
-app.get("/users", async (req, res) => {
+app.get("/users", localAuthMiddleware ,async (req, res) => {
   const allUsers = await User.find();
   res.render("users", {
     title: "Users",
@@ -80,7 +80,7 @@ app.get("/users", async (req, res) => {
 
 
 // Update the /edit route in server.ts
-app.get("/edit", async (req, res): Promise<void> => {
+app.get("/edit", localAuthMiddleware, async (req, res): Promise<void> => {
   try {
     const { product_id } = req.query;
     const product = await Products.findById(product_id).populate(
@@ -114,7 +114,7 @@ app.get("/edit", async (req, res): Promise<void> => {
 });
 
 // /add route
-app.get("/add", async (req, res): Promise<void> => {
+app.get("/add",localAuthMiddleware, async (req, res): Promise<void> => {
   try {
     const categories = await categoriesModel.find({}, "name _id"); // ✅ Get all categories for the dropdown
 
