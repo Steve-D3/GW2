@@ -5,16 +5,15 @@ import express from "express";
 import { notFound } from "./controllers/notFound.controller";
 
 // Routes
-import userRoutes from "./routes/users.routes";
-import productRoutes from "./routes/product.routes";
-import orderRoutes from "./routes/orders.routes";
-import categoryRoutes from "./routes/categories.routes";
-import reviewRoutes from "./routes/reviews.routes";
-import wishlistRoutes from "./routes/wishlist.routes";
-import authRoutes from "./routes/authRoutes";
-import Products from "./models/productsModel";
-import categoriesModel from "./models/categoriesModel"; 
-
+import userRoutes from "./routes/users.routes"
+import productRoutes from "./routes/product.routes"
+import orderRoutes from "./routes/orders.routes"
+import categoryRoutes from "./routes/categories.routes"
+import reviewRoutes from "./routes/reviews.routes"
+import wishlistRoutes from "./routes/wishlist.routes"
+import authRoutes from "./routes/auth.routes"
+import Products from "./models/productsModel"
+import User from "./models/usersModel"
 
 // Middleware
 
@@ -22,6 +21,8 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { isAuth } from "./middleware/authMiddleware";
 import localAuthMiddleware from "./middleware/localAuthMiddleware";
+import categoriesModel from "./models/categoriesModel";
+
 
 
 // Variables
@@ -43,20 +44,13 @@ app.set("views", "src/views");
 app.use(express.static("src/public"));
 
 app.get("/", localAuthMiddleware, async (req, res) => {
-  try {
-    const allProducts = await Products.find().populate("category", "name");
-    console.log("Products sent to Admin View:", allProducts);
-    console.log("User: ", res.locals);
-
-    res.render("index", {
-      title: "Product management system",
-      products: allProducts,
-      user: res.locals.user,
-    });
-  } catch (error) {
-    console.error("Error loading admin view:", error);
-    res.status(500).send("Internal Server Error");
-  }
+  const allProducts = await Products.find().populate("category", "name");
+  console.log("User: ", res.locals);
+  res.render("index", {
+    title: "Product management system",
+    products: allProducts,
+    user: res.locals.user,
+  });
 });
 
 
@@ -69,6 +63,14 @@ app.get("/register/admin", async (req, res) => {
 app.get("/login", async (req, res) => {
   res.render("login", {
     title: "Login",
+  });
+});
+
+app.get("/users", async (req, res) => {
+  const allUsers = await User.find();
+  res.render("users", {
+    title: "Users",
+    users: allUsers,
   });
 });
 

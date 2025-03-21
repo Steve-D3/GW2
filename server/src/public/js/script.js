@@ -68,7 +68,7 @@ loginForm?.addEventListener("submit", async (e) => {
 
       setTimeout(() => {
         window.location.href = "/";
-      }, 1000);
+      }, 1500);
     } catch (error) {
       errorDiv.textContent = error.message;
       errorDiv.style.display = "block";
@@ -104,7 +104,10 @@ registerForm?.addEventListener("submit", async (e) => {
     successDiv.style.display = "block";
     errorDiv.style.display = "none";
 
-    window.location.href = "/";
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1500);
+
   } catch (error) {
     errorDiv.textContent = error.message;
     errorDiv.style.display = "block";
