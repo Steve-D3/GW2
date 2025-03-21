@@ -19,7 +19,7 @@ import User from "./models/usersModel"
 
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
-import { isAuth } from "./middleware/authMiddleware";
+import { isAdmin, isAuth } from "./middleware/authMiddleware";
 import localAuthMiddleware from "./middleware/localAuthMiddleware";
 import categoriesModel from "./models/categoriesModel";
 
@@ -60,11 +60,12 @@ app.get("/register/admin", async (req, res) => {
   });
 });
 
-app.get("/login", async (req, res) => {
+app.get("/login/admin", async (req, res) => {
   res.render("login", {
     title: "Login",
   });
 });
+
 
 app.get("/users", async (req, res) => {
   const allUsers = await User.find();

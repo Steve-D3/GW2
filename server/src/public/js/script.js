@@ -27,7 +27,7 @@ logoutBtn?.addEventListener("click", async () => {
     errorDiv.style.display = "none";
     
     setTimeout(() => {
-      window.location.href = "/login";
+      window.location.href = "/login/admin";
     }, 1500);
   } catch (error) {
     errorDiv.textContent = error.message;
@@ -43,7 +43,7 @@ loginForm?.addEventListener("submit", async (e) => {
       const formData = new FormData(loginForm);
       const inputData = Object.fromEntries(formData);
   
-      const response = await fetch("/api/auth/login", {
+      const response = await fetch("/api/auth/login/admin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

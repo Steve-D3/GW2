@@ -25,7 +25,7 @@ const localAuthMiddleware = async (req: Request, res: Response, next: NextFuncti
     try {
         const { token } = req.cookies;
         if (!token) {
-            res.redirect('/login');
+            res.redirect('/login/admin');
             return;
         }
 
@@ -36,7 +36,7 @@ const localAuthMiddleware = async (req: Request, res: Response, next: NextFuncti
 
         const decoded = jwt.verify(token, JWT_SECRET as string)
         if (!decoded) {
-            res.redirect('/login');
+            res.redirect('/login/admin');
             return;
         }
 
