@@ -28,13 +28,15 @@ export const createProduct = async (req: Request, res: Response) => {
 
     // Ensure all required fields are provided
     if (!name || !description || !price || !stock || !category || !image_url) {
-      return res.status(400).json({ message: "Missing fields" });
+      res.status(400).json({ message: "Missing fields" });
+      return;
     }
 
     // Validate category ID
     const categoryExists = await categoriesModel.findById(category);
     if (!categoryExists) {
-      return res.status(404).json({ message: "Category not found" });
+      res.status(404).json({ message: "Category not found" });
+      return;
     }
 
     //  Ensure `image_url` is stored as an array of objects
@@ -314,7 +316,8 @@ export const updateProduct = async (req: Request, res: Response) => {
     if (category) {
       const categoryExists = await categoriesModel.findById(category);
       if (!categoryExists) {
-        return res.status(404).json({ message: "Category not found" });
+        res.status(404).json({ message: "Category not found" });
+        return;
       }
       updateData.category = category;
     }
@@ -325,7 +328,8 @@ export const updateProduct = async (req: Request, res: Response) => {
 
     if (!itemToUpdate) {
       console.log("Product not found.");
-      return res.status(404).json({ message: "Product not found" });
+      res.status(404).json({ message: "Product not found" });
+      return;
     }
 
     console.log("Updated Product:", itemToUpdate);
@@ -361,7 +365,8 @@ export const deleteProduct = async (req: Request, res: Response) => {
     //  Check if product exists
     const deletedProduct = await productsModel.findByIdAndDelete(id);
     if (!deletedProduct) {
-      return res.status(404).json({ message: "Product not found" });
+      res.status(404).json({ message: "Product not found" });
+      return;
     }
 
     console.log(" Product Deleted:", deletedProduct);

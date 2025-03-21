@@ -1,0 +1,35 @@
+<%- include('partials/header'); -%>
+
+<div class="container">
+    <h1>Edit User</h1>
+    <div class="error"></div>
+    <div class="success"></div>
+    <a href="/users">
+        <button class="blue">
+            Back to Users
+        </button>
+    </a>
+    <p>ID: <%= user_id %></p>
+    <form id="edit-product-form">
+        <input type="hidden" id="user_id" name="user_id" value="<%= user_id %>" />
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" value="<%= name %>"/>
+
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email" value="<%= email %>"/>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" value=""/>
+
+        <label for="role">Role</label>
+        <select name="role" id="role">
+            <% if(role) { %>
+            <option value="<%= role %>" selected><%= role.charAt(0).toUpperCase() + role.slice(1) %></option>
+            <% } %>
+            <option value="basic">Basic</option>
+            <option value="admin">Admin</option>
+        </select>
+
+        <button type="submit" class="blue" id="editUserBtn">Save Changes</button>
+    </form>
+</div>
