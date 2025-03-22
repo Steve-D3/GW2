@@ -15,9 +15,16 @@ type ProductCardProps = {
     stock_quantity: number;
   };
   viewType?: string;
+  isFavorite?: boolean;
+  toggleFavorite?: (id: string) => void;
 };
 
-const ProductCard = ({ product, viewType }: ProductCardProps) => {
+const ProductCard = ({
+  product,
+  viewType,
+  isFavorite,
+  toggleFavorite,
+}: ProductCardProps) => {
   const dispatch = useDispatch();
   const notify = () =>
     toast("Product added to cart successfully", {
@@ -64,11 +71,18 @@ const ProductCard = ({ product, viewType }: ProductCardProps) => {
             <a href="#">
               <i>⇄</i> Compare
             </a>
-            <a href="#">
-              <i>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleFavorite?.(product._id);
+              }}
+            >
+              <i style={{ color: isFavorite ? "red" : "inherit" }}>
                 <FaRegHeart />
               </i>
-              Like
+              {isFavorite ? "Liked" : "Like"}
             </a>
           </div>
         </div>

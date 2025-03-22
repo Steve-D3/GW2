@@ -12,8 +12,12 @@ import {
   setAmountOfProductsSelected,
 } from "../store/filterSlice";
 import { useGetProductsQuery } from "../store/productApiSlice";
+type ProductGridProps = {
+  favorites: string[];
+  toggleFavorite: (id: string) => void;
+};
 
-const ProductGrid = () => {
+const ProductGrid = ({ favorites, toggleFavorite }: ProductGridProps) => {
   const dispatch = useDispatch();
   const limit = useSelector(selectLimit);
   const sortBy = useSelector(selectSortBy);
@@ -89,6 +93,8 @@ const ProductGrid = () => {
               key={product._id}
               product={product}
               viewType={viewType}
+              isFavorite={favorites.includes(product._id)}
+              toggleFavorite={toggleFavorite}
             />
           ))
         )}

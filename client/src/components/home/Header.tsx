@@ -14,7 +14,13 @@ import { selectTotalCartItems } from "../../store/addToCartSlice";
 import { selectIsShowSearch } from "../../store/searchSlice";
 import { toggelSearch } from "../../store/searchSlice";
 import SearchBar from "../../components/SearchBar";
-const Header = () => {
+const Header = ({
+  onToggleFavorites,
+  favoritesCount,
+}: {
+  onToggleFavorites: () => void;
+  favoritesCount: number;
+}) => {
   const dispatch = useDispatch();
   const handelLogin = () => {
     dispatch(showLogin());
@@ -65,9 +71,14 @@ const Header = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/">
+              <button onClick={onToggleFavorites}>
                 <FaRegHeart />
-              </NavLink>
+                {favoritesCount > 0 && (
+                  <span className={styles.favoritesCount}>
+                    {favoritesCount}
+                  </span>
+                )}
+              </button>
             </li>
             <li>
               <NavLink to="#">
