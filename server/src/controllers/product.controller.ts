@@ -333,7 +333,8 @@ export const updateProduct = async (req: Request, res: Response) => {
     }
 
     console.log("Updated Product:", itemToUpdate);
-    res.status(200).json({ status: "success", data: itemToUpdate });
+   res.status(200).json({ status: "success", data: itemToUpdate }); 
+ 
   } catch (error) {
     console.error(" Update Error:", error);
     res.status(500).json({ message: "Internal server error" });
