@@ -129,9 +129,7 @@ export const verificationEmail = async (req: Request, res: Response) => {
     user.verificationToken = null;
     user.isVerified = true;
     await user.save();
-    res.status(200).json({
-      message: "Email is verified",
-    });
+    res.redirect("http://localhost:5173/");
  
   } catch (error: unknown) {
     if (error instanceof Error) {
