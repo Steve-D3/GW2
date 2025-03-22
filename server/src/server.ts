@@ -131,7 +131,6 @@ app.get("/edit/user", localAuthMiddleware, async (req, res): Promise<void> => {
   }
 });
 
-// /add route
 app.get("/add", localAuthMiddleware, async (req, res): Promise<void> => {
   try {
     const categories = await categoriesModel.find({}, "name _id"); // ✅ Get all categories for the dropdown
@@ -139,6 +138,26 @@ app.get("/add", localAuthMiddleware, async (req, res): Promise<void> => {
     res.render("add", {
       title: "Add Product",
       categories,
+    });
+
+    return;
+  } catch (error) {
+    console.error("Error loading add product page:", error);
+    res.status(500).send("Internal Server Error");
+    return;
+  }
+});
+
+app.get("/add/images", localAuthMiddleware, async (req, res): Promise<void> => {
+  try {
+    const { product_id } = req.query;
+    const product = await Products.findById(product_id);
+
+    console.log("Product ID: ", product_id);
+
+    res.render("addImages", {
+      title: "Add Images",
+      product,
     });
 
     return;

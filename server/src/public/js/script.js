@@ -1,6 +1,7 @@
 const registerForm = document.querySelector("#register-form");
 const loginForm = document.querySelector("#login-form");
 const addProduct = document.querySelector("#add-product-form");
+const addImages = document.querySelector("#add-images-form");
 
 const logoutBtn = document.querySelector("#logoutBtn");
 const editUserBtn = document.querySelector("#editUserBtn");
@@ -104,15 +105,17 @@ addProduct?.addEventListener("submit", async (e) => {
     });
 
     const data = await response.json();
+    console.log(data);
 
     // Display success message
     successDiv.textContent = "Product added successfully!";
     successDiv.style.display = "block";
     errorDiv.style.display = "none";
 
-    // setTimeout(() => {
-    //   window.location.href = "/";
-    // }, 1500);
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1500);
+
   } catch (error) {
     errorDiv.textContent = error.message;
     errorDiv.style.display = "block";
@@ -120,6 +123,61 @@ addProduct?.addEventListener("submit", async (e) => {
     console.error("Error adding product:", error);
   }
 });
+
+addImages?.addEventListener("submit", async (e) => {
+  try {
+    e.preventDefault();
+    const formData = new FormData(addImages);
+    const inputData = Object.fromEntries(formData);
+
+    // get the id of the last product added
+    const productId = inputData.product_id;
+    const images = await fetch(`/api/products/images/${productId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    const data = await images.json();
+    const imageCount = data[0]["id"];
+
+    const newImages = {
+      id: imageCount + 1,
+      image_url: inputData.image_url,
+      description: "Image description",
+    };
+
+    // add the new image to the product
+    const response = await fetch(`/api/products/images/${inputData.product_id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(newImages),
+    });
+
+    const newImage = await response.json();
+    console.log(newImage);
+
+    // Display success message
+    successDiv.textContent = "Image added successfully!";
+    successDiv.style.display = "block";
+    errorDiv.style.display = "none";
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+
+  } catch (error) {
+    errorDiv.textContent = error.message;
+    errorDiv.style.display = "block";
+    successDiv.style.display = "none";
+    console.error("Error adding image:", error);
+  }
+})
 
 editUserBtn?.addEventListener("click", async (e) => {
   try {
