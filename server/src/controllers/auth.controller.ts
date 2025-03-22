@@ -7,10 +7,13 @@ import jwt from "jsonwebtoken";
 import { signToken } from "../utils/helpers";
 import validator from "validator";
 import mongoose from "mongoose";
+import { sendEmail } from "../utils/helpers";
 
 
 const saltRounds = 10;
 const SECRET = process.env.JWT_SECRET;
+const BASE_URL = process.env.BASE_URL;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -50,6 +53,19 @@ export const register = async (req: Request, res: Response) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     const userRole = role || "basic";
 
+    const verificationToken = jwt.sign({ email }, JWT_SECRET as string, {
+      expiresIn: "1h",
+    });
+
+    const verificationLink = `${BASE_URL}/verify/${verificationToken}`;
+
+    await sendEmail({
+      name,
+      email,
+      type: "verify",
+      link: verificationLink,
+    });
+
     const response = await User.create({
       name,
       email,
@@ -78,6 +94,45 @@ export const register = async (req: Request, res: Response) => {
     });
 
     res.status(201).json({ message: "User created successfully", user: response });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      res.status(500).json({ message: error.message });
+    } else {
+      res.status(500).json({ message: "Something went wrong" });
+    }
+  }
+};
+
+export const verificationEmail = async (req: Request, res: Response) => {
+  try {
+    const { token } = req.params;
+    if (!token) {
+      res.status(400).json({ message: "Invalid token" });
+      return;
+    }
+
+    const decoded = jwt.verify(token, JWT_SECRET as string);
+
+    if (typeof decoded === "string" || !("email" in decoded)) {
+      res.status(400).json({ message: "Invalid verification link." });
+      return;
+    }
+    const user = await User.findOne({ email: decoded.email });
+    if (!user) {
+      res.status(400).json({ message: "No user found!" });
+      return;
+    }
+    if (user.isVerified) {
+      res.status(400).json({ message: "Is already verified!" });
+      return;
+    }
+    user.verificationToken = null;
+    user.isVerified = true;
+    await user.save();
+    res.status(200).json({
+      message: "Email is verified",
+    });
+ 
   } catch (error: unknown) {
     if (error instanceof Error) {
       res.status(500).json({ message: error.message });
@@ -170,6 +225,11 @@ export const login = async (req: Request, res: Response) => {
       res.status(401).json({ message: "User not Found" });
       return;
     }
+if (!user.isVerified) {
+      res.status(400).json({ message: "Email is not verified!" });
+      return;
+    }
+   
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
@@ -180,6 +240,7 @@ export const login = async (req: Request, res: Response) => {
     if (!SECRET) {
       throw new Error("Internal error");
     }
+ 
 
     const tokenUser = {
       _id: new mongoose.Types.ObjectId(user._id),

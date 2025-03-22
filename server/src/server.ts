@@ -3,6 +3,7 @@ import "dotenv/config";
 import cors from "cors";
 import express from "express";
 import { notFound } from "./controllers/notFound.controller";
+import { verificationEmail } from "./controllers/auth.controller";
 
 // Routes
 import userRoutes from "./routes/users.routes"
@@ -51,6 +52,8 @@ app.get("/", localAuthMiddleware, async (req, res) => {
     user: res.locals.user,
   });
 });
+
+app.get("/verify/:token", verificationEmail);
 
 
 app.get("/register/admin", async (req, res) => {
