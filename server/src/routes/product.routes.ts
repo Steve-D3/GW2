@@ -17,7 +17,7 @@ const router = express.Router();
 
 router
 .post("/products", createProduct)
-.post("/products/images", addImage)
+.post("/products/images/:_id", addImage)
 .get("/products", getProducts)
 .get("/products/:id", getProductById)
 .get("/products/category/:category_name", getProductsByCategory)

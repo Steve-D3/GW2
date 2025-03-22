@@ -86,23 +86,23 @@ export const createProduct = async (req: Request, res: Response) => {
  */
 export const addImage = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const { image_url } = req.body;
+    const { _id } = req.params;
+    const { id, image_url, description } = req.body;
 
-    const product = await productsModel.findById(id);
+    const product = await productsModel.findById(_id);
     if (!product) {
       res.status(404).json({ message: "Product not found" });
       return;
     }
 
-    const newImageId = product.image_url.length + 1;
-    const newImage = { id: newImageId, url: image_url };
-
-    const updatedProduct = await productsModel.findByIdAndUpdate(
+    const newImage = {
       id,
-      { $push: { image_url: newImage } },
-      { new: true }
-    );
+      url: image_url,
+      description,
+    };
+
+    product.image_url.push(newImage);
+    const updatedProduct = await product.save();
 
     res.status(200).json({ status: "success", data: updatedProduct });
   } catch (error) {
