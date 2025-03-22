@@ -17,16 +17,15 @@
     <div class="success"></div>
 
     <button class="green" id="logoutBtn">Log Out</button>
-
-    <a href="/add">
-      <button class="blue">
-        Add product
-      </button>
-    </a>
-
+    
     <a href="/users">
       <button class="blue">
         Users
+      </button>
+    </a>
+    <a href="/add">
+      <button class="blue">
+        Add product
       </button>
     </a>
 
@@ -62,6 +61,12 @@
               <a href="/edit?product_id=<%- product._id %>&name=<%- encodeURIComponent(product.name) %>&description=<%- encodeURIComponent(product.description) %>&price=<%- product.price %>&stock=<%- product.stock %>&category=<%- encodeURIComponent(product.category.name) %>">
                 <button class="red">
                   Edit
+                </button>
+              </a>
+
+              <a href="/add/images?product_id=<%- product._id %>">
+                <button class="red">
+                  Images
                 </button>
               </a>
             </div>

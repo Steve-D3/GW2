@@ -13,7 +13,7 @@ import reviewRoutes from "./routes/reviews.routes"
 import wishlistRoutes from "./routes/wishlist.routes"
 import authRoutes from "./routes/auth.routes"
 import Products from "./models/productsModel"
-import User from "./models/usersModel"
+import usersModel from "./models/usersModel";
 
 // Middleware
 
@@ -45,7 +45,6 @@ app.use(express.static("src/public"));
 
 app.get("/", localAuthMiddleware, async (req, res) => {
   const allProducts = await Products.find().populate("category", "name");
-  console.log("User: ", res.locals);
   res.render("index", {
     title: "Product management system",
     products: allProducts,
@@ -67,8 +66,8 @@ app.get("/login/admin", async (req, res) => {
 });
 
 
-app.get("/users", localAuthMiddleware ,async (req, res) => {
-  const allUsers = await User.find();
+app.get("/users", localAuthMiddleware, async (req, res) => {
+  const allUsers = await usersModel.find();
   res.render("users", {
     title: "Users",
     users: allUsers,
@@ -76,8 +75,6 @@ app.get("/users", localAuthMiddleware ,async (req, res) => {
 });
 
 // ------------------------------------------------------
-
-
 
 // Update the /edit route in server.ts
 app.get("/edit", localAuthMiddleware, async (req, res): Promise<void> => {
@@ -104,7 +101,7 @@ app.get("/edit", localAuthMiddleware, async (req, res): Promise<void> => {
       categories, //  Pass all available categories for the dropdown
     });
 
-    
+
     return;
   } catch (error) {
     console.error(" Error loading edit page:", error);
@@ -113,14 +110,34 @@ app.get("/edit", localAuthMiddleware, async (req, res): Promise<void> => {
   }
 });
 
-// /add route
-app.get("/add",localAuthMiddleware, async (req, res): Promise<void> => {
+app.get("/edit/user", localAuthMiddleware, async (req, res): Promise<void> => {
+  try {
+    const { user_id } = req.query;
+    const user = await usersModel.findById(user_id);
+
+    res.render("editUser", {
+      title: "Edit User",
+      user_id: user?.id,
+      name: user?.name,
+      email: user?.email,
+      role: user?.role,
+    });
+
+    return;
+  } catch (error) {
+    console.error("Error loading add user page:", error);
+    res.status(500).send("Internal Server Error");
+    return;
+  }
+});
+
+app.get("/add", localAuthMiddleware, async (req, res): Promise<void> => {
   try {
     const categories = await categoriesModel.find({}, "name _id"); // ✅ Get all categories for the dropdown
 
     res.render("add", {
       title: "Add Product",
-      categories, 
+      categories,
     });
 
     return;
@@ -131,6 +148,25 @@ app.get("/add",localAuthMiddleware, async (req, res): Promise<void> => {
   }
 });
 
+app.get("/add/images", localAuthMiddleware, async (req, res): Promise<void> => {
+  try {
+    const { product_id } = req.query;
+    const product = await Products.findById(product_id);
+
+    console.log("Product ID: ", product_id);
+
+    res.render("addImages", {
+      title: "Add Images",
+      product,
+    });
+
+    return;
+  } catch (error) {
+    console.error("Error loading add product page:", error);
+    res.status(500).send("Internal Server Error");
+    return;
+  }
+});
 
 // Routes
 app.use("/api/auth", authRoutes);
