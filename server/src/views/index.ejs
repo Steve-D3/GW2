@@ -58,7 +58,7 @@
               <button class="red" id="deleteBtn" data-id="<%- product._id %>">
                 Delete
               </button>
-              <a href="/edit?product_id=<%- product._id %>&name=<%- encodeURIComponent(product.name) %>&description=<%- encodeURIComponent(product.description) %>&price=<%- product.price %>&stock=<%- product.stock %>&category=<%- encodeURIComponent(product.category.name) %>">
+              <a href="/edit/product?product_id=<%- product._id %>&name=<%- encodeURIComponent(product.name) %>&description=<%- encodeURIComponent(product.description) %>&price=<%- product.price %>&stock=<%- product.stock %>&category=<%- encodeURIComponent(product.category.name) %>">
                 <button class="red">
                   Edit
                 </button>

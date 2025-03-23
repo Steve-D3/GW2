@@ -5,6 +5,7 @@ const addImages = document.querySelector("#add-images-form");
 
 const logoutBtn = document.querySelector("#logoutBtn");
 const editUserBtn = document.querySelector("#editUserBtn");
+const editProductBtn = document.querySelector("#editProductBtn");
 const deleteUserBtns = document.querySelectorAll("#deleteUserBtn");
 const deleteProductBtns = document.querySelectorAll("#deleteBtn");
 
@@ -223,6 +224,52 @@ editUserBtn?.addEventListener("click", async (e) => {
     errorDiv.style.display = "block";
     successDiv.style.display = "none";
     console.error("Error updating user data:", error);
+  }
+});
+
+editProductBtn?.addEventListener("click", async (e) => {
+  try {
+    e.preventDefault();
+    const productId = document.querySelector("#product_id").value;
+    console.log("📝 Editing product data...");
+
+    const updateDataProduct = {
+      name: document.querySelector("#name").value,
+      description: document.querySelector("#description").value,
+      price: document.querySelector("#price").value,
+      stock: document.querySelector("#stock").value,
+      category: document.querySelector("#category").value,
+    };
+
+    console.log(JSON.stringify(updateDataProduct));
+
+    const response = await fetch(`/api/products/${productId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updateDataProduct),
+    });
+
+    const responseData = await response.json();
+    console.log("Server Response:", responseData);
+
+    if (!response.ok) {
+      throw new Error(responseData.message);
+    }
+
+    // Display success message
+    successDiv.textContent = "Product data updated successfully!";
+    successDiv.style.display = "block";
+    errorDiv.style.display = "none";
+
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1500);
+
+  } catch (error) {
+    errorDiv.textContent = error.message;
+    errorDiv.style.display = "block";
+    successDiv.style.display = "none";
+    console.error("Error updating product data:", error);
   }
 });
 
