@@ -5,16 +5,15 @@ import { FaRegHeart, FaRegUser } from "react-icons/fa";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { PiMagnifyingGlassBold } from "react-icons/pi";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { showLogin } from "../../store/signinSlice";
-import { showCart, selectTotalCartItems } from "../../store/addToCartSlice";
+import { showCart } from "../../store/addToCartSlice";
 import { toggelSearch } from "../../store/searchSlice";
 import { toggleWishlist } from "../../store/wishlistSlice";
 
 const HamburgerMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const dispatch = useDispatch();
-  const cartItems = useSelector(selectTotalCartItems);
 
   const handleToggleSearch = () => {
     dispatch(toggelSearch());
@@ -81,9 +80,6 @@ const HamburgerMenu = () => {
               </button>
               <button onClick={handleToggleCart}>
                 <MdOutlineShoppingCart />
-                {cartItems > 0 && (
-                  <span className={styles.cartCount}>{cartItems}</span>
-                )}
               </button>
             </div>
           </div>
