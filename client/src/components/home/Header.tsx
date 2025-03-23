@@ -14,6 +14,8 @@ import { selectTotalCartItems } from "../../store/addToCartSlice";
 import { selectIsShowSearch } from "../../store/searchSlice";
 import { toggelSearch } from "../../store/searchSlice";
 import SearchBar from "../../components/SearchBar";
+import { toggleWishlist } from "../../store/wishlistSlice";
+import FavoritesPanel from "../FavoritesPanel";
 const Header = () => {
   const dispatch = useDispatch();
   const handelLogin = () => {
@@ -66,7 +68,7 @@ const Header = () => {
             </li>
             <li>
               <NavLink to="/">
-                <FaRegHeart />
+                <FaRegHeart onClick={() => dispatch(toggleWishlist())} />
               </NavLink>
             </li>
             <li>
@@ -90,6 +92,7 @@ const Header = () => {
         </nav>{" "}
       </section>
       <ShoppingCart />
+      <FavoritesPanel />
       {handleSearchChange && (
         <div className={styles.showSearch}>
           <button
