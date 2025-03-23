@@ -16,9 +16,10 @@
     <div class="form-group">
       <label for="product-images">Product Images:</label>
       <div id="product-images">
-        <% product.image_url.forEach((elem) => { %>
-        <img src="<%- elem.url %>" alt="">
-        <% }); %>
+        <% product.image_url.forEach((image) => { if (image.url !==
+          "/sustainloop.png") { %>
+          <img src="<%- image.url %>" alt="Product Image" />
+          <% } }); %>
       </div>
     </div>
     <div class="form-group">
