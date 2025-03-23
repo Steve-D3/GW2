@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-import { UserType }  from "../types/index";
+// import { UserType }  from "../types/index";
 
 
 
-const usersSchema = new mongoose.Schema<UserType>({
+const usersSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -27,7 +27,12 @@ const usersSchema = new mongoose.Schema<UserType>({
     created_at:{
         type: Date,
         default: Date.now,
-    }
+    },
+    isVerified: {
+        type: Boolean,
+        default: false,
+      },
+      verificationToken: { type: String },
 })
 
 export default mongoose.model("Users", usersSchema);
