@@ -4,7 +4,6 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa6";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { PiMagnifyingGlassBold } from "react-icons/pi";
-import { GiHamburgerMenu } from "react-icons/gi";
 import { useDispatch } from "react-redux";
 import { showLogin } from "../../store/signinSlice";
 import { showCart } from "../../store/addToCartSlice";
@@ -16,6 +15,7 @@ import { toggelSearch } from "../../store/searchSlice";
 import SearchBar from "../../components/SearchBar";
 import { toggleWishlist } from "../../store/wishlistSlice";
 import FavoritesPanel from "../FavoritesPanel";
+import HamburgerMenu from "./HamburgerMenu";
 const Header = () => {
   const dispatch = useDispatch();
   const handelLogin = () => {
@@ -86,10 +86,8 @@ const Header = () => {
           </ul>
         </nav>
         <nav className={styles["header-hamburger"]}>
-          <NavLink to="/">
-            <GiHamburgerMenu />
-          </NavLink>
-        </nav>{" "}
+          <HamburgerMenu />
+        </nav>
       </section>
       <ShoppingCart />
       <FavoritesPanel />
