@@ -50,11 +50,13 @@ const ProductGrid = () => {
     : [];
 
   const filteredProducts = sortedProducts.filter((product) => {
-    const categoryMatch = category === "" || product.category === category;
+    const categoryMatch = category === "" || product.category._id === category;
     const priceInRange =
       product.price >= priceRange.min && product.price <= priceRange.max;
     return categoryMatch && priceInRange;
   });
+
+  console.log(filteredProducts);
 
   const totalPages = Math.ceil(filteredProducts.length / limit);
   const startIndex = (currentPage - 1) * limit;
