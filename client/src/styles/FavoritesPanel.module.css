@@ -1,0 +1,58 @@
+.panel {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 400px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  transition: right 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.show {
+  right: 0;
+}
+
+.header {
+  padding: 16px 20px;
+  background: #b88e2f;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10rem;
+  font-size: 20px;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.closeBtn:hover {
+  transform: scale(1.2);
+}
+
+.content {
+  padding: 16px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+}
+
+.empty {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 14px;
+  color: #666;
+}
