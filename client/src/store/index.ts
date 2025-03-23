@@ -6,6 +6,7 @@ import addToCartSlice from "./addToCartSlice";
 import searchSlice from "./searchSlice";
 
 import authApi from "./authApi";
+import wishlistApi from "./wishlistApi";
 
 const store = configureStore({
   reducer: {
@@ -15,12 +16,14 @@ const store = configureStore({
   addToCart: addToCartSlice,
   [authApi.reducerPath]: authApi.reducer,
   search: searchSlice,
+  [wishlistApi.reducerPath]: wishlistApi.reducer,
+  
   },
 
 
     
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(productApi.middleware, authApi.middleware),
+      getDefaultMiddleware().concat(productApi.middleware, authApi.middleware, wishlistApi.middleware),
 
   },
 );

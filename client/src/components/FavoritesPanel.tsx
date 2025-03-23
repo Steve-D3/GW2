@@ -1,7 +1,9 @@
 import styles from "../styles/FavoritesPanel.module.css";
 import { FaTimes } from "react-icons/fa";
-import ProductCard from "./ProductCard"; // Or a smaller variant if you want
+import ProductCard from "./ProductCard";
 import { useGetProductsQuery } from "../store/productApiSlice";
+import { useSelector } from "react-redux";
+import { useGetWishlistQuery } from "../store/wishlistApi";
 
 type Props = {
   show: boolean;
@@ -18,15 +20,45 @@ const FavoritesPanel = ({
 }: Props) => {
   const { data: productsData } = useGetProductsQuery();
 
-  const favoriteProducts = productsData?.filter((product) =>
-    favorites.includes(product._id)
+  // const favoriteProducts = productsData?.filter((product) =>
+  //   favorites.includes(product._id)
+  // );
+  // console.log("Favorites IDs:", favorites);
+  const currentUser = useSelector(
+    (state: {
+      signin: { user: { name: string; email: string; _id: string } };
+    }) => state.signin.user
   );
-  console.log("Favorites IDs:", favorites);
+  const {
+    data: wishlistData,
+    error,
+    isLoading,
+    isError,
+  } = useGetWishlistQuery({ user_id: currentUser ? currentUser._id : "" });
 
+  if (isLoading) {
+    console.log("Loading wishlist data...");
+  }
+
+  if (isError) {
+    console.error("Error fetching wishlist:", error);
+  }
+
+  if (wishlistData) {
+    console.log("Wishlist data:", wishlistData);
+  }
+
+  const favoriteProducts = productsData?.filter((product) =>
+    wishlistData?.products.includes(product._id)
+  );
   return (
     <div className={`${styles.panel} ${show ? styles.show : ""}`}>
       <div className={styles.header}>
-        <h2>My Favorites ❤️</h2>
+        {currentUser ? (
+          <h2> {currentUser.name.split(" ")[0]}'s Favorites</h2>
+        ) : (
+          <h2>Guest</h2>
+        )}
         <button className={styles.closeBtn} onClick={onClose}>
           <FaTimes />
         </button>
@@ -47,8 +79,11 @@ const FavoritesPanel = ({
           </div>
         ) : (
           <div className={styles.empty}>
-            <p>No favorites yet 🥲</p>
-            <p>Click the ❤️ on a product to save it here.</p>
+            {currentUser ? (
+              <p>No favorites yet</p>
+            ) : (
+              <p>Sign in to see your favorites</p>
+            )}
           </div>
         )}
       </div>
