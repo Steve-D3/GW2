@@ -80,7 +80,7 @@ app.get("/users", localAuthMiddleware, async (req, res) => {
 // ------------------------------------------------------
 
 // Update the /edit route in server.ts
-app.get("/edit", localAuthMiddleware, async (req, res): Promise<void> => {
+app.get("/edit/product", localAuthMiddleware, async (req, res): Promise<void> => {
   try {
     const { product_id } = req.query;
     const product = await Products.findById(product_id).populate(
@@ -95,12 +95,12 @@ app.get("/edit", localAuthMiddleware, async (req, res): Promise<void> => {
     }
 
     res.render("edit", {
-      product_id: product._id,
-      name: product.name,
-      description: product.description,
-      price: product.price,
-      stock: product.stock,
-      category: product.category || null, // Ensure category is sent properly
+      product_id: product?._id,
+      name: product?.name,
+      description: product?.description,
+      price: product?.price,
+      stock: product?.stock,
+      category: product?.category || null, // Ensure category is sent properly
       categories, //  Pass all available categories for the dropdown
     });
 

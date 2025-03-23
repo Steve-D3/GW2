@@ -49,16 +49,17 @@
           <td><%- product.stock %></td>
           <td><%- product.category.name %></td>
           <td>
-            <% product.image_url.forEach((elem) => { %>
-            <img src="<%- elem.url %>" alt="">
-            <% }); %>
+            <% product.image_url.forEach((image) => { if (image.url !==
+              "/sustainloop.png") { %>
+              <img src="<%- image.url %>" alt="Product Image" />
+              <% } }); %>
           </td>
           <td>
             <div>
               <button class="red" id="deleteBtn" data-id="<%- product._id %>">
                 Delete
               </button>
-              <a href="/edit?product_id=<%- product._id %>&name=<%- encodeURIComponent(product.name) %>&description=<%- encodeURIComponent(product.description) %>&price=<%- product.price %>&stock=<%- product.stock %>&category=<%- encodeURIComponent(product.category.name) %>">
+              <a href="/edit/product?product_id=<%- product._id %>&name=<%- encodeURIComponent(product.name) %>&description=<%- encodeURIComponent(product.description) %>&price=<%- product.price %>&stock=<%- product.stock %>&category=<%- encodeURIComponent(product.category.name) %>">
                 <button class="red">
                   Edit
                 </button>
