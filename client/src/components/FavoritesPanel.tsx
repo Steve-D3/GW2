@@ -57,7 +57,7 @@ const FavoritesPanel = () => {
       </div>
 
       <div className={styles.content}>
-        {favoriteProducts?.length ? (
+        {currentUser && favoriteProducts?.length ? (
           <div className={styles.grid}>
             {favoriteProducts.map((product) => (
               <ProductCard
