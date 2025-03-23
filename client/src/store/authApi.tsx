@@ -18,6 +18,7 @@ interface AuthPayload {
   name?: string;
   email: string;
   password: string;
+  _id?: string;
 }
 
 const authApi = createApi({
@@ -43,6 +44,7 @@ const authApi = createApi({
         method: "POST",
         body: { email, password },
       }),
+      invalidatesTags: ["User"],
     }),
     logout: builder.mutation<void, void>({
       query: () => ({

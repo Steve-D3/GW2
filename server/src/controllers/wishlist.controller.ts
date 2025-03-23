@@ -1,5 +1,6 @@
 import { Response, Request } from "express";
 import wishlistModel from "../models/wishlistModel";
+import mongoose from "mongoose";
 
 // CRUD
 // CREATE
@@ -37,18 +38,17 @@ import wishlistModel from "../models/wishlistModel";
 
 // get wishlist by user_id
 export const getWishlist = async (request: Request, response: Response) => {
-  const { userId } = request.params;
-
+//http://localhost:3000/api/wishlist/67e02844e9804c91febbdd0e
   try {
-    const wishlist = await wishlistModel.findOne({ userId });
-
+    const { user_id } = request.params;
+    const wishlist = await wishlistModel.findOne({ user_id });
     if (!wishlist) {
       response.status(404).json({ message: "Wishlist not found" });
       return;
     }
-
     response.status(200).json(wishlist);
   } catch (error) {
+    console.log(error);
     response.status(500).json({ message: "Internal server error" });
   }
 };
@@ -146,51 +146,70 @@ export const addOrUpdateProductInWishlist = async (
 };
 
 // DELETE
-export const deleteProductFromWishlist = async (
-  req: Request,
-  res: Response
-) => {
+
+export const deleteProductFromWishlist = async (req: Request, res: Response) => {
   try {
-    const { user_id } = req.params;
-    const { product_id } = req.body;
+    const { user_id, product_id } = req.params;  // Get from params
 
     // Check if the wishlist exists
     const wishlist = await wishlistModel.findOne({ user_id });
     if (!wishlist) {
-      res?.status(404).json({ message: "Wishlist not found" });
-      return;
+     res.status(404).json({ message: "Wishlist not found" }); return 
     }
 
-    const updateWishlist = await wishlistModel
-      .findOneAndUpdate(
-        { user_id },
-        { $pull: { products: { product_id } } },
-        { new: true }
-      )
-      .populate("products");
-    res.status(200).json({ status: "Success", updateWishlist });
+    // Remove the product from the wishlist
+    const updatedWishlist = await wishlistModel.findOneAndUpdate(
+      { user_id },
+      { $pull: { products: product_id } },
+      { new: true } 
+    ).populate("products"); 
+
+    // Respond with the updated wishlist
+    res.status(200).json({ status: "Success", updatedWishlist });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
-export const deleteWishlist = async (req: Request, res: Response) => {
+// export const deleteWishlist = async (req: Request, res: Response) => {
+//   try {
+//     const { user_id } = req.params;
+
+//     // Check if the wishlist exists
+//     const wishlist = await wishlistModel.findOne({ user_id });
+//     if (!wishlist) {
+//       res?.status(404).json({ message: "Wishlist not found" });
+//       return;
+//     }
+
+//     // Delete the wishlist
+//     await wishlistModel.deleteOne({ user_id });
+//     res.status(200).json({ message: "Wishlist deleted successfully" });
+//   } catch (error) {
+//     console.error("Error deleting wishlist:", error);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// };
+
+
+export const clearWishlist = async (req: Request, res: Response) => {
   try {
     const { user_id } = req.params;
 
-    // Check if the wishlist exists
     const wishlist = await wishlistModel.findOne({ user_id });
     if (!wishlist) {
-      res?.status(404).json({ message: "Wishlist not found" });
+      res.status(404).json({ message: "Wishlist not found" });
       return;
     }
 
-    // Delete the wishlist
-    await wishlistModel.deleteOne({ user_id });
-    res.status(200).json({ message: "Wishlist deleted successfully" });
+
+    wishlist.products = [];
+    await wishlist.save(); 
+
+    res.status(200).json({ message: "Wishlist cleared successfully" });
   } catch (error) {
-    console.error("Error deleting wishlist:", error);
+    console.error("Error clearing wishlist:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };

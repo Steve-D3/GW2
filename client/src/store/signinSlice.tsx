@@ -6,6 +6,7 @@ interface SigninState {
   user: {
     name: string | null;
     email: string | null;
+    _id: string | null;
   } | null;
   isLoading: boolean;
 }
@@ -29,7 +30,7 @@ const signinSlice = createSlice({
 
     setUser: (
       state,
-      action: PayloadAction<{ name: string; email: string }>
+      action: PayloadAction<{ name: string; email: string; _id: string }>
     ) => {
       state.user = action.payload;
     },
