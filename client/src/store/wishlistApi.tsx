@@ -19,10 +19,13 @@ const wishlistApi = createApi({
   tagTypes: ["Wishlist"],
   endpoints: (builder) => ({
     getWishlist: builder.query<Wishlist, { user_id: string }>({
-      query: ({ user_id }) => `/wishlist/${user_id}`,
-
+      query: ({ user_id }) => ({
+        url: `/wishlist/${user_id}`,
+        method: "GET",
+      }),
       providesTags: ["Wishlist"],
     }),
+
     addToWishlist: builder.mutation({
       query: ({
         user_id,
@@ -37,12 +40,33 @@ const wishlistApi = createApi({
       }),
       invalidatesTags: ["Wishlist"],
     }),
-    // removeFromWishlist: builder.mutation({
-    //   query: (productId) => ({}),
-    // }),
+    removeAllFromWishlist: builder.mutation<void, { user_id: string }>({
+      query: ({ user_id }) => ({
+        url: `/wishlist/clear/${user_id}`,
+        method: "DELETE",
+        body: { user_id },
+      }),
+      invalidatesTags: ["Wishlist"],
+    }),
+
+    removeOneProductFromWishlist: builder.mutation<
+      void,
+      { user_id: string; productId: string }
+    >({
+      query: ({ user_id, productId }) => ({
+        url: `/wishlist/delete/${user_id}/${productId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Wishlist"],
+    }),
   }),
 });
 
-export const { useGetWishlistQuery } = wishlistApi;
+export const {
+  useGetWishlistQuery,
+  useAddToWishlistMutation,
+  useRemoveAllFromWishlistMutation,
+  useRemoveOneProductFromWishlistMutation,
+} = wishlistApi;
 
 export default wishlistApi;
