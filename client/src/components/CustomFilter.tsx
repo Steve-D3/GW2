@@ -22,6 +22,7 @@ const CustomFilter = () => {
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(filterByCategory(e.target.value));
+    console.log("Selected category:", e.target.value);
   };
 
   return (
