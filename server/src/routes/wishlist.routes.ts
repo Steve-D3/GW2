@@ -1,6 +1,6 @@
 import express from 'express';
 import { 
-    createWishlist, 
+    addOrCreateWishlist, 
     getWishlist, 
     addOrUpdateProductInWishlist, 
     deleteWishlist, 
@@ -13,7 +13,7 @@ const router = express.Router();
 
 router
 .get('/wishlist/:id', getWishlist)
-.post('/wishlist', createWishlist)
+.post('/wishlist/add', addOrCreateWishlist)
 .put('/wishlist/:user_id', addOrUpdateProductInWishlist)
 .delete('/wishlist/:id', deleteWishlist)
 .delete('/wishlist/:user_id/:product_id', deleteProductFromWishlist);
