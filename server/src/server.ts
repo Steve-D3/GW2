@@ -181,7 +181,7 @@ app.use(
   categoryRoutes,
   reviewRoutes
 );
-app.use("/api", isAuth, wishlistRoutes);
+app.use("/api",  wishlistRoutes);
 app.all("*", notFound);
 
 console.log("Mongo URI: ", process.env.MONGO_URI_LIVE);
