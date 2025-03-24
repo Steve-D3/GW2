@@ -50,8 +50,8 @@ const CustomFilter = () => {
           <Slider
             range
             min={0}
-            max={100}
-            step={5}
+            max={50}
+            step={2}
             value={[range.min, range.max]}
             onChange={handleChange}
           />

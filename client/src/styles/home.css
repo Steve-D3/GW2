@@ -75,6 +75,7 @@
   padding-right: 2rem;
 
   img {
+    cursor: pointer;
     height: 480px;
     width: 381px;
     object-fit: cover;

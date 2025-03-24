@@ -16,7 +16,14 @@ import SearchBar from "../../components/SearchBar";
 import { toggleWishlist } from "../../store/wishlistSlice";
 import FavoritesPanel from "../FavoritesPanel";
 import HamburgerMenu from "./HamburgerMenu";
+import { FaUserCheck } from "react-icons/fa";
+
 const Header = () => {
+  const currentUser = useSelector(
+    (state: {
+      signin: { user: { name: string; email: string; _id: string } };
+    }) => state.signin.user
+  );
   const dispatch = useDispatch();
   const handelLogin = () => {
     dispatch(showLogin());
@@ -54,10 +61,21 @@ const Header = () => {
         <nav className={styles["header-icons"]}>
           <ul>
             <li>
-              <button onClick={handelLogin}>
+              {/* <button onClick={handelLogin}>
                 {" "}
                 <FaRegUser />
-              </button>
+              </button> */}
+              {currentUser ? (
+                <button onClick={handelLogin}>
+                  {" "}
+                  <FaUserCheck />
+                </button>
+              ) : (
+                <button onClick={handelLogin}>
+                  {" "}
+                  <FaRegUser />
+                </button>
+              )}
             </li>
             <li>
               <NavLink to="#">
@@ -67,7 +85,7 @@ const Header = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/">
+              <NavLink to="#">
                 <FaRegHeart onClick={() => dispatch(toggleWishlist())} />
               </NavLink>
             </li>

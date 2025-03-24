@@ -100,6 +100,7 @@ const ProductFilter = () => {
               value={sortBy}
               onChange={(e) => dispatch(setSortBy(e.target.value))}
             >
+              <option value="relevance">Relevance</option>
               <option value="name">Name</option>
               <option value="price">Price</option>
             </select>

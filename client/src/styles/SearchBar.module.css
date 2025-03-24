@@ -1,12 +1,13 @@
 .search-container {
   display: flex;
   justify-content: center;
+
   padding: 10px;
   top: 0px;
   right: 0;
   width: 100%;
   background-color: white;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   position: relative;
   border-radius: 5px;
 }
@@ -25,6 +26,7 @@
   top: 55px;
   left: 0;
   width: 100%;
+  min-height: 220px;
   border: 1px solid #ccc;
   border-top: none;
   list-style: none;

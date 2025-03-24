@@ -40,13 +40,19 @@ const ProductGrid = () => {
   }
 
   const sortedProducts = productsData
-    ? [...productsData].sort((a, b) =>
-        sortBy === "name"
-          ? a.name.localeCompare(b.name)
-          : sortBy === "price"
-          ? a.price - b.price
-          : 0
-      )
+    ? [...productsData].sort((a, b) => {
+        if (sortBy === "name") {
+          return a.name.localeCompare(b.name);
+        }
+        // Handle sorting by 'price'
+        else if (sortBy === "price") {
+          return a.price - b.price;
+        } else if (sortBy === "relevance") {
+          return 0;
+        }
+
+        return 0;
+      })
     : [];
 
   const filteredProducts = sortedProducts.filter((product) => {

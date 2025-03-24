@@ -37,26 +37,28 @@ const ShoppingCart = () => {
         <div className={styles.cartItems}>
           {cartItems.map((item: CartItem) => (
             // make a link to the product details
-            <Link
-              to={`/shop/${item._id}/${item.name}`}
-              onClick={() => dispatch(hideCart())}
-            >
-              <div key={item._id} className={styles.cartItem}>
-                <img src={item.image_url[0]?.url} alt={item.name} />
-                <div>
-                  <h3>{item.name}</h3>
 
-                  <div>
-                    <p>{item.quantity}</p>
-                    <p>X</p>
-                    <p>${item.price}</p>
-                  </div>
+            <div key={item._id} className={styles.cartItem}>
+              {" "}
+              <Link
+                to={`/shop/${item._id}/${item.name}`}
+                onClick={() => dispatch(hideCart())}
+              >
+                <img src={item.image_url[0]?.url} alt={item.name} />{" "}
+              </Link>
+              <div>
+                <h3>{item.name}</h3>
+
+                <div>
+                  <p>{item.quantity}</p>
+                  <p>X</p>
+                  <p>${item.price}</p>
                 </div>
-                <button onClick={() => dispatch(removeFromCart(item._id))}>
-                  x
-                </button>
               </div>
-            </Link>
+              <button onClick={() => dispatch(removeFromCart(item._id))}>
+                x
+              </button>
+            </div>
           ))}
         </div>
       ) : (

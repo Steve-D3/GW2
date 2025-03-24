@@ -5,11 +5,12 @@ import { FaRegHeart, FaRegUser } from "react-icons/fa";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { PiMagnifyingGlassBold } from "react-icons/pi";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { showLogin } from "../../store/signinSlice";
 import { showCart } from "../../store/addToCartSlice";
 import { toggelSearch } from "../../store/searchSlice";
 import { toggleWishlist } from "../../store/wishlistSlice";
+import { FaUserCheck } from "react-icons/fa";
 
 const HamburgerMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -24,6 +25,12 @@ const HamburgerMenu = () => {
     dispatch(showCart());
     setMenuOpen(false);
   };
+
+  const currentUser = useSelector(
+    (state: {
+      signin: { user: { name: string; email: string; _id: string } };
+    }) => state.signin.user
+  );
 
   return (
     <div className={styles.hamburgerContainer}>
@@ -69,9 +76,21 @@ const HamburgerMenu = () => {
               </li>
             </ul>
             <div className={styles.hamburgerIcons}>
-              <button onClick={() => dispatch(showLogin())}>
+              {/* <button onClick={() => dispatch(showLogin())}>
                 <FaRegUser />
-              </button>
+              </button> */}
+
+              {currentUser ? (
+                <button onClick={() => dispatch(showLogin())}>
+                  {" "}
+                  <FaUserCheck />
+                </button>
+              ) : (
+                <button onClick={() => dispatch(showLogin())}>
+                  {" "}
+                  <FaRegUser />
+                </button>
+              )}
               <button onClick={handleToggleSearch}>
                 <PiMagnifyingGlassBold />
               </button>
