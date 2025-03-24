@@ -49,10 +49,10 @@
           <td><%- product.stock %></td>
           <td><%- product.category.name %></td>
           <td>
-            <% product.image_url.forEach((elem) => { %>
-            <img src="<%- elem.url %>" alt="">
-            <% }); 
-              %>
+            <% product.image_url.forEach((image) => { if (image.url !==
+              "/sustainloop.png") { %>
+            <img src="<%- image.url %>" alt="Product Image" />
+            <% } }); %>
           </td>
           <td>
             <div>
@@ -79,13 +79,13 @@
 
     <div class="pagination">
       <% if (currentPage > 1) { %>
-        <a href="/?page=<%= currentPage - 1 %>&limit=<%= limit %>">Previous</a>
+      <a href="/?page=<%= currentPage - 1 %>&limit=<%= limit %>">Previous</a>
       <% } %>
       <% for (let i = 1; i <= totalPages; i++) { %>
-        <a href="/?page=<%= i %>&limit=<%= limit %>" class="<%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+      <a href="/?page=<%= i %>&limit=<%= limit %>" class="<%= currentPage === i ? 'active' : '' %>"><%= i %></a>
       <% } %>
       <% if (currentPage < totalPages) { %>
-        <a href="/?page=<%= currentPage + 1 %>&limit=<%= limit %>">Next</a>
+      <a href="/?page=<%= currentPage + 1 %>&limit=<%= limit %>">Next</a>
       <% } %>
     </div>
 

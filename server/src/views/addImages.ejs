@@ -12,23 +12,23 @@
   </a>
   <h2><%= product.name %></h2>
   <form id="add-images-form">
-      <input type="text" id="product_id" name="product_id" value="<%= product._id %>" hidden>
+    <input type="text" id="product_id" name="product_id" value="<%= product._id %>" hidden>
     <div class="form-group">
       <label for="product-images">Product Images:</label>
       <div class="product-images" style="display: flex; flex-wrap: wrap; gap: 10px;">
-        <% product.image_url.forEach((elem) => { %>
-          <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 10px;">
-            <img src="<%- elem.url %>" alt="">
-            <button class="red" id="deleteImgBtn" data-id="<%- elem.id %>" data-product-id="<%- product._id %>">
-              Delete
-            </button>
-          </div>
-        <% }); %>
+        <% product.image_url.forEach((image) => { if (image.url !== "/sustainloop.png") { %>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 10px;">
+          <img src="<%- image.url %>" alt="">
+          <button class="red" id="deleteImgBtn" data-id="<%- image.id %>" data-product-id="<%- product._id %>">
+            Delete
+          </button>
+        </div>
+        <% } }); %>
       </div>
     </div>
     <div>
-        <label for="image-url">Enter Image URL:</label>
-        <input type="url" id="image-url" name="image_url" placeholder="https://example.com/image.jpg">
+      <label for="image-url">Enter Image URL:</label>
+      <input type="url" id="image-url" name="image_url" placeholder="https://example.com/image.jpg">
     </div>
     <button type="submit" class="blue">Add</button>
   </form>
