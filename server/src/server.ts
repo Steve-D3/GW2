@@ -30,7 +30,7 @@ import categoriesModel from "./models/categoriesModel";
 const app = express();
 const PORT = process.env.PORT || 3000;
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://gw2-rfg0.onrender.com/api","http://localhost:5174", "https://gw-2-pi.vercel.app/" ], // Allow the front-end to access the API
+  origin: ["http://localhost:5173", "https://gw2-rfg0.onrender.com/api", "http://localhost:5174", "https://gw-2-pi.vercel.app"], // Allow the front-end to access the API
   credentials: true, // Allow credentials like cookies to be sent
 };
 // Middleware
@@ -198,7 +198,7 @@ app.use(
   categoryRoutes,
   reviewRoutes
 );
-app.use("/api",  wishlistRoutes);
+app.use("/api", wishlistRoutes);
 app.all("*", notFound);
 
 console.log("Mongo URI: ", process.env.MONGO_URI_LIVE);
