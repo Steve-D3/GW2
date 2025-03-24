@@ -3,6 +3,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 5rem;
+  margin: 0 auto;
+  min-height: 300px;
 }
 
 .product-contanier {
@@ -12,6 +14,8 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  align-self: center;
+  justify-self: center;
   h2 {
     font-size: 4rem;
     font-weight: 700;

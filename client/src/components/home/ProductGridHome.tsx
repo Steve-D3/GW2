@@ -1,11 +1,19 @@
 import ProductCard from "../ProductCard";
+import { useSelector } from "react-redux";
+import { selectHomeCategory } from "../../store/filterSlice";
 // import productsData from "../../db.json";
 import styles from "../../styles/ProductGridInHome.module.css";
 import { useGetProductsQuery } from "../../store/productApiSlice";
 const ProductGridHome = () => {
+  const homeCategory = useSelector(selectHomeCategory);
   const { data: productsData } = useGetProductsQuery();
   if (!productsData) return null;
-  const selectedProducts = productsData.slice(0, 10);
+  const selectedProducts =
+    homeCategory.length > 1
+      ? productsData
+          .filter((product) => product.category._id === homeCategory)
+          .slice(0, 10)
+      : productsData.slice(0, 10);
   return (
     <section className={styles["product-contanier"]}>
       {" "}

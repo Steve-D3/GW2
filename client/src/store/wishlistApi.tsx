@@ -13,8 +13,8 @@ type Wishlist = {
 const wishlistApi = createApi({
   reducerPath: "wishlistApi",
   baseQuery: fetchBaseQuery({
-    // baseUrl: "https://gw2-rfg0.onrender.com/api",
-    baseUrl: "http://localhost:3000/api",
+    baseUrl: "https://gw2-rfg0.onrender.com/api",
+    // baseUrl: "http://localhost:3000/api",
   }),
   tagTypes: ["Wishlist"],
   endpoints: (builder) => ({
