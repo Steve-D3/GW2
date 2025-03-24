@@ -19,7 +19,7 @@ const initialState: FilterState = {
   viewType: "grid",
   viewFilter: false,
   category: "",
-  priceRange: { min: 0, max: 100 },
+  priceRange: { min: 0, max: 50 },
   amountOfProductsSelected: 0,
   amountOfProductsFiltered: 0,
   homeCategory: "",
