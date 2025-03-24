@@ -7,6 +7,7 @@ const logoutBtn = document.querySelector("#logoutBtn");
 const editUserBtn = document.querySelector("#editUserBtn");
 const editProductBtn = document.querySelector("#editProductBtn");
 const deleteUserBtns = document.querySelectorAll("#deleteUserBtn");
+const deleteImgBtns = document.querySelectorAll("#deleteImgBtn");
 const deleteProductBtns = document.querySelectorAll("#deleteBtn");
 
 
@@ -142,7 +143,7 @@ addImages?.addEventListener("submit", async (e) => {
     });
 
     const data = await images.json();
-    const imageCount = data[0]["id"];
+    const imageCount = data.length;
 
     const newImages = {
       id: imageCount + 1,
@@ -334,6 +335,42 @@ deleteUserBtns?.forEach((btn) => {
     } catch (error) {
       console.error("Error deleting user:", error);
       alert("Failed to delete user.");
+    }
+  });
+});
+
+deleteImgBtns?.forEach((btn) => {
+  btn.addEventListener("click", async (e) => {
+    try {
+      e.preventDefault();
+      const imgData = e.target.dataset;
+      console.log("🗑️ Deleting image:", imgData);
+
+      if (!confirm("Are you sure you want to delete this image?")) return;
+
+      const response = await fetch(`/api/products/images/${imgData.productId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          image_id: imgData.id,
+        }),
+
+      });
+
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.message);
+
+      console.log("Image deleted:", result);
+      alert("Image deleted successfully!");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } catch (error) {
+      console.error("Error deleting image:", error);
+      // alert("Failed to delete image.");
     }
   });
 });

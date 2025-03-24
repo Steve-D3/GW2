@@ -17,7 +17,7 @@
     <div class="success"></div>
 
     <button class="green" id="logoutBtn">Log Out</button>
-    
+
     <a href="/users">
       <button class="blue">
         Users
@@ -49,10 +49,10 @@
           <td><%- product.stock %></td>
           <td><%- product.category.name %></td>
           <td>
-            <% product.image_url.forEach((image) => { if (image.url !==
-              "/sustainloop.png") { %>
-              <img src="<%- image.url %>" alt="Product Image" />
-              <% } }); %>
+            <% product.image_url.forEach((elem) => { %>
+            <img src="<%- elem.url %>" alt="">
+            <% }); 
+              %>
           </td>
           <td>
             <div>

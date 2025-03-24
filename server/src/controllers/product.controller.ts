@@ -394,7 +394,8 @@ export const deleteProduct = async (req: Request, res: Response) => {
  */
 export const deleteImage = async (req: Request, res: Response) => {
   try {
-    const { id, image_id } = req.params;
+    const { id } = req.params;
+    const { image_id } = req.body;
     const product = await productsModel.findById(id);
     if (!product) {
       res.status(404).json({ message: "Product not found" });
@@ -411,6 +412,7 @@ export const deleteImage = async (req: Request, res: Response) => {
     );
 
     res.status(200).json({ status: "success", data: updatedProduct });
+
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
