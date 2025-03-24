@@ -45,12 +45,29 @@ app.set("views", "src/views");
 app.use(express.static("src/public"));
 
 app.get("/", localAuthMiddleware, async (req, res) => {
-  const allProducts = await Products.find().populate("category", "name");
-  res.render("index", {
-    title: "Product management system",
-    products: allProducts,
-    user: res.locals.user,
-  });
+  try {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 5;
+    const skip = (page - 1) * limit;
+
+    const totalProducts = await Products.countDocuments();
+    const products = await Products.find()
+      .populate("category", "name")
+      .skip(skip)
+      .limit(limit);
+
+    res.render("index", {
+      title: "Product management system",
+      products,
+      currentPage: page,
+      totalPages: Math.ceil(totalProducts / limit),
+      limit,
+      user: res.locals.user,
+    });
+  } catch (error) {
+    console.error("Error fetching paginated products:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.get("/verify/:token", verificationEmail);
