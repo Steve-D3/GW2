@@ -17,7 +17,7 @@
     <div class="success"></div>
 
     <button class="green" id="logoutBtn">Log Out</button>
-    
+
     <a href="/users">
       <button class="blue">
         Users
@@ -51,8 +51,8 @@
           <td>
             <% product.image_url.forEach((image) => { if (image.url !==
               "/sustainloop.png") { %>
-              <img src="<%- image.url %>" alt="Product Image" />
-              <% } }); %>
+            <img src="<%- image.url %>" alt="Product Image" />
+            <% } }); %>
           </td>
           <td>
             <div>
@@ -76,6 +76,19 @@
         <% }); %>
       </tbody>
     </table>
+
+    <div class="pagination">
+      <% if (currentPage > 1) { %>
+      <a href="/?page=<%= currentPage - 1 %>&limit=<%= limit %>">Previous</a>
+      <% } %>
+      <% for (let i = 1; i <= totalPages; i++) { %>
+      <a href="/?page=<%= i %>&limit=<%= limit %>" class="<%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+      <% } %>
+      <% if (currentPage < totalPages) { %>
+      <a href="/?page=<%= currentPage + 1 %>&limit=<%= limit %>">Next</a>
+      <% } %>
+    </div>
+
   </div>
 </body>
 

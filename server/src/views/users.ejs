@@ -15,15 +15,17 @@
         <th>Name</th>
         <th>Email</th>
         <th>Role</th>
+        <th>Verified</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <% users.forEach(user => { %>
       <tr>
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td><%= user.role %></td>
+        <td><%= user?.name %></td>
+        <td><%= user?.email %></td>
+        <td><%= user?.role %></td>
+        <td><%= user?.isVerified %></td>
         <td>
           <a href="/edit/user?user_id=<%- user._id %>&name<%- encodeURIComponent(user.name)%>&email=<%- user.email %>&role=<%- user.role %>">
             <button class="blue">
