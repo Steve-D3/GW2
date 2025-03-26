@@ -136,10 +136,11 @@ app.get("/", (req, res) => {
 // });
 
 
-app.post("/upload", upload.single("image"), async (req, res) => {
+app.post("/upload/:user_id", upload.single("image"), async (req, res) => {
   try {
+   const user_id = req.params.user_id;
     if (!req.file) {
-      return res.status(400).json({ message: "No file uploaded." });
+     res.status(400).json({ message: "No file uploaded." }); return 
     }
 
  
@@ -149,13 +150,16 @@ app.post("/upload", upload.single("image"), async (req, res) => {
 
  
     // Construct Image URL
-    const imageUrl = `/uploads/${req.file.filename}`;
+    const baseUrl = "http://res.cloudinary.com/djuqnuesr/image/upload/";
+      const trans = "c_thumb,g_face,h_200,w_200/r_max/f_auto";
+      const end = req.file.filename + path.extname(req.file.originalname);
+    const imageUrl = `${baseUrl}${trans}/${end}`;
 
     // Save to database
-    const newProfilePicture = new profilePictureModel({ user_id: "67e284b388b6b40d1ae56e14", image_url: imageUrl });
+    const newProfilePicture = new profilePictureModel({ user_id: user_id, image_url: imageUrl });
     await newProfilePicture.save();
 
-    res.status(201).json({ message: "Image uploaded successfully", user_id: "67e284b388b6b40d1ae56e14", image_url: imageUrl });
+    res.status(201).json({ message: "Image uploaded successfully", user_id: user_id, image_url: imageUrl });
 
   } catch (error) {
     console.error("Error uploading image:", error);
