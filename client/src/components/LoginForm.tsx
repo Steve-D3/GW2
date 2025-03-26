@@ -9,6 +9,7 @@ import {
 import { useRegisterMutation, useLoginMutation } from "../store/authApi";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useAddProfilePicMutation } from "../store/addProfilePicApi";
 
 const LoginForm = () => {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -21,8 +22,9 @@ const LoginForm = () => {
 
   const isShowLogin = useSelector(selectIsShowLogin);
   const currentUser = useSelector(
-    (state: { signin: { user: { name: string; email: string } } }) =>
-      state.signin.user
+    (state: {
+      signin: { user: { name: string; email: string; _id: string } };
+    }) => state.signin.user
   );
 
   const [registerUser, { isLoading: isRegistering, error: registerError }] =
@@ -38,42 +40,6 @@ const LoginForm = () => {
     setUsername("");
     setConfirmPassword("");
   };
-  // const handleLogin = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await loginUser({ email, password }).unwrap();
-  //     localStorage.setItem("token", response.token);
-  //     dispatch(
-  //       setUser({
-  //         name: response.user.name,
-  //         email: response.user.email,
-  //         _id: response.user._id,
-  //       })
-  //     );
-  //     onClose();
-  //   } catch (err) {
-  //     console.error("Login failed:", err);
-  //     // Display error message if available
-  //     if (err && typeof err === "object" && "data" in err) {
-  //       if (
-  //         err &&
-  //         typeof err === "object" &&
-  //         "data" in err &&
-  //         err.data !== null &&
-  //         typeof err.data === "object" &&
-  //         "message" in err.data
-  //       ) {
-  //         setErrorMsgs((err.data as { message: string }).message);
-  //       } else {
-  //         setErrorMsgs(
-  //           "Login failed. Please check your credentials and try again."
-  //         );
-  //       }
-  //     } else {
-  //       setErrorMsgs("An unexpected error occurred. Please try again later.");
-  //     }
-  //   }
-  // };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -140,6 +106,12 @@ const LoginForm = () => {
     dispatch(logout());
   };
 
+  const [addProfilePic] = useAddProfilePicMutation();
+  const handleAddPicture = async (fd: FormData) => {
+    console.log(fd);
+    addProfilePic({ formData: fd, userId: currentUser?._id });
+  };
+
   return (
     <div className={styles[`${isShowLogin ? "show-login" : "hide-login"}`]}>
       <div className={isShowLogin ? "show-login" : "hide-login"}>
@@ -153,9 +125,13 @@ const LoginForm = () => {
               </p>
             </div>
             <div className={styles.profileActions}>
-              <button className={styles.logoutButton}>
-                Upload Profile Picture
-              </button>
+              <div>
+                <form action={handleAddPicture}>
+                  <input type="file" name="image" />
+                  <button type="submit">Upload Picture</button>
+                </form>
+              </div>
+
               <button className={styles.logoutButton} onClick={handleLogout}>
                 Logout
               </button>
