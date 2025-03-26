@@ -11,7 +11,7 @@ declare module "express-serve-static-core" {
 const { JWT_SECRET } = process.env;
 export const isAuth = (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.token;
-  console.log(token);
+  console.log(token, "token");
   console.log("this is a test")
   if (!token) {
     res.status(401).json({ message: "Unauthorized" });

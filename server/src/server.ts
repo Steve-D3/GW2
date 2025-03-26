@@ -3,6 +3,7 @@ import "dotenv/config";
 import cors from "cors";
 import express from "express";
 import { notFound } from "./controllers/notFound.controller";
+import { Request } from "express";
 import { verificationEmail } from "./controllers/auth.controller";
 
 // Routes
@@ -30,7 +31,17 @@ import path from "path";
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import { addProfilePicture } from "./controllers/profilePictureController";
+import profilePictureModel from "./models/profilePictureModel";
+// Extend Express Request interface to include 'file'
+declare global {
+  namespace Express {
+    interface Request {
+      file?: Express.Multer.File;
+    }
+  }
+}
 
+// Variables
 // Variables
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -81,31 +92,74 @@ app.get("/", (req, res) => {
 //routes multer
 // const upload = multer({ dest: "uploads/" });
 
+// app.post("/upload", upload.single("image"), async (req, res) => {
+//   try {
+  
+//     if (!req.file) {
+//       res.status(400).json({ message: "No file uploaded." });  return 
+//       }
+//     console.log(req.body);
+//     console.log("img",req.file);
+
+//     // Extract user_id from request body and set image_url using the uploaded file path
+//     req.body.image_url = `/uploads/${req.file.filename}`;
+
+ 
+   
+  
+
+//   console.log(req.file);
+//   const baseUrl = "http://res.cloudinary.com/djuqnuesr/image/upload/";
+//   const trans = "c_thumb,g_face,h_200,w_200/r_max/f_auto";
+//   const end = req.file.filename + path.extname(req.file.originalname);
+// if (!req.user) {
+//   res.status(401).json({ message: "Unauthorized: User not authenticated." });
+//   return;
+// }
+// if (typeof req.user !== "string" && "name" in req.user) {
+
+//   const newProfilePicture = new profilePictureModel({ user_id: "67e284b388b6b40d1ae56e14", image_url: req.body.image_url });
+//   await newProfilePicture.save();
+//     res.status(201).json({ message: "Image uploaded successfully" });
+// } else {
+//   res.status(400).json({ message: "Invalid user data." });
+//   return;
+// }
+// //   res.status(200).send(`
+// //     <h1 style="text-align: center; color: green" >Image uploaded successfully</h1>
+// //     <img src="${baseUrl}${trans}/${end}" alt="Uploaded Image" width="300" style="display: block; margin: 0 auto;">
+// //     `);
+//   } catch (error) {
+//     console.error("Error uploading image:", error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
+
+
 app.post("/upload", upload.single("image"), async (req, res) => {
   try {
     if (!req.file) {
-    res.status(400).json({ message: "No file uploaded." });  return 
+      return res.status(400).json({ message: "No file uploaded." });
     }
 
-    // Extract user_id from request body and set image_url using the uploaded file path
-    req.body.image_url = `/uploads/${req.file.filename}`;
+ 
 
-    // Call the controller function
-    await addProfilePicture(req, res);
-  
+    console.log("Received file:", req.file);
+    console.log("Received body:", req.body);
 
-  console.log(req.file);
-  const baseUrl = "http://res.cloudinary.com/djuqnuesr/image/upload/";
-  const trans = "c_thumb,g_face,h_200,w_200/r_max/f_auto";
-  const end = req.file.filename + path.extname(req.file.originalname);
+ 
+    // Construct Image URL
+    const imageUrl = `/uploads/${req.file.filename}`;
 
-  res.status(200).send(`
-    <h1 style="text-align: center; color: green" >Image uploaded successfully</h1>
-    <img src="${baseUrl}${trans}/${end}" alt="Uploaded Image" width="300" style="display: block; margin: 0 auto;">
-    `);
+    // Save to database
+    const newProfilePicture = new profilePictureModel({ user_id: "67e284b388b6b40d1ae56e14", image_url: imageUrl });
+    await newProfilePicture.save();
+
+    res.status(201).json({ message: "Image uploaded successfully", user_id: "67e284b388b6b40d1ae56e14", image_url: imageUrl });
+
   } catch (error) {
     console.error("Error uploading image:", error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
