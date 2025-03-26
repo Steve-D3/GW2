@@ -125,7 +125,7 @@ const LoginForm = () => {
               </p>
             </div>
             <div className={styles.profileActions}>
-              <div>
+              <div className={styles.uploadPicture}>
                 <form action={handleAddPicture}>
                   <input type="file" name="image" />
                   <button type="submit">Upload Picture</button>
