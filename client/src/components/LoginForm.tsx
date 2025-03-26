@@ -153,6 +153,9 @@ const LoginForm = () => {
               </p>
             </div>
             <div className={styles.profileActions}>
+              <button className={styles.logoutButton}>
+                Upload Profile Picture
+              </button>
               <button className={styles.logoutButton} onClick={handleLogout}>
                 Logout
               </button>
