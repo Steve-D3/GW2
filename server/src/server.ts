@@ -24,7 +24,11 @@ import { isAdmin, isAuth } from "./middleware/authMiddleware";
 import localAuthMiddleware from "./middleware/localAuthMiddleware";
 import categoriesModel from "./models/categoriesModel";
 
-
+// Multer
+import multer from "multer";
+import path from "path";
+import { v2 as cloudinary } from "cloudinary";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
 
 // Variables
 const app = express();
@@ -43,6 +47,49 @@ app.use(express.json());
 app.set("view engine", "ejs");
 app.set("views", "src/views");
 app.use(express.static("src/public"));
+//uploads imgs
+app.use("/uploads", express.static("uploads"));
+
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'test',
+    allowedFormats: ['jpg', 'png', 'jpeg', 'gif', 'webp'],
+  }as any
+});
+
+// limit 3MG
+
+const upload = multer({storage: storage});
+
+// Routes
+app.get("/", (req, res) => {
+  res.sendFile("/index.html");
+});
+//routes multer
+app.post("/upload", upload.single("image"), (req, res) => {
+  if (!req.file) {
+    res.status(400).send("No file uploaded.");
+    return;
+  }
+ 
+  console.log(req.file);
+ const baseUrl = "http://res.cloudinary.com/djuqnuesr/image/upload/"
+ const trans = "c_thumb,g_face,h_200,w_200/r_max/f_auto"
+const end = req.file.filename + path.extname(req.file.originalname)
+
+  res.status(200).send(`
+    <h1 style="text-align: center; color: green" >Image uploaded successfully</h1>
+    <img src="${baseUrl}${trans}/${end}" alt="Uploaded Image" width="300" style="display: block; margin: 0 auto;">
+    `);
+});
+
 
 app.get("/", localAuthMiddleware, async (req, res) => {
   try {
