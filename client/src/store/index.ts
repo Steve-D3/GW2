@@ -8,6 +8,7 @@ import searchSlice from "./searchSlice";
 import authApi from "./authApi";
 import wishlistApi from "./wishlistApi";
 import wishlistSlice from "./wishlistSlice";
+import { addProfilePicApi } from "./addProfilePicApi";
 
 const store = configureStore({
   reducer: {
@@ -19,13 +20,14 @@ const store = configureStore({
   search: searchSlice,
   [wishlistApi.reducerPath]: wishlistApi.reducer,
   wishlist: wishlistSlice,
+  [addProfilePicApi.reducerPath]: addProfilePicApi.reducer,
   
   },
 
 
     
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(productApi.middleware, authApi.middleware, wishlistApi.middleware),
+      getDefaultMiddleware().concat(productApi.middleware, authApi.middleware, wishlistApi.middleware, addProfilePicApi.middleware),
 
   },
 );
