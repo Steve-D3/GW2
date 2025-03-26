@@ -29,6 +29,7 @@ import multer from "multer";
 import path from "path";
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
+import { addProfilePicture } from "./controllers/profilePictureController";
 
 // Variables
 const app = express();
@@ -78,11 +79,20 @@ app.get("/", (req, res) => {
   res.sendFile("/index.html");
 });
 //routes multer
-app.post("/upload", upload.single("image"), (req, res) => {
-  if (!req.file) {
-    res.status(400).send("No file uploaded.");
-    return;
-  }
+// const upload = multer({ dest: "uploads/" });
+
+app.post("/upload", upload.single("image"), async (req, res) => {
+  try {
+    if (!req.file) {
+    res.status(400).json({ message: "No file uploaded." });  return 
+    }
+
+    // Extract user_id from request body and set image_url using the uploaded file path
+    req.body.image_url = `/uploads/${req.file.filename}`;
+
+    // Call the controller function
+    await addProfilePicture(req, res);
+  
 
   console.log(req.file);
   const baseUrl = "http://res.cloudinary.com/djuqnuesr/image/upload/";
@@ -93,6 +103,10 @@ app.post("/upload", upload.single("image"), (req, res) => {
     <h1 style="text-align: center; color: green" >Image uploaded successfully</h1>
     <img src="${baseUrl}${trans}/${end}" alt="Uploaded Image" width="300" style="display: block; margin: 0 auto;">
     `);
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.get("/", localAuthMiddleware, async (req, res) => {
