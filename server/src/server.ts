@@ -6,14 +6,14 @@ import { notFound } from "./controllers/notFound.controller";
 import { verificationEmail } from "./controllers/auth.controller";
 
 // Routes
-import userRoutes from "./routes/users.routes"
-import productRoutes from "./routes/product.routes"
-import orderRoutes from "./routes/orders.routes"
-import categoryRoutes from "./routes/categories.routes"
-import reviewRoutes from "./routes/reviews.routes"
-import wishlistRoutes from "./routes/wishlist.routes"
-import authRoutes from "./routes/auth.routes"
-import Products from "./models/productsModel"
+import userRoutes from "./routes/users.routes";
+import productRoutes from "./routes/product.routes";
+import orderRoutes from "./routes/orders.routes";
+import categoryRoutes from "./routes/categories.routes";
+import reviewRoutes from "./routes/reviews.routes";
+import wishlistRoutes from "./routes/wishlist.routes";
+import authRoutes from "./routes/auth.routes";
+import Products from "./models/productsModel";
 import usersModel from "./models/usersModel";
 
 // Middleware
@@ -34,7 +34,13 @@ import { CloudinaryStorage } from "multer-storage-cloudinary";
 const app = express();
 const PORT = process.env.PORT || 3000;
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://gw2-rfg0.onrender.com/api", "http://localhost:5174", "https://gw-2-pi.vercel.app", "https://gw2-ecoshop.surge.sh"], // Allow the front-end to access the API
+  origin: [
+    "http://localhost:5173",
+    "https://gw2-rfg0.onrender.com/api",
+    "http://localhost:5174",
+    "https://gw-2-pi.vercel.app",
+    "https://gw2-ecoshop.surge.sh",
+  ], // Allow the front-end to access the API
   credentials: true, // Allow credentials like cookies to be sent
 };
 // Middleware
@@ -50,23 +56,22 @@ app.use(express.static("src/public"));
 //uploads imgs
 app.use("/uploads", express.static("uploads"));
 
-
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
-})
+});
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'test',
-    allowedFormats: ['jpg', 'png', 'jpeg', 'gif', 'webp'],
-  }as any
+    folder: "test",
+    allowedFormats: ["jpg", "png", "jpeg", "gif", "webp"],
+  } as any,
 });
 
 // limit 3MG
 
-const upload = multer({storage: storage});
+const upload = multer({ storage: storage, limits: { fileSize: 3000000 } });
 
 // Routes
 app.get("/", (req, res) => {
@@ -78,18 +83,17 @@ app.post("/upload", upload.single("image"), (req, res) => {
     res.status(400).send("No file uploaded.");
     return;
   }
- 
+
   console.log(req.file);
- const baseUrl = "http://res.cloudinary.com/djuqnuesr/image/upload/"
- const trans = "c_thumb,g_face,h_200,w_200/r_max/f_auto"
-const end = req.file.filename + path.extname(req.file.originalname)
+  const baseUrl = "http://res.cloudinary.com/djuqnuesr/image/upload/";
+  const trans = "c_thumb,g_face,h_200,w_200/r_max/f_auto";
+  const end = req.file.filename + path.extname(req.file.originalname);
 
   res.status(200).send(`
     <h1 style="text-align: center; color: green" >Image uploaded successfully</h1>
     <img src="${baseUrl}${trans}/${end}" alt="Uploaded Image" width="300" style="display: block; margin: 0 auto;">
     `);
 });
-
 
 app.get("/", localAuthMiddleware, async (req, res) => {
   try {
@@ -119,7 +123,6 @@ app.get("/", localAuthMiddleware, async (req, res) => {
 
 app.get("/verify/:token", verificationEmail);
 
-
 app.get("/register/admin", async (req, res) => {
   res.render("register", {
     title: "Register",
@@ -132,7 +135,6 @@ app.get("/login/admin", async (req, res) => {
   });
 });
 
-
 app.get("/users", localAuthMiddleware, async (req, res) => {
   const allUsers = await usersModel.find();
   res.render("users", {
@@ -144,38 +146,41 @@ app.get("/users", localAuthMiddleware, async (req, res) => {
 // ------------------------------------------------------
 
 // Update the /edit route in server.ts
-app.get("/edit/product", localAuthMiddleware, async (req, res): Promise<void> => {
-  try {
-    const { product_id } = req.query;
-    const product = await Products.findById(product_id).populate(
-      "category",
-      "name"
-    ); //  Ensure category is populated
-    const categories = await categoriesModel.find({}, "name _id"); // Fetch all categories for dropdown
+app.get(
+  "/edit/product",
+  localAuthMiddleware,
+  async (req, res): Promise<void> => {
+    try {
+      const { product_id } = req.query;
+      const product = await Products.findById(product_id).populate(
+        "category",
+        "name"
+      ); //  Ensure category is populated
+      const categories = await categoriesModel.find({}, "name _id"); // Fetch all categories for dropdown
 
-    if (!product) {
-      res.status(404).send("Product not found");
+      if (!product) {
+        res.status(404).send("Product not found");
+        return;
+      }
+
+      res.render("edit", {
+        product_id: product?._id,
+        name: product?.name,
+        description: product?.description,
+        price: product?.price,
+        stock: product?.stock,
+        category: product?.category || null, // Ensure category is sent properly
+        categories, //  Pass all available categories for the dropdown
+      });
+
+      return;
+    } catch (error) {
+      console.error(" Error loading edit page:", error);
+      res.status(500).send("Internal Server Error");
       return;
     }
-
-    res.render("edit", {
-      product_id: product?._id,
-      name: product?.name,
-      description: product?.description,
-      price: product?.price,
-      stock: product?.stock,
-      category: product?.category || null, // Ensure category is sent properly
-      categories, //  Pass all available categories for the dropdown
-    });
-
-
-    return;
-  } catch (error) {
-    console.error(" Error loading edit page:", error);
-    res.status(500).send("Internal Server Error");
-    return;
   }
-});
+);
 
 app.get("/edit/user", localAuthMiddleware, async (req, res): Promise<void> => {
   try {
