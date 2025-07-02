@@ -1,5 +1,11 @@
 # Eco-Shop
 
+## Presentation
+
+You can watch the project presentation here:
+
+[Eco-Shop Presentation](https://www.canva.com/design/DAGfY5IwwY0/Q9ejmKDTqwD4y1l1-YmvBQ/view?utm_content=DAGfY5IwwY0&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hc936e4d8cb#1)
+
 
 ## Description
 This project is the result of our second group collaboration: an online webshop inspired by eco-friendly products. 
